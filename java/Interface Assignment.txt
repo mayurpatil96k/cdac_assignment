@@ -1,0 +1,150 @@
+public interface PizzaIngredientFactory
+{
+	public Dough createDough();
+	public Sauce createSauce();
+	public Cheese createCheese();
+	public Pepperoni createPepperoni();
+	public Clams createClams();
+}
+define 2 implementations 
+	USPizzaIngredientFactory and IndianPizzaIngredientFactory
+
+create an array of "PizzaIngredientFactory" , store all the implemenations object inside it, traverse the array and invoke all the methods.
+
+
+package test;
+class createPizza{
+	void disp() {
+		System.out.println("Creating pizza...");
+		
+	}
+}
+class Dough extends test{
+	void disp(){
+		System.out.println("Creating Dough...");
+		
+	}
+}
+class Cheese extends test{
+	void disp() {
+		System.out.println("Adding Cheese...");
+		
+	}
+} 
+class Pepperoni extends test{
+	void disp() {
+		System.out.println("Adding Pepperoni...");
+		
+	}
+}
+class Sauce extends test{
+	void disp() {
+		System.out.println("Adding Sauce...");
+		
+	}
+}
+class Clams extends test{
+	void disp() {
+		System.out.println("Adding Clams...");
+		
+	}
+}
+interface PizzaIngredientFactory
+{
+	public Dough createDough();
+	public Sauce createSauce();
+	public Cheese createCheese();
+	public Pepperoni createPepperoni();
+	public Clams createClams();
+}
+
+class USPizzaIngredientFactory implements PizzaIngredientFactory{
+
+	@Override
+	public Dough createDough() {
+		System.out.println("Creating Dough...");
+		// TODO Auto-generated method stub
+		return new Dough();
+	}
+
+	@Override
+	public Sauce createSauce() {
+		System.out.println("Adding Sauce...");
+		// TODO Auto-generated method stub
+		return new Sauce();
+	}
+
+	@Override
+	public Cheese createCheese() {
+		System.out.println("Adding Cheese...");
+		// TODO Auto-generated method stub
+		return new Cheese();
+	}
+
+	@Override
+	public Pepperoni createPepperoni() {
+		System.out.println("Adding Pepperoni...");
+		// TODO Auto-generated method stub
+		return new Pepperoni();
+	}
+
+	@Override
+	public Clams createClams() {
+		System.out.println("Adding Clams...");
+		// TODO Auto-generated method stub
+		return new Clams();
+	}
+	
+}
+class IndianPizzaIngredientFactory implements PizzaIngredientFactory{
+
+	public Dough createDough() {
+		System.out.println("Creating Dough...");
+		// TODO Auto-generated method stub
+		return new Dough();
+	}
+
+	@Override
+	public Sauce createSauce() {
+		System.out.println("Adding Sauce...");
+		// TODO Auto-generated method stub
+		return new Sauce();
+	}
+
+	@Override
+	public Cheese createCheese() {
+		System.out.println("Adding Cheese...");
+		// TODO Auto-generated method stub
+		return new Cheese();
+	}
+
+	@Override
+	public Pepperoni createPepperoni() {
+		System.out.println("Adding Pepperoni...");
+		// TODO Auto-generated method stub
+		return new Pepperoni();
+	}
+
+	@Override
+	public Clams createClams() {
+		System.out.println("Adding Clams...");
+		// TODO Auto-generated method stub
+		return new Clams();
+	}
+	
+}
+
+public class test{
+	public static void main(String[] args) {
+		PizzaIngredientFactory arr[]=new PizzaIngredientFactory[2];
+		arr[0]=new USPizzaIngredientFactory();
+		arr[1]=new IndianPizzaIngredientFactory();
+		for(int i=0;i<arr.length;i++) {
+			arr[i].createDough();
+			arr[i].createCheese();
+			arr[i].createClams();
+			arr[i].createPepperoni();
+			arr[i].createSauce();
+		}
+	}
+}

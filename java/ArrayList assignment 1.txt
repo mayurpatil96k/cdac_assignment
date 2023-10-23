@@ -1,0 +1,85 @@
+
+create a class MyNum with
+		private int num;
+		parameterized constructor
+
+	
+Demo class with main
+	create 4 objects of MyNum by passing different integers.
+	store these 4 objects inside "ArrayList"
+	and now store that ArrayList inside file system.
+	
+	read ArrayList from file and traverse it using Iterator.
+
+
+Solution:
+
+package test;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+class MyNum implements Serializable
+{
+	private int num;
+
+	public MyNum(int num) {
+		super();
+		this.num = num;
+	}		
+}
+public class demo{
+	public static void main(String[] args) {
+		List<MyNum>mylist=new ArrayList<MyNum>();
+		MyNum e1=new MyNum(10);
+		MyNum e2=new MyNum(30);
+		MyNum e3=new MyNum(30);
+		MyNum e4=new MyNum(40);
+		mylist.add(e1);
+		mylist.add(e1);
+		mylist.add(e3);
+		mylist.add(e4);
+		
+		try(FileOutputStream fos=new FileOutputStream("D:\\vita_cdac\\java\\Day_12\\Day_12\\File_Handling_1\\test\\test.txt");){
+			try(ObjectOutputStream oos=new ObjectOutputStream(fos);){
+				oos.writeObject(mylist);
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<?> ref=null;
+		try(FileInputStream fis=new FileInputStream("D:\\vita_cdac\\java\\Day_12\\Day_12\\File_Handling_1\\test\\test.txt");){
+			try(ObjectInputStream ois=new ObjectInputStream(fis);){
+				ref=(List<?>)ois.readObject();
+				Iterator itr=ref.iterator();
+				while(itr.hasNext()) {
+					System.out.println(itr.next());
+				}
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		}
+	
+	}

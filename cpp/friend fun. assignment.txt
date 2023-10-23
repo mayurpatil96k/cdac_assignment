@@ -1,0 +1,132 @@
+1) class First
+   {
+      char str1[20];
+   };
+   class Second
+   {
+      char str2[20];
+   };
+write a friend function,which will create a  new string containing str1,str2 and also display it.
+
+
+#include <iostream>
+#include <cstring>
+
+class Second; // Forward declaration
+
+class First {
+private:
+    char str1[20];
+
+public:
+    First(const char* s) {
+        strncpy(str1, s, sizeof(str1));
+    }
+
+    friend void combineAndDisplay(const First& first, const Second& second);
+};
+
+class Second {
+private:
+    char str2[20];
+
+public:
+    Second(const char* s) {
+        strncpy(str2, s, sizeof(str2));
+    }
+
+    friend void combineAndDisplay(const First& first, const Second& second);
+};
+
+void combineAndDisplay(const First& first, const Second& second) {
+    char combined[40]; // To hold the combined string
+
+    // Concatenate str1 and str2
+    strcpy(combined, first.str1);
+    strcat(combined, second.str2);
+
+    // Display the combined string
+    std::cout << "Combined String: " << combined << std::endl;
+}
+
+int main() {
+    First obj1("Hello, ");
+    Second obj2("World!");
+
+    combineAndDisplay(obj1, obj2);
+
+    return 0;
+}
+
+
+
+2) 
+class First
+{
+	int a;
+};
+class Second
+{
+	public:
+		void fun1(){}
+		void fun2(){}
+		void fun3(){}
+};
+
+Above code is incomplete.
+Make sure that all the member functions of "Second" will access "a".
+
+
+#include <iostream>
+
+class First {
+private:
+    int a;
+
+public:
+    First(int val) : a(val) {}
+
+    // Declare Second as a friend class
+    friend class Second;
+};
+
+class Second {
+public:
+    void fun1(const First& obj) {
+        // Access "a" from the First class
+        std::cout << "fun1: " << obj.a << std::endl;
+    }
+
+    void fun2(const First& obj) {
+        // Access "a" from the First class
+        std::cout << "fun2: " << obj.a << std::endl;
+    }
+
+    void fun3(const First& obj) {
+        // Access "a" from the First class
+        std::cout << "fun3: " << obj.a << std::endl;
+    }
+};
+
+int main() {
+    First obj1(42);
+    Second obj2;
+
+    obj2.fun1(obj1);
+    obj2.fun2(obj1);
+    obj2.fun3(obj1);
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+

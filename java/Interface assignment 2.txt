@@ -1,0 +1,148 @@
+on Developer side create the following interface
+	create necessary jar and docs
+
+public interface PersistenceMechanism
+{
+	void writeData(String ref);
+	String readData();
+}
+
+
+create following classes on client side
+
+class FileSystem implements PersistenceMechanism
+{
+	public void writeData(String ref)
+	{
+		// how to write data inside FileSystem
+	}
+	public String readData()
+	{
+		// how to read data from FileSystem
+	}
+}
+
+class DatabaseSystem implements PersistenceMechanism
+{
+	public void writeData(String ref)
+	{
+		// how to write data inside DatabaseSystem
+	}
+	public String readData()
+	{
+		// how to read data from DatabaseSystem
+	}
+}
+
+class BigdataSystem implements PersistenceMechanism
+{
+	public void writeData(String ref)
+	{
+		// how to write data inside BigdataSystem
+	}
+	public String readData()
+	{
+		// how to read data from BigdataSystem
+	}
+}
+
+create one more class "Demo" and in its main function create array of "PersistenceMechanism" interface, store all the child class objects , traverse the array and invoke only "BigdataSystem" class "writeData" and "readData" methods.
+
+solution:
+Dev:
+/**
+ * 
+ */
+package devpack;
+
+/**
+ * @author Mayur
+ *
+ */
+public interface PersistenceMechanism
+{
+	void writeData(String ref);
+	String readData();
+}
+
+
+
+client:
+import devpack.PersistenceMechanism;
+
+class FileSystem implements PersistenceMechanism {
+
+	@Override
+	public String readData() {
+		System.out.println("Reading data from file...");
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void writeData(String arg0) {
+		// TODO Auto-generated method stub
+		System.out.println("in filesystem write data wring data...");
+	}
+	
+}
+
+
+import devpack.PersistenceMechanism;
+
+class DatabaseSystem implements PersistenceMechanism {
+
+	@Override
+	public String readData() {
+		System.out.println("Reading databse from file...");
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void writeData(String arg0) {
+		// TODO Auto-generated method stub
+		System.out.println("in database write data wring data...");
+	}
+
+}
+
+
+import devpack.PersistenceMechanism;
+
+public class BigdataSystem implements PersistenceMechanism {
+
+	@Override
+	public String readData() {
+		System.out.println("Reading data from datasystem...");
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void writeData(String arg0) {
+		// TODO Auto-generated method stub
+		System.out.println("in datasystem write data wring data...");
+	}
+
+}
+
+//main method
+
+import devpack.PersistenceMechanism;
+
+public class Demo {
+public static void main(String[] args) {
+	PersistenceMechanism arr[]=new PersistenceMechanism[3];
+	arr[0]= new FileSystem();
+	arr[1]= new DatabaseSystem();
+	arr[2]=new BigdataSystem();
+	for (int i=0;i<arr.length;i++) {
+		arr[i].readData();
+		arr[i].writeData(null);
+	}
+}
+
+}
+
+

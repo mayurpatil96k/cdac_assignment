@@ -1,0 +1,71 @@
+1) define a functional interface "First" with an abstract method "void disp1()".
+define a class "Second" with a method "void fun1()"
+
+inside main function create a method reference for "First" and invoke "fun1" of "Second"
+
+2) define a functional interface "Third" with an abstract method "void show(int num)".
+define a class "Sample" with a method "void disp(int num)"
+
+inside main function create a method reference for "Third" and invoke "disp" of "Sample" by passing a value "500".
+solution:
+package test;
+
+interface Third{
+	void show(int num);
+}
+public class Sample{
+	void disp(int num) {
+		System.out.println("in disp"+num);
+	}
+	public static void main(String[] args) {
+		Sample s= new Sample();
+		Third ref=s::disp;
+		ref.show(50);
+	}
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------
+3) define a functional interface "Fifth" with an abstract method "int add(int a,int b)"
+define a class Math1 with a method "int calc(int a,int b)" 
+
+inside main function invoke "calc" method with the help of
+	a) lamdba expression
+	b) method reference
+solution:
+package test;
+
+interface Fifth{
+	int add(int a,int b);
+}
+public class Math1{
+	int calc(int a,int b) {
+		return a*b;
+	}
+	public static void main(String[] args) {
+		Math1 m=new Math1();
+		Fifth ref=m::calc;
+		System.out.println(ref.add(10, 20));
+		
+		Fifth ref1=(a,b)->{return m.calc(a,b);};
+		System.out.println(ref1.add(30, 50));
+	}
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------
+4) define a functional interface "Sixth" with an abstract method "void disp5()".
+define a class "Sample" with a static method "void fun1()"
+
+inside main function create a method reference for "Sixth" and invoke "fun1" of "Sample"
+solution:
+package test;
+
+interface Sixth{
+	void disp();
+}
+class Sample{
+	static void fun1() {
+		System.out.println("Static of sample");
+	}
+	public static void main(String[] args) {
+		Sixth ref=Sample::fun1;
+		ref.disp();
+	}
+}

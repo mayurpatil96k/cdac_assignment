@@ -1,0 +1,115 @@
+1.Create class calculator with two method Add and product. Create object and call method.
+solution:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace mayur
+{
+    internal class Calculator
+    {
+        public int add(int x, int y) {
+            return x + y;
+        }
+        public int product(int x, int y) {  return x * y; }
+        static void Main(string[] args)
+        {
+            Calculator a= new Calculator();
+            Console.WriteLine(a.add(10, 20));
+            Console.WriteLine(a.product(20,30));
+
+        }
+    }
+}
+D:\vita_cdac\Microsoft_DotNet\Practice\ClassLibrary1\
+
+2.Create class library with method fact() which will return factorial of a number. Use it in console application.
+solution:
+dll user:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ClassLibrary1;
+
+namespace mayur
+{
+    internal class Calculator
+    {
+  
+        static void Main(string[] args)
+        {
+            int a;
+            a=Convert.ToInt32(Console.ReadLine());
+            Class1 ob = new Class1();
+            Console.WriteLine(ob.fact(a));
+        }
+    }
+}
+
+
+dll side:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ClassLibrary1
+{
+    public class Class1
+    {
+        public int fact(int x)
+        {
+            if(x > 0)
+            {
+                return x*fact(x-1);
+            }
+            else { return 1; }
+        }
+    }
+}
+
+
+3.Create a class student in namespace DAC and in namespace DBDA write method add in both class. In entry point call both method
+solution:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAC
+{
+    internal class student
+    {
+    
+        public int add(int x,int y)
+        {
+            return x + y;
+        }
+    }
+}
+namespace DBDA
+{
+    class student
+    {
+        public int add(int x, int y)
+        {
+            return x + y;
+        }
+    }
+}
+class demo
+{
+   static void Main(string[] args)
+    {
+        DAC.student s1= new DAC.student();
+        DBDA.student s2= new DBDA.student();
+        Console.WriteLine(s1.add(10, 20));
+        Console.WriteLine(s2.add(20, 30));
+    }
+}

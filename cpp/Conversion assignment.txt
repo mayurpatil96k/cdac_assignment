@@ -1,0 +1,168 @@
+1) class Hour
+{
+	private:
+		int hr;
+	public:
+		parameterized constructor
+		disp method
+}
+class Minute
+{
+	private:
+		int mnt;
+	public:
+		parameterized constructor
+		disp method
+}
+
+
+write a program to convert minutes to hours.
+(Use operator= for conversion.)
+
+
+#include<iostream>
+using namespace std;
+class Hour
+{
+private:
+	int hr;
+public:
+	Hour() {
+		hr = 0;
+		cout << "in default constructor"<< endl;
+	}
+	Hour(int hr) {
+		this->hr = hr;
+		cout << "in param 1 constructor" << endl;
+	}
+	void disp() {
+		cout << "hours are " << hr << endl;
+	}
+
+	
+};
+class Minute
+{
+private:
+	int mnt;
+public:
+	Minute(int mnt)
+	{
+		this->mnt = mnt;
+	}
+	Minute() {
+		mnt = 0;
+		cout << "in default of min" << endl;
+	}
+	void disp() {
+		cout << "minutes are " << mnt << endl;
+	}
+
+	operator Hour() {
+		Hour r(mnt / 60);
+		return r;
+	}
+};
+void main() {
+	Minute m(360);
+	Hour h(10);
+	m.disp();
+	h.disp();
+	h = m;
+	h.disp();
+}
+
+
+
+
+2)write a number class with
+int num;
+void disp(){}
+
+u should be able to do following
+
+number n1(20);
+int k=-n1;
+
+n1+=5;
+n1.disp()
+
+number n2(35);
+if(n1!=n2)
+{
+	some message
+}
+
+
+
+number n3(12);
+
+if(n3 < n1)
+{
+	some message
+}
+
+number n4;
+
+n4=n2*n3;
+
+#include<iostream>
+using namespace std;
+class Number {
+private:
+	int num;
+public:
+	Number() {
+		num = 0;
+		cout << "IN defautl constructor;" << endl;
+	}
+	Number(int num) {
+		this->num = num;
+		cout << "In param constructor" << endl;
+	}
+	void disp() {
+		cout << num;
+	}
+	int operator -() {
+		this->num = -1 * this->num;
+		return num;
+	}
+	Number& operator+=(int val) {
+		num += val;
+		return *this;
+	}
+	bool operator!=(Number& ref) {
+		return num != ref.num;
+	}
+	bool operator<(Number& ref) {
+		return num < ref.num;
+	}
+	Number operator*(Number& ref) {
+		return Number(num * ref.num);
+	}
+};
+int main() {
+	Number n1(20);
+	int k = -n1;
+
+	n1 += 5;
+	n1.disp();
+
+	Number n2(35);
+
+	if (n1 != n2) {
+		std::cout << "Some message" << std::endl;
+	}
+
+	Number n3(12);
+
+	if (n3 < n1) {
+		std::cout << "Some message" << std::endl;
+	}
+
+	Number n4;
+	n4 = n2 * n3;
+	n4.disp();
+
+	return 0;
+}

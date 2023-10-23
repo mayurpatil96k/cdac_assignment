@@ -1,0 +1,134 @@
+on the developer side create following interface:
+	create necessary jar file and documentation
+
+interface Vehicle { 
+      
+    // all are the abstract methods. 
+    void changeGear(int a); 
+    void speedUp(int a); 
+    void applyBrakes(int a); 
+} 
+
+
+on the client side define following classes:
+
+class FourWheeler implements Vehicle
+{
+	public void changeGear(int a)
+	{
+		// how to change gear in FourWheeler
+	}
+	public void speedUp(int a)
+	{
+		// how to speed up FourWheeler
+	}
+	public void applyBrakes(int a)
+	{
+		// how to apply brakes of FourWheeler
+	}
+}
+
+
+class TwoWheeler implements Vehicle
+{
+	public void changeGear(int a)
+	{
+		// how to change gear in TwoWheeler
+	}
+	public void speedUp(int a)
+	{
+		// how to speed up TwoWheeler
+	}
+	public void applyBrakes(int a)
+	{
+		// how to apply brakes of TwoWheeler
+	}
+}
+
+create one more class "Demo" with
+	main and static perform method
+while calling perform pass any implementation of "Vehicle" and invoke the methods polymorphically.
+
+dev:
+/**
+ * 
+ */
+package devpack;
+
+/**
+ * @author Mayur
+ *
+ */
+public interface Vehicle { 
+    void changeGear(int a); 
+    void speedUp(int a); 
+    void applyBrakes(int a); 
+} 
+
+client:
+import devpack.Vehicle;
+
+public class FourWheeler implements Vehicle {
+
+	@Override
+	public void applyBrakes(int arg0) {
+		// TODO Auto-generated method stub
+		System.out.println("you applied breaks with "+arg0+" percent");
+		
+	}
+
+	@Override
+	public void changeGear(int arg0) {
+		// TODO Auto-generated method stub
+		System.out.println("you shifyted gear of fourwheeler to"+arg0);
+	}
+
+	@Override
+	public void speedUp(int arg0) {
+		// TODO Auto-generated method stub
+		System.out.println("doing speedup of fourwheel to..."+arg0);
+	}
+
+}
+
+
+import devpack.Vehicle;
+
+public class TwoWheeler implements Vehicle{
+
+	@Override
+	public void applyBrakes(int arg0) {
+		// TODO Auto-generated method stub
+		System.out.println("you applied breaks with "+arg0+" percent");
+		
+	}
+
+	@Override
+	public void changeGear(int arg0) {
+		// TODO Auto-generated method stub
+		System.out.println("you shifyted gear of two wheeler to"+arg0);
+		
+	}
+
+	@Override
+	public void speedUp(int arg0) {
+		// TODO Auto-generated method stub
+		System.out.println("doing speedup of speedup to..."+arg0);
+	}
+
+}
+
+
+import devpack.Vehicle;
+
+public class Demo {
+	static void perform(Vehicle ref) {
+		ref.applyBrakes(50);
+		ref.changeGear(50);
+		ref.speedUp(60);
+	}
+public static void main(String[] args) {
+	perform(new FourWheeler());
+	perform(new TwoWheeler());
+}
+}

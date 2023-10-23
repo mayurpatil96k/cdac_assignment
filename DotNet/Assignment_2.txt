@@ -1,0 +1,214 @@
+Q1. Accept two number from user and do the sum of it
+solution:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAC
+{
+    internal class student
+    {
+
+        public static void Main()
+        {
+            string x, y;
+            float m, n;
+            float o, p;
+            float q, w;
+            Console.WriteLine("Enter two numbers to add");
+            x=Console.ReadLine(); 
+            y=Console.ReadLine();
+            o=Convert.ToSingle(x);
+            p=Convert.ToSingle(y);
+            bool a = float.TryParse(x, out m);
+            bool b=float.TryParse(y, out n);
+            q = float.Parse(x);
+            w = float.Parse(y);
+            if (a == true && b == true)
+            {
+                Console.WriteLine("Addition of two numbers is " + (m + n));
+            }
+            Console.WriteLine("Addition of two numbers is " + (o +p));
+            Console.WriteLine("Addition of two numbers is " + (q + w));
+        }
+    }
+}
+
+Q2. Accept a float value and print square of that number
+Solve above code using Parse(), ToSingle() and TryPrase() method.
+Also observe exception if you do not enter valid data
+
+solution:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAC
+{
+    internal class student
+    {
+
+        public static void Main()
+        {
+            string x;
+            float m;
+            float o;
+            float q;
+            Console.WriteLine("Enter two numbers to add");
+            x=Console.ReadLine(); 
+    
+            o=Convert.ToSingle(x);
+   
+            bool a = float.TryParse(x, out m);
+      
+            q = float.Parse(x);
+       
+            if (a == true)
+            {
+                Console.WriteLine("Square of number is " + (m *m));
+            }
+            Console.WriteLine("Square of number is " + (o*o));
+            Console.WriteLine("Square of number is " + (q*q));
+        }
+    }
+}
+
+Q3.Create a class calculator and write 3 instance method square, cube, round[if in put 22.5 o/p 22]
+Which will return square .cube and rounded number.
+Create object and call method and print the result.
+
+solution:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAC
+{
+    internal class calculator
+    {
+        public void square(float x)
+        {
+            Console.WriteLine("Square of number is "+(x * x));
+        }
+        public void cube(float x) { Console.WriteLine("Square of number is " + (x * x * x)); }
+        public void round(float x) { Console.WriteLine("Round is "+Convert.ToInt32(x)); }
+
+        public static void Main()
+        {
+            calculator calculator = new calculator();    
+            calculator.square(2.0f);
+            calculator.cube(2.0f);
+            calculator.round(25.4f);
+        }
+    }
+}
+
+Q4 Create enum dep having value [MKT=1 , ADV=2,ADMN=3]
+Create a class Employee with instance member id, name , salary and enum dept d.
+Create 5 object of class Employee and put them into different department.
+Write a  sataic method which will display department wise total salary paid
+
+E.g.
+1, "Raj", 3000, dep.ADMN
+2, "Reena", 2000, dep.ADMN
+ 3, "Geeta", 1000, dep.MKT
+
+O/p ADMN department spend 5000 on salary
+MKT department spend 1000 on salary
+
+solution:
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAC
+{
+    class Employee
+    {
+        public int id;
+        public string name;
+        public int salary;
+        dep d;
+
+        public Employee(int id, string name, int salary, dep d)
+        {
+            this.id = id;
+            this.name = name;
+            this.salary = salary;
+            this.d = d;
+        }
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+
+        public static void imp(Employee []arr)
+        {
+            int m, a, ad;
+            m = 0;
+            a = 0;
+            ad= 0;
+            for(int i=0; i<arr.Length; i++)
+            {
+                if (arr[i].d == dep.MKT)
+                {
+                    m = m + arr[i].salary;
+                }
+                else if (arr[i].d == dep.ADV)
+                {
+                    a = a + arr[i].salary;
+                }
+                if (arr[i].d == dep.ADMN)
+                {
+                    ad = ad + arr[i].salary;
+                }
+            }
+            Console.WriteLine("Sum of salary of MKT dept is "+ m);
+            Console.WriteLine("Sum of salary of ADV dept is " + a);
+            Console.WriteLine("Sum of salary of ADMN dept is " + ad);
+        }
+
+    }
+    internal class calculator
+    { 
+        
+
+        public static void Main()
+        {
+            Employee e1 = new Employee(1, "Mayur  Patil", 50000, dep.MKT);
+            Employee e2 = new Employee(2, "Suyash Jadhvar", 40000, dep.ADMN);
+            Employee e3 = new Employee(3, "Omkar Divate", 30000, dep.MKT);
+            Employee e4 = new Employee(4, "Akshay PAtil", 20000, dep.ADV);
+            Employee e5 = new Employee(5, "Rohit Gaikwad", 10000, dep.ADMN);
+
+            e1.ToString();
+            e2.ToString();
+            e3.ToString();
+            e4.ToString();
+            e5.ToString();
+
+            Employee[] arr=new Employee[5];
+            arr[0] = e1;
+            arr[1] = e2;
+            arr[2] = e3;
+            arr[3] = e4;
+            arr[4] = e5;
+
+            Employee.imp(arr);
+        }
+    }
+    enum dep
+    {
+        MKT = 1, ADV = 2, ADMN = 3
+    }
+}
+

@@ -1,0 +1,74 @@
+public abstract class Course
+{
+	public void start()
+	{
+		// start process
+	}
+	public abstract double getFee();
+	public abstract void evaluate();
+}
+
+define child classes of above abstract class
+	DACDBDACourse extends Course
+	MSCitCourse extends Course
+
+show late binding with the help of "perform()" method.
+
+
+
+package test;
+
+import java.time.Period;
+
+abstract class Course
+{
+	public void start()
+	{
+		System.out.println("Starting course...");
+	}
+	public abstract double getFee();
+	public abstract void evaluate();
+}
+class DACDBDACourse extends Course{
+
+	@Override
+	public double getFee() {
+		// TODO Auto-generated method stub
+		System.out.println("fees for dac is 1 Lakh and for dac it is 136k");
+		return 0;
+	}
+
+	@Override
+	public void evaluate() {
+		// TODO Auto-generated method stub
+		System.out.println("Evaluation will be done with CCEE and practical exam");
+		
+	}
+	
+}
+class MSCitCourse extends Course{
+
+	@Override
+	public double getFee() {
+		// TODO Auto-generated method stub
+		System.out.println("Fees of mscit is 10k");
+		return 0;
+	}
+
+	@Override
+	public void evaluate() {
+		// TODO Auto-generated method stub
+		System.out.println("Evaluation will  be done with the onlinr exam");
+	}
+	
+}
+public class Demo{
+	static void perfrom(Course ref) {
+	ref.getFee();
+	ref.evaluate();
+	}
+	public static void main(String[] args) {
+		perfrom(new MSCitCourse());
+		perfrom(new DACDBDACourse());
+	}
+}

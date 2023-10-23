@@ -1,0 +1,392 @@
+1)create a customer class with following attributes
+	custid
+	custname
+	address
+	age
+create one instance of it and store it in a file. (Serialization).
+now open a file, read the object and read its contents . (Deserialization)
+package test;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+import javax.tools.FileObject;
+
+class customer implements Serializable{
+	int custin;
+	String custname;
+	String address;
+	int age;
+	public customer(int custin, String custname, String address, int age) {
+		super();
+		this.custin = custin;
+		this.custname = custname;
+		this.address = address;
+		this.age = age;
+	}
+}
+public class demo{
+	public static void main(String[] args) {
+		customer c=new customer(10, "MAyuur", "nashik", 22);
+		try(FileOutputStream fis=new FileOutputStream("D:\\vita_cdac\\java\\Day_12\\Day_12\\File_Handling_1\\test\\new.txt")){
+			try(ObjectOutputStream os=new ObjectOutputStream(fis)){
+				os.writeObject(c);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try(FileInputStream fis=new FileInputStream("D:\\vita_cdac\\java\\Day_12\\Day_12\\File_Handling_1\\test\\new.txt")){
+			try(ObjectInputStream oi=new ObjectInputStream(fis)){
+				customer c1=(customer)oi.readObject();
+				System.out.println(c1.address);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+			}
+	}
+	
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2) Person class implements Serializable with
+	private String name
+	private int age
+
+		getters and setters
+		parameterized constructor
+
+Student extends Person
+	private int rollno
+		getter and setters
+		parameterized constructor accepting name,age and rollno
+			pass name and age to the super constructor
+
+
+Demo class with main
+	create one object of Student, write it inside file and then read.
+
+package test;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+import javax.tools.FileObject;
+
+class Person implements Serializable{
+	private String name;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	private int age;
+	public Person(String name, int age) {
+		super();
+		this.name = name;
+		this.age = age;
+	}
+}
+class students extends Person{
+
+	private int rollno;
+
+	public students(String name, int age,int rollno) {
+		super(name, age);
+		this.rollno=rollno;
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getRollno() {
+		return rollno;
+	}
+
+	public void setRollno(int rollno) {
+		this.rollno = rollno;
+	}
+	
+	
+}
+public class demo{
+	public static void main(String[] args) {
+	students s1=new students("Mayur", 21, 43);
+		try(FileOutputStream fis=new FileOutputStream("D:\\vita_cdac\\java\\Day_12\\Day_12\\File_Handling_1\\test\\new.txt")){
+			try(ObjectOutputStream os=new ObjectOutputStream(fis)){
+				os.writeObject(s1);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try(FileInputStream fis=new FileInputStream("D:\\vita_cdac\\java\\Day_12\\Day_12\\File_Handling_1\\test\\new.txt")){
+			try(ObjectInputStream oi=new ObjectInputStream(fis)){
+				students c1=(students)oi.readObject();
+				System.out.println(c1.getAge());
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+			}
+	}
+	
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3) Define a class "Student" with
+	private int rollno and private String name and private int age;
+	setters and getters
+
+	create 2 objects of Student and write them inside filesystem and thereafter read both the objects and display.
+
+
+package test;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+import javax.tools.FileObject;
+
+
+
+class students implements Serializable{
+
+	private int rollno;
+	private int age;
+	private String name;
+	public students(int rollno, int age, String name) {
+		super();
+		this.rollno = rollno;
+		this.age = age;
+		this.name = name;
+	}
+	public int getRollno() {
+		return rollno;
+	}
+	public void setRollno(int rollno) {
+		this.rollno = rollno;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+}
+public class demo{
+	public static void main(String[] args) {
+	students s1=new students( 21, 43,"Mayur");
+	students s2=new students(20, 54, "Akshay");
+		try(FileOutputStream fis=new FileOutputStream("D:\\vita_cdac\\java\\Day_12\\Day_12\\File_Handling_1\\test\\new.txt")){
+			try(ObjectOutputStream os=new ObjectOutputStream(fis)){
+				os.writeObject(s1);
+				os.writeObject(s2);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try(FileInputStream fis=new FileInputStream("D:\\vita_cdac\\java\\Day_12\\Day_12\\File_Handling_1\\test\\new.txt")){
+			try(ObjectInputStream oi=new ObjectInputStream(fis)){
+				students c1=(students)oi.readObject();
+				students c2=(students)oi.readObject();
+				
+				System.out.println(c1.getAge());
+				System.out.println(c2.getAge());
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+			}
+	}
+	
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+4) create two classes
+	Engine
+		private int speed
+		private String type
+			setters and getters
+
+	Car
+		private Engine engine;
+		private String modelname;
+			setters and getters
+
+define class "Demo" with main
+	inside main create object of Car and then pass Engine to its setEngine method.
+	now serialize this object of Car and deserialize it.
+
+
+package test;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+import javax.tools.FileObject;
+
+
+class Engine implements Serializable{
+	private int speed;
+	private String type;
+	public int getSpeed() {
+		return speed;
+	}
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public Engine(int speed, String type) {
+		super();
+		this.speed = speed;
+		this.type = type;
+	}
+	
+}
+class car implements Serializable{
+	private Engine engine;
+	private String modelname;
+	public Engine getEngine() {
+		return engine;
+	}
+	public void setEngine(Engine engine) {
+		this.engine = engine;
+	}
+	public String getModelname() {
+		return modelname;
+	}
+	public void setModelname(String modelname) {
+		this.modelname = modelname;
+	}
+	public car(String modelname) {
+		super();
+		this.modelname = modelname;
+	}
+	
+}
+public class demo{
+	public static void main(String[] args) {
+	Engine e11=new Engine(50, "car engine");
+	car c=new car("Bugati");
+	c.setEngine(e11);
+		try(FileOutputStream fis=new FileOutputStream("D:\\vita_cdac\\java\\Day_12\\Day_12\\File_Handling_1\\test\\new.txt")){
+			try(ObjectOutputStream os=new ObjectOutputStream(fis)){
+				os.writeObject(c);
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try(FileInputStream fis=new FileInputStream("D:\\vita_cdac\\java\\Day_12\\Day_12\\File_Handling_1\\test\\new.txt")){
+			try(ObjectInputStream oi=new ObjectInputStream(fis)){
+				car c1=(car)oi.readObject();
+				
+				
+				System.out.println(c1.getModelname());
+				
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+			}
+	}
+	
+
+

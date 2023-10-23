@@ -1,0 +1,248 @@
+1) create a class with constructors and destructors.
+create array of instances and observe how program behaves.
+
+
+
+
+#include <iostream>
+class MyClass {
+public:
+    // Constructor
+    MyClass() {
+        std::cout << "Constructor called." << std::endl;
+    }
+
+    // Destructor
+    ~MyClass() {
+        std::cout << "Destructor called." << std::endl;
+    }
+};
+
+int main() {
+    const int numInstances = 3; // Number of instances in the array
+
+    // Create an array of instances of MyClass
+    MyClass myArray[numInstances];
+
+    std::cout << "Program execution continues..." << std::endl;
+
+    // The program will automatically call the destructor for each instance when they go out of scope
+    return 0;
+}
+
+
+
+
+
+2) create a class with constructors and destructor.
+create 2 instances on stack and 1 instance on heap. observe the invocation of constructors and destructors.
+
+
+#include <iostream>
+class MyClass {
+public:
+    // Constructor
+    MyClass() {
+        std::cout << "Constructor called." << std::endl;
+    }
+
+    // Destructor
+    ~MyClass() {
+        std::cout << "Destructor called." << std::endl;
+    }
+};
+
+int main() {
+    MyClass obj1;
+    MyClass obj2;
+
+    MyClass* obj3 = new MyClass;
+    delete obj3;
+
+
+    
+}
+
+
+3)create a class "MyClass1"
+with members and member function "disp1().
+create another class "MyClass2"
+with members and member function "disp2().
+now try to invoke disp1() from disp2()
+in the main() function, create instances of both the classes and invoke their member functions.
+
+4) create a class.
+accept from user, how many instances are required.
+Accordingly create array of instances dynamically.
+Now make sure that u call destructor for each and every instances.
+
+#include <iostream>
+
+class MyClass {
+public:
+    MyClass() {
+        std::cout << "Creating MyClass instance" << std::endl;
+    }
+
+    ~MyClass() {
+        std::cout << "Destroying MyClass instance" << std::endl;
+    }
+};
+
+int main() {
+    int num_instances;
+    std::cout << "How many MyClass instances do you want to create? ";
+    std::cin >> num_instances;
+
+    // Create an array of MyClass instances dynamically.
+    MyClass* instances = new MyClass[num_instances];
+
+   
+    delete[] instances;
+
+    return 0;
+}
+
+5) create a class, define different types of constructors. in main create n number of objects. At the end display how many constructors are created for a class.
+
+
+#include <iostream>
+using namespace std;
+class MyClass {
+public:
+    static int cnt;
+    MyClass() {
+        std::cout << "Creating MyClass instance" << std::endl;
+        cnt++;
+    }
+
+    ~MyClass() {
+        std::cout << "Destroying MyClass instance" << std::endl;
+        cnt--;
+    }
+    void display() {
+        cout << cnt;
+    }
+};
+int MyClass::cnt = 0;
+int main() {
+    int num_instances;
+    std::cout << "How many MyClass instances do you want to create? ";
+    std::cin >> num_instances;
+
+    // Create an array of MyClass instances dynamically.
+    MyClass* instances = new MyClass[num_instances];
+
+   
+    instances->display();
+
+    return 0;
+}
+
+
+6) 
+Developer Side
+	create a class "book" with
+		int bookid
+		char *bookname
+		int price
+
+	define parameterized constructor only for this class.
+	define 3 getter functions.
+
+create necessary header and lib file and distribute it to the client.
+
+Client Side
+
+	 create 2 instances
+	1 on stack and 1 on heap.
+	pass the necessary values while creating instances.
+	call the getter functions.
+
+
+
+client code
+ Book book1(101, "Introduction to C++", 25);
+
+    // Create an instance of Book on the heap
+    Book* book2 = new Book(102, "Advanced C++ Programming", 30);
+
+    // Access and display book information using getter functions
+    std::cout << "Book 1: " << book1.getBookId() << ", " << book1.getBookName() << ", $" << book1.getPrice() << std::endl;
+    std::cout << "Book 2: " << book2->getBookId() << ", " << book2->getBookName() << ", $" << book2->getPrice() << std::endl;
+
+dev code
+head
+#pragma once
+class Book
+{
+private:
+	int bookid;
+	const char* bookname;
+	int price;
+public:
+	Book(int bookid, const char* bookname, int price);
+	int getBookId() const;
+	const char* getBookName() const;
+	int getPrice() const;
+};
+
+
+cpp
+// StaticLib1.cpp : Defines the functions for the static library.
+//
+
+#include "pch.h"
+#include "framework.h"
+class Book {
+public:
+    // Parameterized constructor
+    Book(int bookid, const char* bookname, int price);
+
+    // Getter functions
+    int getBookId() const;
+    const char* getBookName() const;
+    int getPrice() const;
+
+private:
+    int bookid;
+    const char* bookname;
+    int price;
+};
+
+// Implementation of the parameterized constructor
+Book::Book(int bookid, const char* bookname, int price) : bookid(bookid), price(price) {
+    // Allocate memory for bookname and copy the string
+    this->bookname = bookname;
+}
+
+// Implementation of the getter functions
+int Book::getBookId() const {
+    return bookid;
+}
+
+const char* Book::getBookName() const {
+    return bookname;
+}
+
+int Book::getPrice() const {
+    return price;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

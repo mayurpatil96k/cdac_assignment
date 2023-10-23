@@ -1,0 +1,91 @@
+public interface MouseHandler
+{
+	void mouseClicked();
+	void mousePressed();
+	void mouseReleased();
+}
+public interface WindowHandler
+{
+	void windowClosing();
+	void windowClosed();
+}
+
+public class WindowGUIApp implements MouseHandler,WindowHandler
+{
+}
+public class GUIDemo
+{
+	main()
+	{
+		create the object of WindowGUIApp and invoke all the methods
+	}
+}
+
+code
+package test;
+interface MouseHandler
+{
+	void mouseClicked();
+	void mousePressed();
+	void mouseReleased();
+}
+interface WindowHandler
+{
+	void windowClosing();
+	void windowClosed();
+}
+
+class WindowGUIApp implements MouseHandler,WindowHandler
+{
+
+	@Override
+	public void windowClosing() {
+		// TODO Auto-generated method stub
+		System.out.println("Closing window...");
+		
+	}
+
+	@Override
+	public void windowClosed() {
+		// TODO Auto-generated method stub
+		System.out.println("Window Closed...");
+	}
+
+	@Override
+	public void mouseClicked() {
+		// TODO Auto-generated method stub
+		System.out.println("Mouse closed...");
+	}
+
+	@Override
+	public void mousePressed() {
+		// TODO Auto-generated method stub
+		System.out.println("Mouse Presed...");
+	}
+
+	@Override
+	public void mouseReleased() {
+		// TODO Auto-generated method stub
+		System.out.println("Mouse Released...");
+	}
+}
+public class GUIDemo {
+	
+    public static void main(String[] args) {
+    	WindowGUIApp gui = new WindowGUIApp();
+    	gui.windowClosed();
+    	gui.windowClosing();
+    	gui.mouseClicked();
+    	gui.mousePressed();
+    	gui.mouseReleased();
+    }
+}
+
+
+
+
+
+
+
+
+

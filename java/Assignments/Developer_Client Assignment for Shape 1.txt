@@ -1,0 +1,117 @@
+on developer side:
+
+create interface "Shape" with "void draw();" method.
+
+now define child classes 
+	Triangle,Rect and Circle
+
+create necessary jar file and documentation.
+
+
+on Client side:
+
+define "ShapeDemo" class with main function
+
+create an array of "Shape" with 3 elements. store objects of Triangle,Rect and Circle in this array. now traverse the array and invoke "draw()" of each child.
+
+
+Client:
+import devpack.*;
+
+public class ShapeDemo {
+public static void main(String[] args) {
+	Shape arr[] = new Shape[3];
+	arr[0]=new Triangle();
+	arr[1]=new Circle();
+	arr[2]=new Rect();
+	for(int i=0;i<arr.length;i++) {
+		arr[i].draw();
+	}
+}
+
+}
+
+
+Devolper
+
+
+/**
+ * 
+ */
+package devpack;
+
+/**
+ * @author Mayur
+ *
+ */
+public interface Shape {
+	void draw();
+}
+
+
+
+/**
+ * 
+ */
+package devpack;
+
+/**
+ * @author Mayur
+ *
+ */
+public class Triangle implements Shape {
+
+	@Override
+	public void draw() {
+		// TODO Auto-generated method stub
+		System.out.println("Drawing Triangle...");
+		
+	}
+
+}
+
+
+
+package devpack;
+/**
+ * @author Mayur
+ *
+ */
+public class Rect implements Shape{
+
+	@Override
+	public void draw() {
+		// TODO Auto-generated method stub
+		System.out.println("Drawing Rectangle...");
+		
+	}
+	
+}
+
+
+/**
+ * 
+ */
+package devpack;
+
+/**
+ * @author Mayur
+ *
+ */
+public class Circle implements Shape{
+
+	
+	@Override
+	public void draw() {
+		// TODO Auto-generated method stub
+		System.out.println("Drawing Circle...");
+	}
+
+}
+
+
+
+
+
+
+

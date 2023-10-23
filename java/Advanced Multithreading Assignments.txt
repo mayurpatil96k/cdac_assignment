@@ -1,0 +1,67 @@
+1) create a multi-threaded application by using Thread pool.create 2 threads. each thread should display characters from A to J. [ make sure while one thread executes , other thread should not interfere ]
+ 
+
+import java.lang.reflect.Executable;
+import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class test1 implements Runnable {
+   @Override
+  public void run() {
+	   synchronized (test1.class) {
+		   for(char i='A';i<='J';i++) {
+			   System.out.println(i);
+		   }
+	}
+	   
+}
+   public static void main(String[] args) {
+	test1 ob=new test1();
+	ExecutorService exec=Executors.newFixedThreadPool(2);
+	exec.execute(ob);
+	exec.execute(ob);
+	exec.shutdown();
+}
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2) create a multi-threaded application by using Thread pool.create 2 threads. each thread should display numbers from 1 to 10. [ make sure while one thread executes , other thread should not interfere ]
+Also when first thread displays nos. from 1 to 5 it should released the lock and allow other thread to display nos. from 1 to 5 and then previous thread will display nos. from 6 to 10 and so on.
+
+
+3) create a multi-threaded application by using Thread pool and ReentrantLock (explicit locking) .create 2 threads. each thread should display characters from A to J. [ make sure while one thread executes , other thread should not interfere ]
+
+
+
+import java.lang.reflect.Executable;
+import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class test1 implements Runnable {
+   ReentrantLock lock=new ReentrantLock();
+  public void run() {
+	  lock.lock();
+	   synchronized (test1.class) {
+		   for(char i='A';i<='J';i++) {
+			   System.out.println(i);
+		   }
+		   lock.unlock();
+	}
+	   
+}
+   public static void main(String[] args) {
+	test1 ob=new test1();
+	ExecutorService exec=Executors.newFixedThreadPool(2);
+	exec.execute(ob);
+	exec.execute(ob);
+	exec.shutdown();
+}
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4) create a multi-threaded application by using Thread pool and ReentrantLock.create 2 threads. each thread should display numbers from 1 to 10. [ make sure while one thread executes , other thread should not interfere ]
+Also when first thread displays nos. from 1 to 5 it should released the lock and allow other thread to display nos. from 1 to 5 and then previous thread will display nos. from 6 to 10 and so on.
+

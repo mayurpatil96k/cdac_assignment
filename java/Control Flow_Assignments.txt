@@ -1,0 +1,318 @@
+1)	display a table of a particular number   
+package mayur;
+
+import java.util.*;
+public class test
+{
+	public static void main(String args[])
+	{
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter a number to get table of it");
+		int a;
+		a= sc.nextInt();
+		for(int i=1;i<11;i++) {
+			System.out.println(a+"*"+i+"="+a*i);
+		}
+	}
+}
+
+        
+2)	declare two numbers and one operator as a character. e.g. '+'
+using switch... case check which operator is declared and accordingly perform the action.
+
+package mayur;
+
+import java.util.*;
+public class test
+{
+	public static void main(String args[])
+	{
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter Two number to perform operation");
+		int a,b;
+		a= sc.nextInt();
+		b= sc.nextInt();
+		System.out.println("Enter one operator to do operations");
+		char o;
+		o=sc.next().charAt(0);
+		switch(o) {
+		case '+':
+			System.out.println("Addition of two number is"+(a+b));
+			break;
+		case '-':
+			System.out.println("Addition of two number is"+(a-b));
+			break;
+		case '/':
+			System.out.println("Addition of two number is"+(a/b));
+			break;
+		case '*':
+			System.out.println("Addition of two number is"+(a*b));
+			break;
+		default:
+			System.out.println("wrong choice");
+		}
+				
+		
+		
+	}
+}
+
+
+3)	Display numbers  1 to 10 using loop
+
+package mayur;
+
+import java.util.*;
+public class test
+{
+	public static void main(String args[])
+	{
+		for(int i=1;i<11;i++) {
+			System.out.println(i);
+		}
+	}
+}
+4)	Display numbers from 3 to 30 except number 24  using loop.
+package mayur;
+
+import java.util.*;
+public class test
+{
+	public static void main(String args[])
+	{
+		for(int i=3;i<31;i++) {
+			if(i==24) {
+				continue;
+			}
+			System.out.println(i);
+		}
+	}
+}
+
+
+5)	Using if…….else if….  Else,  display whether result is  fail, pass, second class , first class, Distinction etc.  
+
+package mayur;
+
+import java.util.*;
+public class test
+{
+	public static void main(String args[])
+	{
+		System.out.println("Enter mark to get result");
+		Scanner sc = new Scanner(System.in);
+		int a=sc.nextInt();
+		if(a>=80) {
+			System.out.println("Your result is First class with distinction");
+		}else if(a>=70) {
+			System.out.println("Your result is First class ");
+		}else if(a>=50) {
+			System.out.println("Your result is Second class ");
+		}
+		else if(a>=35) {
+			System.out.println("Your result is Pass");
+		}
+		else {
+			System.out.println("Your result is Fail");
+		}
+	}
+}
+
+6) display all prime numbers between 3 to 30
+package mayur;
+
+import java.util.*;
+public class test
+{
+	public static void main(String args[])
+	{
+		boolean flag=false;
+		for(int i=3;i<31;i++) {
+			for(int j=2;j<=i/2;j++) {
+				if(i%j==0) {
+					flag=true;
+				}
+			}
+			if(!flag) {
+				System.out.println(i);
+		}
+		}
+		
+	}
+}
+
+7) using nested for loop display following :
+
+A  a
+A  b
+A  c
+
+B  a
+B  b
+B  c
+
+C  a
+C  b
+C  c
+
+package mayur;
+
+import java.util.*;
+public class test
+{
+	public static void main(String args[])
+	{
+		for(char i='A';i<'D';i++) {
+			for(char j='a';j<'d';j++) {
+				System.out.print(i+" ");
+				System.out.println(j);
+			}
+			System.out.println(" ");
+		}
+		
+	}
+}
+
+
+
+8) solve following patten programs:
+
+
+    * 
+   * * 
+  * * * 
+ * * * * 
+* * * * * 
+
+
+
+       * * * * 
+  	* * * 
+  	 * * 
+          * 
+
+
+    * 
+   * * 
+  * * * 
+ * * * * 
+  * * * 
+   * * 
+    * 
+
+
+package mayur;
+
+import java.util.*;
+public class test
+{
+	public static void main(String args[])
+	{
+		for(int i=0;i<6;i++) {
+			for(int j=6-i;j>1;j--) {
+				System.out.print(" ");
+			}
+			for(int j=0;j<=i;j++) {
+				System.out.print("* ");
+			}
+			System.out.println();
+		}
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		for(int i=1;i<5;i++) {
+			for(int j=1;j<i;j++) {
+				System.out.print(" ");
+			}
+			for(int j=i;j<=4;j++) {
+				System.out.print("* ");
+			}
+			System.out.println();
+		}
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		for(int i=0;i<6;i++) {
+			for(int j=6-i;j>1;j--) {
+				System.out.print(" ");
+			}
+			for(int j=0;j<=i;j++) {
+				System.out.print("* ");
+			}
+			System.out.println();
+		}
+		System.out.print("");
+		for(int i=1;i<6;i++) {
+			for(int j=1;j<i;j++) {
+				System.out.print(" ");
+			}
+			for(int j=i;j<=5;j++) {
+				System.out.print("* ");
+			}
+			System.out.println();
+		}
+	}
+}
+
+
+
+
+11) display all prime numbers between 3 to 30
+package mayur;
+
+import java.util.*;
+public class test
+{
+	public static void main(String args[])
+	{
+		boolean flag=false;
+		for(int i=3;i<31;i++) {
+			for(int j=2;j<=i/2;j++) {
+				if(i%j==0) {
+					flag=true;
+				}
+			}
+			if(!flag) {
+				System.out.println(i);
+		}
+		}
+		
+	}
+}
+
+13) using nested for loop display following :
+
+A  a
+A  b
+A  c
+
+B  a
+B  b
+B  c
+
+C  a
+C  b
+C  c
+
+package mayur;
+
+import java.util.*;
+public class test
+{
+	public static void main(String args[])
+	{
+		for(char i='A';i<'D';i++) {
+			for(char j='a';j<'d';j++) {
+				System.out.print(i+" ");
+				System.out.println(j);
+			}
+			System.out.println(" ");
+		}
+		
+	}
+}
+
+
+

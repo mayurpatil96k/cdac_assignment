@@ -1,0 +1,227 @@
+1) using cin and cout, accept name,address,age of a person and print it.
+
+2) create following structure
+struct book
+{
+	char bid[5];
+	char name[30];
+	int price;
+};
+ask user how many records he wants to create and accordingly allocate memory.
+accept values from user and display.
+( Hint :-  use  "new" operator)
+
+#include <iostream>
+#include "D:\vitta_cdac\cpp\Day_2\Day_2\Assignments\client\head1.h"
+using namespace std;
+struct book {
+    char bid[5];
+    char name[30];
+    int price;
+};
+int main()
+{
+    int numRecords;
+
+    // Ask the user how many records they want to create
+    std::cout << "Enter the number of records you want to create: ";
+    std::cin >> numRecords;
+
+    // Dynamically allocate memory for an array of 'book' structures
+    book* records = new book[numRecords];
+
+    // Accept values for each record from the user
+    for (int i = 0; i < numRecords; ++i) {
+        std::cout << "Enter details for record " << i + 1 << ":\n";
+        std::cout << "Book ID: ";
+        std::cin >> records[i].bid;
+        std::cout << "Book Name: ";
+        std::cin.ignore(); // Ignore the newline character left in the input buffer
+        std::cin.getline(records[i].name, 30);
+        std::cout << "Price: ";
+        std::cin >> records[i].price;
+    }
+
+    // Display the entered records
+    std::cout << "\nEntered records:\n";
+    for (int i = 0; i < numRecords; ++i) {
+        std::cout << "Record " << i + 1 << ":\n";
+        std::cout << "Book ID: " << records[i].bid << "\n";
+        std::cout << "Book Name: " << records[i].name << "\n";
+        std::cout << "Price: " << records[i].price << "\n";
+    }
+
+    // Deallocate the dynamically allocated memory
+    delete[] records;
+
+    return 0;
+
+}
+
+3) create a structure "Employee" 
+with members 
+	int id
+	char name[20];
+	char desig[20];
+now access it using
+a) array 
+
+
+#include <iostream>
+#include "D:\vitta_cdac\cpp\Day_2\Day_2\Assignments\client\head1.h"
+using namespace std;
+struct Employee {
+    int id;
+    char name[20];
+    char desig[20];
+};
+int main()
+{
+    const int numEmployees = 3; // Number of employees
+
+    // Create an array of Employee structures
+    Employee employees[numEmployees];
+
+    // Initialize data for each employee
+    for (int i = 0; i < numEmployees; ++i) {
+        employees[i].id = i + 1; // Assign unique ID
+        std::cout << "Enter name for Employee " << i + 1 << ": ";
+        std::cin.getline(employees[i].name, 20);
+        std::cout << "Enter designation for Employee " << i + 1 << ": ";
+        std::cin.getline(employees[i].desig, 20);
+    }
+
+    // Access and display data using array
+    std::cout << "\nEmployee Details using Array:\n";
+    for (int i = 0; i < numEmployees; ++i) {
+        std::cout << "Employee " << i + 1 << ":\n";
+        std::cout << "ID: " << employees[i].id << "\n";
+        std::cout << "Name: " << employees[i].name << "\n";
+        std::cout << "Designation: " << employees[i].desig << "\n";
+    }
+
+    return 0;
+}
+
+
+b) DMA
+
+
+#include <iostream>
+#include "D:\vitta_cdac\cpp\Day_2\Day_2\Assignments\client\head1.h"
+using namespace std;
+struct Employee {
+    int id;
+    char name[20];
+    char desig[20];
+};
+int main()
+{
+    int numEmployees;
+
+    // Ask the user for the number of employees
+    std::cout << "Enter the number of employees: ";
+    std::cin >> numEmployees;
+    std::cin.ignore(); // Consume the newline character
+
+    // Dynamically allocate memory for an array of Employee structures
+    Employee* employees = new Employee[numEmployees];
+
+    // Initialize data for each employee
+    for (int i = 0; i < numEmployees; ++i) {
+        employees[i].id = i + 1; // Assign unique ID
+        std::cout << "Enter name for Employee " << i + 1 << ": ";
+        std::cin.getline(employees[i].name, 20);
+        std::cout << "Enter designation for Employee " << i + 1 << ": ";
+        std::cin.getline(employees[i].desig, 20);
+    }
+
+    // Access and display data using DMA
+    std::cout << "\nEmployee Details using DMA:\n";
+    for (int i = 0; i < numEmployees; ++i) {
+        std::cout << "Employee " << i + 1 << ":\n";
+        std::cout << "ID: " << employees[i].id << "\n";
+        std::cout << "Name: " << employees[i].name << "\n";
+        std::cout << "Designation: " << employees[i].desig << "\n";
+    }
+
+    // Deallocate the dynamically allocated memory
+    delete[] employees;
+
+    return 0;
+}
+
+
+4) create a library in C++ in which,
+write a function which will accept 2 numbers and return the difference between 2 numbers
+write appropriate header file.
+
+write a client code to access this library.
+
+
+5) given
+	void disp(int); function.
+
+now create a function pointer and call this function using function pointer.
+
+6) write a function to swap 2 given numbers using pointers.
+
+
+
+
+7) accept from user how many initials he has in his name, now allocate a memory accordingly and accept his initial. [use new operator]
+
+
+8) write a function which can accept minimum 3 characters and maximum 5 characters and display them. ( use "default arguments")
+
+9)write a function which takes 3 arguments
+variable, pointer and a reference.(any datatype)
+invoke this function and show how "call by value","call by address" and "call by reference" will work.
+
+
+
+
+#include <iostream>
+#include "D:\vitta_cdac\cpp\Day_2\Day_2\Assignments\client\head1.h"
+using namespace std;
+void def(int var, int* ptr, int& ref) {
+    var = 10;
+    *ptr = 20;
+    ref = 30;
+}
+int main()
+{
+    int num = 5;
+    int* ptr = &num;
+    int &ref = num;
+
+    def(num, ptr, ref);
+
+    std::cout << "\nAfter invoking the function:\n";
+    std::cout << "Original Value (num): " << num << "\n";  // Call by Value (no change)
+    std::cout << "Original Value (*ptr): " << *ptr << "\n"; // Call by Address (changed)
+    std::cout << "Original Value (ref): " << ref << "\n";   // Call by Reference (changed)
+
+    return 0;
+}
+
+
+10)define 3 different structures and initialize their members.
+now write 3 different functions,but with the same name.
+these functions will accept each structure respectively and display their members.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

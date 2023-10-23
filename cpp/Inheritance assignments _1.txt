@@ -1,0 +1,232 @@
+1)
+class base
+{
+	public:
+		base(char *ptr)
+		{
+		}
+};
+class sub:public base
+{
+};
+
+Following statements should be possible
+
+sub s;
+
+sub *s1=new sub(40);
+
+sub *s2=new sub('a',4.5);
+
+
+#include<iostream>
+#include<string>
+using namespace std;
+
+
+class base
+{
+private:
+	char* ptr;
+public:
+	base() {
+		cout << "in base default"<<endl;
+	}
+	base(char* ptr)
+	{
+		this->ptr = new char[strlen(ptr) + 1];
+		strcpy_s(this->ptr, strlen(ptr) + 1, ptr);
+		cout << "in base param" << endl;
+	}
+};
+class sub :public base
+{
+private:
+	int k;
+	double d;
+public:
+	sub():base(NULL) {
+		cout << "default";
+		cout << "in sub default" << endl;
+	}
+	sub(int k,double d):base(NULL) {
+		this->k = k;
+		this->d = d;
+		cout << "in base param" << endl;
+	}
+	sub(int k) :base(NULL) {
+		this->k = k;
+		cout << "in base param" << endl;
+	}
+};
+
+int main() {
+
+	sub s;
+
+	sub* s1 = new sub(40);
+
+	sub* s2 = new sub('a', 4.5);
+}
+
+
+
+
+2) 
+class parent
+{
+	public:
+		disp1()
+		disp2()
+		disp3()
+		disp4()
+};
+class sub:private parent
+{
+	public:
+		disp5()
+};
+
+make sure u can do the following
+
+sub s(30);
+s.disp5();
+s.disp3();
+s.disp1();
+
+3) create a class Person with "void walk()" method and "walks normally" statement inside it. Now derive a class "Athelite" from Person and redefine "void walk()" with a statement "walks faster". In the main function create an instance of "Athelite" and invoke "walk()" method. Observe what happens.
+
+
+#include<iostream>
+using namespace std;
+class person {
+public:
+	void walk() {
+		cout << "Walks normally";
+	}
+};
+class Athelate :public person {
+public:
+	void walk() {
+		cout << "Walks faster";
+	}
+};
+int main()
+{
+	Athelate a;
+	a.walk();
+}
+
+
+4)Define three classes A, B, C carrying one integer member in each of them. Let C be derived from A and B. Write constructors and destructors in each of these classes that prompt some message from each class. Also the constructor of C should accept three values, one for its own member and other two for A and B. The C constructor should see that the two values goes to respective constructors of A and B. What is the order in which constructors and destructors get called upon? How can you change this order?
+
+#include<iostream>
+using namespace std;
+class A {
+private:
+	int a;
+public:
+	A(int a) {
+		cout << "in constructor of A" << endl;
+		this->a = a;
+	}
+	~A() {
+		cout << "in A destructor"<<a << endl;
+	}
+};
+class B {
+private:
+	int b;
+public:
+	B(int b) {
+		cout << "in constructor of B" << endl;
+		this->b = b;
+	}
+	~B() {
+		cout << "in B destructor"<<b << endl;
+	}
+};
+class C :public A, public B {
+private:
+	int c;
+public:
+	C(int c, int a, int b) :A(a), B(b) {
+		cout << "in constructor of C" << endl;
+		this->c = c;
+	}
+	~C() {
+		cout << "in C destructor"<<c << endl;
+	}
+};
+int main()
+{
+	C obj(10, 20, 30);
+}
+
+
+
+5) create a class Base with "int num1" ,parameterized constructor and destructor. Derive class Sub1 from Base with "int num2" ,parameterized constructor and destructor. Now derive class Sub2 from Sub1 with "int num3" ,parameterized constructor and destructor.
+in the main function create the object of Sub1 and notice constructor and destructor invocation.
+
+
+#include <iostream>
+using namespace std;
+class Base {
+public:
+    Base(int n1) : num1(n1) {
+        cout << "Base Constructor, num1: " << num1 << endl;
+    }
+
+    ~Base() {
+        cout << "Base Destructor, num1: " << num1 << endl;
+    }
+
+protected:
+    int num1;
+};
+
+class Sub1 : public Base {
+public:
+    Sub1(int n1, int n2) : Base(n1), num2(n2) {
+        cout << "Sub1 Constructor, num2: " << num2 << endl;
+    }
+
+    ~Sub1() {
+        cout << "Sub1 Destructor, num2: " << num2 << endl;
+    }
+
+private:
+    int num2;
+};
+
+class Sub2 : public Sub1 {
+public:
+    Sub2(int n1, int n2, int n3) : Sub1(n1, n2), num3(n3) {
+        cout << "Sub2 Constructor, num3: " << num3 << endl;
+    }
+
+    ~Sub2() {
+        cout << "Sub2 Destructor, num3: " << num3 << endl;
+    }
+
+private:
+    int num3;
+};
+
+int main() {
+    Sub1 sub1Obj(10, 20);
+    return 0;
+}
+
+
+
+6) create a Base1 and Base2 classes in the library.
+constructors, member variables and functions you can have in the above classes of your choice.
+
+now create a client application where you have to create a child class by the name "Sub" of above classes.
+in the main function create an instance of child class and try to access methods of Base1 and Base2.
+
+
+
+
+

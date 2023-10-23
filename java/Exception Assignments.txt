@@ -1,0 +1,277 @@
+1) define your exception class by name "MyArithException"
+(MyArithException.java)
+define class "Calculator"   (Calculator.java)
+In this class define a function,which will accept an int and return double of it.
+e.g int caldouble(int)
+This function will check an int which is passed to it
+It will raise the  exception if 0 is passed or negative passed
+in case of 0 caller of this method should get error message
+"Zero not allowed" 
+in case of negative caller of this method should get error message
+"negative not allowed"
+In case of positive value it should simply return the double value.
+	[ this method shouldn't handle the exception]
+
+Now define class "MyCalcApp" (MyCalcApp.java)
+In this class you accept a number from user and pass that no. to
+caldouble() method which is mentioned above.
+solution:
+client:
+import devpack.*;
+public class MyCalcApp {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Calculator c1=new Calculator();
+		try {
+			System.out.println(c1.caldouble(10)); 
+		} catch (MyArithException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}
+
+
+dev:
+package devpack;
+
+public class Calculator {
+	public int caldouble(int k)throws MyArithException {
+		if(k==0) {
+			throw new MyArithException("Zero not allowed");
+		}else if(k<0) {
+			throw new MyArithException("negative not allowed");
+		}
+		return k*2;
+		
+	}
+}
+/**
+ * 
+ */
+package devpack;
+
+public class MyArithException extends Exception{
+	public MyArithException(String mess)
+	{
+		super(mess);
+	}
+}
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2) on the developer side create an exception:
+	NumberNotDivisibleBySevenException
+	as a checked exception
+
+create necessary jar and documentation.
+
+on client side
+	public class MyMath class with 
+		public void disp(int num)
+this disp() method will check if the number passed is not divisible by 7 , it will raise "NumberNotDivisibleBySevenException" or else it will simply display the number passed.
+	[ this method shouldn't handle the exception]
+
+	public class Demo
+		main function 
+		invoke "disp()" of "MyMath" class.
+
+
+client:
+/**
+ * 
+ */
+package devpack;
+
+public class NumberNotDivisibleBySevenException extends Exception{
+	public NumberNotDivisibleBySevenException(String mess)
+	{
+		super(mess);
+	}
+}
+
+dev:
+
+import devpack.*;
+public class MyMath {
+	public void disp(int num) throws NumberNotDivisibleBySevenException {
+		if(num%7 != 0) {
+			throw new NumberNotDivisibleBySevenException("this method shouldn't handle the exception");
+		}else {
+			System.out.println("Divisible by seven");
+		}
+	}
+}
+
+import devpack.NumberNotDivisibleBySevenException;
+
+public class Demo {
+public static void main(String[] args){
+	MyMath m1=new MyMath();
+	try {
+		m1.disp(10);
+	} catch (NumberNotDivisibleBySevenException e) {
+		e.printStackTrace();
+	}
+}
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+3) define "MyException" as a checked exception.
+
+define a class "Demo" with 
+	public void show1(), public void show2() , public void show3() and main functions.
+
+inside "show3()" accept a number and if it is greater than 10 raise "MyException" else display the number.
+	[ this method shouldn't handle the exception]
+
+main() function should call "show1()" , 
+show1() function should call "show2()",
+show2() function should call "show3()"
+
+show2() should not handle the exception but show1() should handle.
+
+
+solution:
+
+
+import java.util.Scanner;
+
+class MyException extends Exception{
+	public MyException() {
+		super("Exception Occured");
+	}
+}
+public class demo{
+	public void show1(int k) {
+		try {
+			show2(k);
+		} catch (MyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void show2(int k) throws MyException {
+		show3(k);
+	}
+	public void show3(int k) throws MyException {
+		if(k>10) {
+			throw new MyException();
+		}
+		else {
+			System.out.println(k);
+		}
+	}
+	public static void main(String[] args) {
+		demo m=new demo();
+		System.out.println("Enter a number");
+		Scanner sc = new Scanner(System.in);
+		int n=sc.nextInt();
+		m.show1(n);
+	}
+}
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+4) on the developer side create following checked exception:
+	InvalidLengthException
+create necessary jar file and documentation.
+
+on client side
+
+public class Authenticator
+	with
+a parameterized constructor which takes String as a password.
+this class also will have "done()" method with "successful authentication" message.
+Parameterized constructor should check the length of the password passed if it is less than 5 or more that 9 , it should raise "InvalidLengthException" 
+	[ constructor shouldn't handle the exception]
+
+create a class "Demo" with main
+	inside main function create the object of "Authenticator" class and invoke "done()" method.
+
+solution:
+
+/**
+ * 
+ */
+package devpack;
+
+public class InvalidLengthException extends Exception{
+	public InvalidLengthException(String mess)
+	{
+		super(mess);
+	}
+}
+
+import devpack.InvalidLengthException;
+
+public class Authenticator
+{
+	public Authenticator(String pass) throws InvalidLengthException {
+		if(pass.length()>5 && pass.length()<9) {
+			throw new InvalidLengthException(null);
+		}
+	}
+	public void done() {
+		System.out.println("successful authentication");
+	}
+}
+
+
+import devpack.InvalidLengthException;
+
+public class Demo {
+public static void main(String[] args) {
+	try {
+		Authenticator m1=new Authenticator("mayur");
+		m1.done();
+	} catch (InvalidLengthException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+}
+}
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+5) on the developer side 
+create checked exception "ResourceNotAllocatedException"
+
+create a class:
+
+public class MyResource implements AutoCloseable
+{
+	public MyResource(int capacity) throws ResourceNotAllocatedException
+	{
+		if(capacity>100)
+		{
+			throw new ResourceNotAllocatedException("not sufficient space");
+		}
+	}
+    void disp()
+    {
+    	System.out.println("successful");
+    }
+	@Override
+	public void close()  {
+		System.out.println("resource is closed");
+		
+	}
+}
+
+create necessary jar file and documentation
+
+on the client side
+public class Demo with main function
+
+	inside main function, create object of "MyResource" and invoke "disp()" method.
+
+
+

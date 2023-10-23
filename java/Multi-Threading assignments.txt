@@ -1,0 +1,172 @@
+1) create a multi-threaded application by using  "extends Thread " method.create 2 threads. they should display characters from A to J.
+
+
+solution:
+
+import devpack.*;
+import java.lang.reflect.Constructor;
+
+public class Demo extends Thread{
+	public void run() {
+		char s='A';
+		char e='J';
+		 for(char i=s;i<e;i++) {
+			 System.out.println(i);
+		 }
+	}
+	public static void main(String[] args) {
+		Demo t1=new Demo();
+		Demo t2=new Demo();
+		
+		t1.start();
+		t2.start();
+	}
+    
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2) above program  using "implements Runnable" method.
+
+solution:
+
+import devpack.*;
+import java.lang.reflect.Constructor;
+
+public class Demo implements Runnable{
+	public void run() {
+		char s='A';
+		char e='J';
+		 for(char i=s;i<e;i++) {
+			 System.out.println(i);
+		 }
+	}
+	public static void main(String[] args) {
+		Demo ob=new Demo();
+
+
+		Thread t1=new Thread(ob);
+		Thread t2=new Thread(ob);
+		t1.start();
+		t2.start();
+	}
+    
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3) create 3 threads in such a way that while one thread is executing, 2 threads cannot interfere. they should display output "Exec  0" to "Exec 5".
+
+import java.util.Scanner;
+
+public class test1 implements Runnable {
+   @Override
+  public void run() {
+	   synchronized (this) {
+		   for(int i=0;i<6;i++) {
+			   System.out.println("Exec "+i);
+		   }
+	}
+	   
+}
+   public static void main(String[] args) {
+	test1 ob=new test1();
+
+
+	Thread t1= new Thread(ob);
+	Thread t2= new Thread(ob);
+	Thread t3= new Thread(ob);
+	
+	t1.start();
+	t2.start();
+	t3.start();
+}
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4)create 2 threads. Write a program which displays number 1 to 10 using class lock. 
+[hint:- use "implements Runnable" and synchronized block]
+
+
+import java.util.Scanner;
+
+public class test1 implements Runnable {
+   @Override
+  public void run() {
+	   synchronized (test1.class) {
+		   for(int i=0;i<11;i++) {
+			   System.out.println(i);
+		   }
+	}
+	   
+}
+   public static void main(String[] args) {
+	test1 ob=new test1();
+
+
+	Thread t1= new Thread(ob);
+	Thread t2= new Thread(ob);
+	
+	
+	t1.start();
+	t2.start();
+}
+}
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+5) create 2 threads
+	one thread will display 1 to 50
+	second thread will display 50 to 1
+both the threads should start simultaneously.
+
+(use implements method)
+solution:
+
+
+
+class NumberPrinter implements Runnable {
+    private int start;
+    private int end;
+
+    public NumberPrinter(int start, int end) {
+        this.start = start;
+        this.end = end;
+    }
+
+    public void run() {
+        if (start < end) {
+            for (int i = start; i <= end; i++) {
+                System.out.println(Thread.currentThread().getName() + ": " + i);
+            }
+        } else {
+            for (int i = start; i >= end; i--) {
+                System.out.println(Thread.currentThread().getName() + ": " + i);
+            }
+        }
+    }
+}
+
+public class SimultaneousNumberPrinting {
+    public static void main(String[] args) {
+        Thread thread1 = new Thread(new NumberPrinter(1, 50));
+        Thread thread2 = new Thread(new NumberPrinter(50, 1));
+
+        thread1.start();
+        thread2.start();
+    }
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+

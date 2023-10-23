@@ -1,0 +1,18 @@
+create a structure "Product"
+	with following members
+
+	char *pcode;
+	char *name;
+	int price;
+	int qty
+
+	in main function u should be able to say
+
+	Product p1("p1","soap",100,20);
+	Product p2("p2","perfume",300,50);
+	Product p3("p3","Deo",200,100);
+
+	cout<<p1<<"\t"<<p2<<"\t"<<p3<<endl;
+
+
+	

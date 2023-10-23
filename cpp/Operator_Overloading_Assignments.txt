@@ -1,0 +1,240 @@
+1) class Number
+   {
+       int num;
+   }
+In the main function,
+Number n1(8),n2(4),n3(20),n4(6),n5;
+n5=n1-n2*n3/n4;
+
+
+#include <iostream>
+using namespace std;
+class Number {
+private:
+    int num;
+
+public:
+    Number(int n) : num(n) {}
+
+    // Overload the subtraction operator
+    Number operator-(const Number& other) const {
+        return Number(this->num - other.num);
+    }
+
+    // Overload the multiplication operator
+    Number operator*(const Number& other) const {
+        return Number(this->num * other.num);
+    }
+
+    // Overload the division operator
+    Number operator/(const Number& other) const {
+        if (other.num != 0) {
+            return Number(this->num / other.num);
+        }
+        else {
+            // Handle division by zero here (e.g., throw an exception)
+            throw std::runtime_error("Division by zero");
+        }
+    }
+
+    // Assignment operator overload
+    Number& operator=(const Number& other) {
+        if (this != &other) {
+            this->num = other.num;
+        }
+        return *this;
+    }
+
+    // Optional: Overload the output stream operator for printing
+    friend std::ostream& operator<<(std::ostream& os, const Number& number) {
+        os << number.num;
+        return os;
+    }
+};
+int main() {
+    Number n1(8), n2(4), n3(20), n4(6);
+
+    Number n5 = n1 - n2 * n3 / n4;
+
+    std::cout << "Result: " << n5 << std::endl;
+
+    return 0;
+}
+
+
+2) class sample
+   {
+	private:
+		char ch;
+	public:
+		sample(char ch)
+		{
+			this->ch=ch;
+		}
+  };
+
+given above class.
+
+write a global function "display" which will access "ch" directly and display it.
+call this function from main function.
+
+#include <iostream>
+using namespace std;
+class sample {
+private:
+	char ch;
+public:
+	sample(char ch)
+	{
+		this->ch = ch;
+	}
+	friend void disp(sample&);
+};
+void disp(sample &ref) {
+	cout << ref.ch<<endl;
+}
+int main() {
+	sample s1('m');
+	disp(s1);
+}
+
+
+
+3) Given
+
+class Module1
+{
+	int duration;
+	public:
+		Module1(int k)
+		{
+			duration=k;
+		}
+};
+
+class Module2
+{
+	int duration;
+	public:
+		Module2(int k)
+		{
+			duration=k;
+		}
+};		
+	
+write a global function "check" which will take 2 modules (i.e. Module1 and Module2 ) and check whether Modules are same or not.
+call this "check" function from main function.	
+
+
+
+#include <iostream>
+using namespace std;
+class Module2;
+class Module1
+{
+	int duration;
+public:
+	Module1(int k)
+	{
+		duration = k;
+	}
+	friend void cheack(Module1& ref, Module2& ref2);
+};
+
+class Module2
+{
+	int duration;
+public:
+	Module2(int k)
+	{
+		duration = k;
+	}
+	friend void cheack(Module1& ref, Module2& ref2);
+};
+void cheack(Module1& ref, Module2& ref2) {
+	if (ref.duration == ref2.duration) {
+		cout << "same duration"<<endl;
+	}
+	else
+	{
+		cout << "Diffrent duration" << endl;
+	}
+}
+int main() {
+	Module1 m1(20);
+	Module2 m2(30);
+	cheack(m1, m2);
+}
+
+4) Define a class , write two member functions 
+	void disp1(){ //some code }
+	void disp2(){ // some code }
+
+	Try to call disp1   from    disp2.
+
+
+#include <iostream>
+using namespace std;
+class Module1
+{
+	int duration;
+public:
+	Module1(int k)
+	{
+		duration = k;
+	}
+	void disp1() {
+		cout << "in disp1"<<endl;
+	}
+	void disp2() {
+		cout << "in disp2"<<endl;
+		disp1();
+	}
+
+	
+};
+
+int main() {
+	Module1 m1(20);
+	m1.disp1();
+	m1.disp2();
+}
+
+
+5) Define a class with constructor and  member function
+
+	create object, call member function
+	now create a reference to that object, and using that reference try to call member function
+
+	
+
+#include <iostream>
+using namespace std;
+class Module1
+{
+	int duration;
+public:
+	Module1(int k)
+	{
+		duration = k;
+	}
+	void disp1() {
+		cout << "in disp1"<<endl;
+	}
+};
+
+int main() {
+	Module1 m1(20);
+	m1.disp1();
+	Module1& ref1 = m1;
+	ref1.disp1();
+}
+
+
+
+
+
+
+
+	
+	

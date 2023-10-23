@@ -1,0 +1,43 @@
+write a file copy program using FileInputStream and FileOutputStream
+
+	hint: existing file u need to open using FileInputStream and new file u need
+ to open using FileOutputStream.
+
+	first read existing file's data inside byte array and then write the same
+ byte array inside new file.
+
+	byte array should be created equivalent to the length of existing file.
+
+
+solution:
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class demo{
+	public static void main(String[] args) {
+		File f1=new File("D:\\vita_cdac\\java\\Day_12\\Day_12\\File_Handling_1\\test\\mayur.txt");
+		
+		try(FileInputStream fis=new FileInputStream("D:\\vita_cdac\\java\\Day_12\\Day_12\\File_Handling_1\\test\\mayur.txt")){
+			byte b[]= new byte[(int)(f1.length())];
+			fis.read(b);
+			try(FileOutputStream fos=new FileOutputStream("D:\\vita_cdac\\java\\Day_12\\Day_12\\File_Handling_1\\test\\new.txt",true)){
+				fos.write(b);
+				fos.close();
+			}
+			fis.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

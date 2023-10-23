@@ -1,0 +1,108 @@
+create a new project
+	create a package "weaponpack"
+		inside this package
+
+	public class Weapon
+	{
+		public void attack()
+		{
+		}
+	}
+	public class Sword extends Weapon
+	{
+		override attack
+	}
+	public class Bomb extends Weapon
+	{
+		override attack
+	}
+	public class Gun extends Weapon
+	{
+		override attack
+			+
+		public void fillBullets()
+		{
+			S.o.p("filling bullets");
+		}
+	}
+
+	public class Soldier
+	{
+		// define "fight" method in such a way that given any specific weapon, it should be able to attack
+		public void fight(Weapon ref)
+		{
+			ref.attack();
+			// make sure you invoke "fillBullets" also along with "attack" and that shouldn't give "ClassCastException"
+		}
+
+	}
+	public class WeaponDemo
+	{
+		p.s.v.main()
+		{
+			//invoke "fight" method of Soldier class
+			Soldier s1=new Soldier();
+			s1.fight(new Gun());
+		}
+	}
+
+
+
+
+
+solution:
+package test;
+
+class Weapon{
+	void attack() {
+	}
+}
+class Sword extends Weapon{
+	void attack() {
+		System.out.println("Attacking with Sword...");
+	}
+}
+class Bomb extends Weapon{
+	void attack() {
+		System.out.println("Attacking with Bomb...");
+	}
+}
+class Gun extends Weapon{
+	void attack() {
+		System.out.println("Attacking with Gun...");
+	}
+	void fillbullets() {
+		System.out.println("Filling bullets in Gun");
+	}
+}
+class Soldier{
+	void fight(Weapon ref) {
+		ref.attack();
+		if(ref instanceof Gun) {
+			((Gun) ref).fillbullets();
+		}
+	}
+}
+public class WeaponDemo{
+	public static void main(String[] args) {
+		Soldier s1=new Soldier();
+		s1.fight(new Gun());
+		s1.fight(new Bomb());
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

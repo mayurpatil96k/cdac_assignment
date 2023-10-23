@@ -1,0 +1,65 @@
+
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	int ini;
+	cout << "Enter your initials" << endl;
+	cin >> ini;
+	char* init = new char[ini + 1];
+	cout << "Enter your name" << endl;
+	cin >> init;
+	cout << "Your name is" <<init<< endl;
+}
+
+
+
+
+#include <iostream>
+using namespace std;
+int main()
+{
+	int age;
+	string name, address;
+	cout << "Enter your name"<<endl;
+	cin >> name;
+	cout << "Enter your Adress" << endl;
+	cin >> address;
+	cout << "Enter your age" << endl;
+	cin >> age;
+	cout << " Your name is " << name << " your address is " << address << " your age is " << age << endl;
+}
+
+
+#include <iostream>
+using namespace std;
+void swap(int* a, int* b) {
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+}
+int main()
+{
+	int num1 = 10;
+	int num2 = 20;
+	cout << "Before swapping num1= " << num1 << "and num2= " << num2 << endl;
+	swap(&num1, &num2);
+	cout << "After swapping num1= " << num1 << "and num2= " << num2 << endl;
+}
+
+
+
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	void disp(char a, char b, char c, char d = ' ', char e = ' ');
+	disp('A', 'B', 'C');
+	disp('A', 'B', 'C','D');
+	disp('A', 'B', 'C','D','E');
+}
+void disp(char a, char b, char c, char d = ' ', char e = ' ') {
+	cout << a << b << c << d << e;
+}

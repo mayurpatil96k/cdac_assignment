@@ -1,0 +1,70 @@
+Interface Course
+{
+	void start();
+	void stop();
+}
+now define 3 implementations: 
+	DACDBDACourse,MSCit and Basic
+
+inside "DACDBDACourse" class define one more method "public void orientation()"
+
+define one more class "CourseDemo" with main function and "public static void show()" method.
+from main function
+	invoke "show()" method by passing object of any implementations and invoke "start()" and "stop()" methods. Also invoke "orientation()" method whenever object of "DACDBDACourse" is passed.
+
+
+package test;
+interface Course
+{
+	public void start();
+	public void stop();
+}
+class DACDBDACourse implements Course{
+	public void orientation() {
+		System.out.println("orientation started of DACDBDACourse");
+	}
+	public void start()
+	{
+		System.out.println("Starting new course DACDBDACourse...");
+	}
+	public void stop()
+	{
+		System.out.println("Course stoppped DACDBDACourse...");
+	}
+}
+class MSCit implements Course{
+	public void start()
+	{
+		System.out.println("Starting new course MSCit...");
+	}
+	public void stop()
+	{
+		System.out.println("Course stoppped MSCit...");
+	}
+}
+class Basic implements Course{
+	public void start()
+	{
+		System.out.println("Starting new course Basic...");
+	}
+	public void stop()
+	{
+		System.out.println("Course stoppped Basic...");
+	}
+}
+public class CourseDemo{
+	public static void main(String[] args) {
+		Course arr[]=new Course[3];
+		arr[0]=new DACDBDACourse();
+		arr[1]=new MSCit();
+		arr[2]=new Basic();
+		for(int i=0;i<arr.length;i++) {
+			arr[i].start();
+			arr[i].stop();
+			if(arr[i] instanceof DACDBDACourse) {
+				DACDBDACourse temp=(DACDBDACourse)arr[i]; 
+				temp.orientation();
+			}
+		}
+	}
+}

@@ -1,0 +1,369 @@
+s1Revision_1) 
+Define a class “MyClass”. Define a class “Everything” and define a member function with variable no. of argument inside it. Define  a class Demo1  and define main function in it. From main function , call the function of class Everything and make sure you can pass any arguments , it will take and display. It should even take instance of “MyClass” and display.
+
+class MyClass{
+	
+}
+class Everything{
+	void disp(Object ...set) {
+		for(int i=0;i<set.length;i++) {
+			System.out.println(set[i]);
+		}
+	}
+}
+public class Demo1{
+	public static void main(String[] args) {
+		MyClass m1=new MyClass();
+		Everything e=new Everything();
+		e.disp(m1,10,80);
+	}
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Revision_2)
+Define a class Sample with member variable “char ch” and a parameterized constructor. Create some instances(at least 2) of this class by passing any alphabet.  Now achieve following tasks:
+
+a) when you print the reference it should be display the character which was passed during instantiation.
+b) if two instances have same character or an alphabet, their "equals()" should return true and obviously "hashCode()" also should be same.
+
+class Sample{
+	char ch;
+	Sample(char ch){
+		this.ch=ch;
+	}
+	public String toString() {
+		return String.valueOf(ch);
+		
+	}
+	public boolean equals(Sample ref) {
+		
+		return this.ch==ref.ch;
+		
+	}
+	public char hashcode() {
+		return (int)ch;
+	}
+}
+
+public class Demo1{
+	public static void main(String[] args) {
+		Sample s1=new Sample('M');
+		Sample s2=new Sample('N');
+		Sample s3=new Sample('N');
+		System.out.println(s1);
+		System.out.println(s3.equals(s2));
+		System.out.println(s1.hashcode());
+		System.out.println(s2.hashcode());
+		System.out.println(s3.hashcode());
+	}
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Revision_3) 
+create 4 classes A,B,C,D with member functions Afun(),Bfun(),Cfun() and Dfun() respectively.
+now define "Demo" class with main function. Inside main function create array of Object class which will store instances of above mentioned classes. Traverse through this array and call "Cfun()" of class C only.
+solution:
+
+
+class A{
+	void Afun() {
+		System.out.println("IN class A fun");
+	}
+}
+class B{
+
+	void Bfun() {
+		System.out.println("IN class B fun");
+	}
+}
+class C{
+
+	void Cfun() {
+		System.out.println("IN class C fun");
+	}
+}
+class D{
+
+	void Dfun() {
+		System.out.println("IN class D fun");
+	}
+}
+public class Demo{
+	public static void main(String[] args) {
+		Object arr[]=new Object[4];
+		arr[0]=new A();
+		arr[1]=new B();
+		arr[2]=new C();
+		arr[3]=new D();
+		for(int i=0;i<arr.length;i++) {
+			if(arr[i] instanceof C) {
+				C temp=(C)arr[i];
+				temp.Cfun();
+			}
+		}
+	}
+}
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Revision_4) 
+create a parent class "Artist" with a member function "void perform()".
+now derive following child classes from "Artist"
+	Actor,Singer and Musician and override "perform" in these classes to write the specific task.
+inside "Actor" class define one more method
+	void changeGateUp()
+	{
+		S.o.p("as per the role demands");
+	}
+
+now create a Demo class with main function.
+inside main function create array of "Artist" with size 3.
+store instances of the above child classes in it.
+Now traverse through the array and invoke "perform" of each child class. In addition to this wherever "Actor" object is there inside the array , also perform "changeGateUp()" method.
+solution:
+
+class Artist{
+	void perform() {
+		System.out.println("Artist");
+	}
+}
+class Actor extends Artist{
+	void perform() {
+		System.out.println("Actor");
+	}
+	void changeGateUp()
+	{
+		System.out.println("as per the role demands");
+	}
+}
+class Singer extends Artist{
+	void perform() {
+		System.out.println("Singer");
+	}
+}
+class Musician extends Artist{
+	void perform() {
+		System.out.println("Musician");
+	}
+}
+public class Demo{
+	public static void main(String[] args) {
+		Artist arr[]=new Artist[3];
+		arr[0]=new Actor();
+		arr[1]=new Singer();
+		arr[2]=new Musician();
+		for(int i=0;i<arr.length;i++) {
+			arr[i].perform();
+			if(arr[i] instanceof Actor) {
+				Actor temp=(Actor)arr[i];
+				temp.changeGateUp();
+			}
+		}
+	}
+}
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Revision_5) 
+	it's a Developer- Client example
+on a Developer side:
+
+create a checked exception "VotingNotAllowedException".
+
+define a class "Person" with a instance member "private String name" and "private int age"
+define parameterized constructor and toString() method also.
+In the parameterized constructor check the age passed while instantiating the class. if the age is less than 18 , constructor should raise "VotingNotAllowedException"
+	[ it should not handle the exception]
+
+	create jar file and documentation 
+
+
+on Client side:
+
+Define a class "Demo" with main function.
+From main function create an object of "Person" and display that object.
+
+
+solution:
+
+
+/**
+ * 
+ */
+package devpack;
+
+public class VotingNotAllowedException extends Exception{
+	public VotingNotAllowedException(String mess)
+	{
+		super(mess);
+	}
+}
+
+
+
+package devpack;
+
+public class Person {
+	public String name;
+	public int age;
+	public Person(String name, int age) throws VotingNotAllowedException {
+		super();
+		this.name = name;
+		this.age = age;
+		if(age<18) {
+			throw new VotingNotAllowedException("you are small");
+		}else {
+			System.out.println("you are elligible for voting");
+		}
+	}
+	@Override
+	public String toString() {
+		return "Person [name=" + name + ", age=" + age + "]";
+	}
+	
+}
+
+
+import devpack.*;
+public class Demo{
+	public static void main(String[] args) {
+		try {
+			Person m=new Person("mayur", 15);
+		} catch (VotingNotAllowedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Revision_6)
+write a program to display the method names inside the class which is passed as a command line argument.
+solution:
+package test;
+import java.lang.reflect.Method;
+
+public class Demo{
+	public static void main(String[] args) {
+		Class c=null;
+		try {
+			c=Class.forName(args[0]);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Method methods[]=c.getDeclaredMethods();
+		for(int i=0;i<methods.length;i++) {
+			System.out.println(methods[i]);
+		}
+	}
+}
+Revision_7)
+on the developer side create 4 classes [ First,Second,Third and Fourth] with only "toString()" method which should return the respective class name.
+
+create necessary jar file and documentation
+
+
+on the client side
+	create a class "Demo" with main function and 
+	static Object returnObject(String name)  method. 
+
+this "returnObject()" method should 
+	create the object of the given inside "name" parameter using Reflection API and return it.
+
+from the main function invoke "returnObject()" by passing name of either "First" or "Second" or "Third" or "Fourth" only. Then main function should collect the object given by "returnObject()" method and display it.
+
+
+solution:
+
+/**
+ * 
+ */
+package devpack;
+
+public class First{
+
+	@Override
+	public String toString() {
+		return "First []";
+	}
+	
+}
+ 
+
+
+package devpack;
+
+public class Second{
+
+	@Override
+	public String toString() {
+		return "Second []";
+	}
+	
+}
+
+
+
+package devpack;
+
+public class Third {
+
+	@Override
+	public String toString() {
+		return "Third []";
+	}
+
+}
+
+
+
+package devpack;
+
+public class Fourth {
+
+	@Override
+	public String toString() {
+		return "Fourth []";
+	}
+
+}
+
+
+
+import devpack.*;
+import java.lang.reflect.Constructor;
+
+public class Demo {
+	public static Object returnObject(String name) throws Exception {
+        String className = name;
+        Class<?> clazz = Class.forName(className);
+        Constructor<?> constructor = clazz.getDeclaredConstructor();
+        return constructor.newInstance();
+    }
+    public static void main(String[] args) {
+        String className = "devpack.First"; 
+
+        try {
+            Object obj = returnObject(className);
+            System.out.println(obj);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    
+}
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------		

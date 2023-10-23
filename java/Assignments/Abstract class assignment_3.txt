@@ -1,0 +1,55 @@
+create abstract class "Shape" with
+	a contract "draw()" and concrete behaviour "show()"
+
+create 3 child classes
+	Triangle, Rectangle and Circle
+
+define a class "ShapeDemo" with main
+inside main create an array of "Shape" of 3 elements. Store all the child class objects inside the array, traverse it and invoke "draw()" and "show()" methods polymorphically.
+
+
+package test;
+abstract class Shape{
+	abstract void draw();
+	void show() {
+		System.out.println("Shape display...");
+	}
+}
+class Triangle extends Shape{
+
+	@Override
+	void draw() {
+		// TODO Auto-generated method stub
+		System.out.println("Drawing Triangle...");
+	}
+	
+}
+class Rectangle extends Shape{
+
+	@Override
+	void draw() {
+		// TODO Auto-generated method stub
+		System.out.println("Drawing Rectangle...");
+	}
+	
+}
+class Circle extends Shape{
+
+	@Override
+	void draw() {
+		// TODO Auto-generated method stub
+		System.out.println("Drawing Circle...");
+	}
+	
+}
+public class ShapeDemo{
+	public static void main(String[] args) {
+		Shape arr[]=new Shape[3];
+		arr[0]=new Triangle();
+		arr[1]=new Circle();
+		arr[2]=new Rectangle();
+		for(int i=0;i<arr.length;i++) {
+			arr[i].draw();
+			arr[i].show();}
+		}
+}

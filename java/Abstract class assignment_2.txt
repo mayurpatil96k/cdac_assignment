@@ -1,0 +1,95 @@
+abstract class Beverages {
+
+	// Defined
+	public void addMilk() {
+
+	}
+
+	// abstract
+	abstract void addIngredients();
+}
+
+class Coffee extends Beverages
+{
+	void addIngredients()
+	{
+		// ingredients for Coffee
+	}
+	// addMilk inherited
+}
+class Tea extends Beverages
+{
+	void addIngredients()
+	{
+		// ingredients for Tea
+	}
+	// addMilk inherited
+}
+class FruitJuice extends Beverages
+{
+	void addIngredients()
+	{
+		// ingredients for FruitJuice
+	}
+	// addMilk inherited
+}
+
+create Array of Beverages class and store all the child classes objects.
+now traverse the array and invoke all the functions.
+
+
+package test;
+abstract class Beverages {
+
+	// Defined
+	public void addMilk() {
+
+		System.out.println("Adding milk...");
+	}
+
+	// abstract
+	abstract void addIngredients();
+}
+
+class Coffee extends Beverages
+{
+	void addIngredients()
+	{
+		// ingredients for Coffee
+		System.out.println("Adding coffee milk sugar and all other ingridients");
+	}
+	// addMilk inherited
+}
+class Tea extends Beverages
+{
+	void addIngredients()
+	{
+		// ingredients for Tea
+		System.out.println("Adding tea powder Ginger milk sugar water and other things");
+	}
+	// addMilk inherited
+}
+class FruitJuice extends Beverages
+{
+	void addIngredients()
+	{
+		// ingredients for FruitJuice
+		System.out.println("Adding fruits and sugar  made etc");
+	}
+	// addMilk inherited
+}
+public class Demo{
+	
+	public static void main(String[] args) {
+		Beverages arr[]=new Beverages[3];
+		arr[0]=new Coffee();
+		arr[1]=new Tea();
+		arr[2]=new FruitJuice();
+		for(int i=0;i<arr.length;i++) {
+			arr[i].addMilk();
+			arr[i].addIngredients();
+		}
+		}
+}
+
+

@@ -1,0 +1,115 @@
+on developer side:
+
+create interface "Shape" with "void draw();" method.
+
+now define child classes 
+	Triangle,Rect and Circle
+
+
+
+on Client side:
+
+define "ShapeDemo" class with main and perform functions
+
+define perform function in such a way that given any shape it can invoke "draw()" of it.
+
+Developer part:
+Shape.java
+/**
+ * 
+ */
+package Devpack;
+
+/**
+ * 
+ */
+public interface Shape 
+{
+	abstract void draw();
+
+}
+
+
+Traingle.java
+/**
+ * 
+ */
+package Devpack;
+
+/**
+ * 
+ */
+public class Triangle implements Shape
+{
+	public void draw()
+	{
+		System.out.println("Draw Triangle");
+	}
+
+}
+
+
+Cicle.java
+/**
+ * 
+ */
+package Devpack;
+
+/**
+ * 
+ */
+public class Circle implements Shape
+{
+	public void draw()
+	{
+		System.out.println("Draw Circle");
+	}
+
+}
+
+
+Rectangle.java
+/**
+ * 
+ */
+package Devpack;
+
+/**
+ * 
+ */
+public class Rectangle implements Shape
+{
+	public void draw()
+	{
+		System.out.println("Draw Rectangle");
+	}
+
+}
+
+
+
+
+Client Part:
+package Clientpack;
+
+import Devpack.*;
+//import Devpack.Circle;
+//import Devpack.Circle;
+//import Devpack.Circle;
+
+public class ClientApp 
+{
+
+	public static void main(String[] args)
+	{
+		Shape s1[]= new Shape[3];
+		s1[0]= new Triangle();
+		s1[1]= new Rectangle();
+		s1[2]= new Circle();
+		for(int i=0;i<s1.length;i++)
+		{
+			s1[i].draw();
+		}
+	}
+
+}
