@@ -1,0 +1,360 @@
+create a class student with member variable name aths science eng
+create a method which will retrurn total marks[300]
+create a method which will display name and total.
+
+solution:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAC
+{
+    class Student
+    {
+        string name;
+        double maths;
+        double science;
+        double eng;
+
+        public Student(string name, double maths, double science, double eng)
+        {
+            this.name = name;
+            this.maths = maths;
+            this.science = science;
+            this.eng = eng;
+        }
+        public static double totalmarkss(Student e)
+        {
+            return e.maths+e.science+e.eng;
+        }
+        public static void disp(Student e)
+        {
+            Console.WriteLine(e.name+" "+totalmarkss(e));
+        }
+        public static void Main()
+        {
+            Student s = new Student("Mayur", 90.5, 99, 100);
+            Student.disp(s);
+            Console.WriteLine(Student.totalmarkss(s)); 
+        }
+    }
+}
+
+
+Q2. create a class account having member name id balance
+create a methood1public void deposit(int amt){balance=balance+amt}
+create a method withdraw public void withdraw(int amt){balance=balance-amt}
+create display method whitch will display name and balance.
+create  objects and do transaction.
+solution:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAC
+{
+    class Account
+    {
+        string name;
+        int id;
+        double balance;
+
+        public Account(string name, int id, double balance)
+        {
+            this.name = name;
+            this.id = id;
+            this.balance = balance;
+        }
+        public void deposit(int amt)
+        {
+            if (amt >= 0)
+            {
+                balance += amt;
+            }
+            else
+            {
+                throw new Exception("Enter deposit ammount greater than 0");
+            }
+        }
+        public void withdraw(int amt)
+        {
+            if (amt >= 0 && balance<=amt)
+            {
+                throw new Exception("Please enter valid Amount");
+            }
+            else
+            {
+                balance -= amt;
+            }
+        }
+        public void display()
+        {
+            Console.WriteLine(name + " " + balance);
+        }
+        public static void Main()
+        {
+            Account a = new Account("Mayur", 1, 50000);
+            Account b = new Account("Akshay", 2, 40000);
+            a.display();
+            b.display();
+            a.withdraw(1000);
+            b.withdraw(5000);
+            a.display();
+            b.display();
+            a.deposit(1000);
+            b.deposit(500);
+            a.display();
+            b.display();
+        }
+    }
+}
+
+Q
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAC
+{
+    class Employee
+    {
+        private static int a;
+        private string name;
+        private int salary;
+        private double netsalary;
+        private int id;
+
+        public Employee(string name, int salary)
+        {
+            this.name = name;
+            this.salary = salary;
+        }
+        public double Calculatesal()
+        {
+            this.netsalary = this.salary - this.salary * 0.10;
+            return this.netsalary = this.salary - this.salary * 0.10 ;
+        } 
+        public void disp()
+        {
+            Console.WriteLine(this.name + " " + this.netsalary);
+        }
+        public static void Main()
+        {
+            Employee e1 = new Employee("mayur", 50000);
+            Employee e2 = new Employee("akshay", 60000);
+            Employee e3 = new Employee("om", 40000);
+            e1.Calculatesal();
+            e2.Calculatesal();
+            e3.Calculatesal();
+            e1.disp();
+            e2.disp();
+            e3.disp();
+        }
+    }
+}
+
+Q.
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAC
+{
+    class Student
+    {
+        string name;
+        double maths;
+        double science;
+        double eng;
+
+
+        static Student()
+        {
+            Console.WriteLine("New English School,Sakri");
+        }
+        public Student(string name, double maths, double science, double eng)
+        {
+            this.name = name;
+            this.maths = maths;
+            this.science = science;
+            this.eng = eng;
+        }
+        public static double totalmarkss(Student e)
+        {
+            return e.maths + e.science + e.eng;
+        }
+        public static void disp(Student e)
+        {
+            Console.WriteLine(e.name + " " + totalmarkss(e));
+        }
+        public static void Main()
+        {
+            Student s = new Student("Mayur", 90.5, 99, 100);
+            Student.disp(s);
+            Console.WriteLine(Student.totalmarkss(s));
+        }
+    }
+}
+
+
+Q.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAC
+{
+    class Employee
+    {
+        private static int a;
+        private string name;
+        private int salary;
+        private double netsalary;
+        private int id;
+
+        static Employee()
+        {
+            Console.WriteLine("State Bank of india");
+        }
+        public Employee(string name, int salary)
+        {
+            this.name = name;
+            this.salary = salary;
+        }
+        public double Calculatesal()
+        {
+            this.netsalary = this.salary - this.salary * 0.10;
+            return this.netsalary = this.salary - this.salary * 0.10;
+        }
+        public void disp()
+        {
+            Console.WriteLine(this.name + " " + this.netsalary);
+        }
+        public static void Main()
+        {
+            Employee e1 = new Employee("mayur", 50000);
+            Employee e2 = new Employee("akshay", 60000);
+            Employee e3 = new Employee("om", 40000);
+            e1.Calculatesal();
+            e2.Calculatesal();
+            e3.Calculatesal();
+            e1.disp();
+            e2.disp();
+            e3.disp();
+        }
+    }
+}
+
+Q.
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAC
+{
+    class Employee
+    {
+        public int id;
+        public string name;
+        public int salary;
+        dep d;
+        double netsalary;
+
+        public Employee(int id, string name, int salary, dep d)
+        {
+            this.id = id;
+            this.name = name;
+            this.salary = salary;
+            this.d = d;
+            
+        }
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+
+        public static void imp(Employee[] arr)
+        {
+            int m, a, ad;
+            m = 0;
+            a = 0;
+            ad = 0;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i].d == dep.MKT)
+                {
+                    m = m + arr[i].salary;
+                }
+                else if (arr[i].d == dep.ADV)
+                {
+                    a = a + arr[i].salary;
+                }
+                if (arr[i].d == dep.ADMN)
+                {
+                    ad = ad + arr[i].salary;
+                }
+            }
+            Console.WriteLine("Sum of salary of MKT dept is " + m);
+            Console.WriteLine("Sum of salary of ADV dept is " + a);
+            Console.WriteLine("Sum of salary of ADMN dept is " + ad);
+        }
+        public double paytax(double p)
+        {
+            netsalary = salary - salary * (p /100);
+            return netsalary = salary - salary * (p/100);
+        }
+        public void disp()
+        {
+            Console.WriteLine(this.name+" "+netsalary);
+        }
+    }
+    internal class calculator
+    {
+
+
+        public static void Main()
+        {
+            Employee e1 = new Employee(1, "Mayur  Patil", 50000, dep.MKT);
+            Employee e2 = new Employee(2, "Suyash Jadhvar", 40000, dep.ADMN);
+            Employee e3 = new Employee(3, "Omkar Divate", 30000, dep.MKT);
+            Employee e4 = new Employee(4, "Akshay PAtil", 20000, dep.ADV);
+            Employee e5 = new Employee(5, "Rohit Gaikwad", 10000, dep.ADMN);
+
+            e1.ToString();
+            e2.ToString();
+            e3.ToString();
+            e4.ToString();
+            e5.ToString();
+
+            Employee[] arr = new Employee[5];
+            arr[0] = e1;
+            arr[1] = e2;
+            arr[2] = e3;
+            arr[3] = e4;
+            arr[4] = e5;
+
+            Employee.imp(arr);
+
+        }
+    }
+    enum dep
+    {
+        MKT = 1, ADV = 2, ADMN = 3
+    }
+}
+
