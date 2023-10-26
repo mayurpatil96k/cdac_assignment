@@ -1,0 +1,31 @@
+Q1. Create 2 string variable and accept data from user.
+Using equals and == check data entered by user is same or not.
+Print gethashcode for both string .variable
+Also use referenceEquals and observe out put.
+
+solution:
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAC
+{
+    class Employee
+    {    
+        public static void Main()
+        {
+           
+            Console.WriteLine("Enter twoo sentences");
+            string a=Console.ReadLine();
+           string  b=Console.ReadLine();
+            Console.WriteLine(a==b);
+            Console.WriteLine(Object.Equals(a,b));
+            Console.WriteLine(a.GetHashCode());
+            Console.WriteLine(b.GetHashCode());
+            Console.WriteLine(Object.ReferenceEquals(a,b));
+        }
+    }
+}
