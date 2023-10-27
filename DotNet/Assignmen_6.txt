@@ -1,0 +1,211 @@
+Q.Write a method which will return sum of digit and using out variable let it send count of digit also.
+Eg. input 123  return(6) in out variable (3)
+
+solution:
+
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAC
+{
+    class Employee
+    {
+        public static int add(int a, int b, out int c)
+        {
+            c = a + b;
+            return a + b; 
+        }
+        public static void Main()
+        {
+            int a= 1;
+            int b= 2;
+            int c;
+            Employee.add(a, b, out c);
+            Console.WriteLine(c);
+        }
+
+    }
+    
+
+}
+
+
+Q.Write a method which will accept two number and return all even number between it as array and also give count in out variable.
+Int count=
+Int [] result=Dojob(5,30)
+
+solution:
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAC
+{
+    class Employee
+    {
+
+        public static int[] even(int a, int b, out int c)
+        {
+            int[] arr = new int[10];
+            int cnt = 0;
+            for(int i = a,j=0; i <= b; i++)
+            {
+                if(i%2 == 0)
+                {
+                    arr[j] = i;
+                    cnt++;
+                    j++;
+                }
+            }
+            c= cnt;
+            return arr;
+        }
+        public static void Main()
+        {
+            int a= 10;
+            int b= 20;
+            int c;
+            int[] arr = Employee.even(a, b, out c);
+            for(int i=0; i<arr.Length; i++) { Console.WriteLine(arr[i]); }
+            Console.WriteLine(c);
+        }
+
+    }
+    
+
+}
+
+Q.Create class Account having member variable id, name, balance
+Id is autoincrement it has getter property
+Name and balance need getter setter property
+//Ensure when you open account amt should not be <1
+Declare static double intrate=0.07;
+It has deposit method who’s job is to increase balance.
+Create two child class Savingaccount, Currentaccount
+It has fields typeofaccount.
+In Savingaccount,  child class it has withdraw method who’s job is to reduce balance. It is a rule to maintain minimum balance of rs1000 so declare
+const int minbal=1000
+ In Currentaccount,  child class it has withdraw method who’s job is to reduce balance here –ve balance is allowed.
+Create object of two child class and do the transaction
+In Account class write public override string ToString(){} which will display id name balance.
+Solution:
+
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAC
+{
+    class Account
+    {
+        int id;
+        string name;
+        protected double balance;
+        static int getid;
+        protected static double intrate = 0.07;
+
+        public Account( string name, double balance)
+        {
+            id = ++getid;
+            Name = name;
+            Balance = balance;
+        }
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        public Double Balance
+        {
+            get { return balance; }
+            set {
+                if (value <= 0)
+                {
+                    Console.Beep();
+                    throw new Exception("You can not open account with zero balance");
+                }
+                else { 
+                balance = value;
+                }
+            }
+        }
+        public void deposit (int amt)
+        {
+            balance = balance + amt;
+        }
+        public override string ToString()
+        {
+            return string.Format("Id:{0} Name:{1} Balance:{2}",id,name,balance);
+        }
+    }
+    class Savingaccount:Account
+    {
+        string typeOfAccount;
+        const int minbal = 1000;
+
+        public Savingaccount(string name,double balance,string typeOfAccount):base(name,balance) 
+        {
+            this.typeOfAccount = typeOfAccount;
+        }
+        public void withdraw(int amt)
+        {
+            if(balance+minbal-amt <= 1000)
+            {
+                Console.Beep();
+                throw new Exception("After  removing ammout min balance should be 1000");
+            }
+            else
+            {
+                this.balance -= amt;
+            }
+        }
+    }
+    class Currentaccount:Account
+    {
+        string typeOfAccount;
+        public Currentaccount(string name, double balance, string typeOfAccount) : base(name, balance)
+        {
+            this.typeOfAccount = typeOfAccount;
+        }
+        public void withdraw(int amt)
+        {
+            this.balance -= amt;
+        }
+    }
+    class demo
+    {
+        public static void Main()
+        {
+            Currentaccount c = new Currentaccount("Mayur Current", 50000, "Current");
+            Savingaccount s = new Savingaccount("Mayur Saving", 40000, "Saving");
+            Console.WriteLine(c.ToString());
+            Console.WriteLine(s.ToString());
+            c.withdraw(1000);
+            s.withdraw(1000);
+            Console.WriteLine(c.ToString());
+            Console.WriteLine(s.ToString());
+            c.deposit(10000);
+            s.deposit(10000);
+            Console.WriteLine(c.ToString());
+            Console.WriteLine(s.ToString());
+            c.withdraw(59000);
+            s.withdraw(49000);
+            Console.WriteLine(c.ToString());
+            Console.WriteLine(s.ToString());
+        }
+    }
+
+}
+
+
+
