@@ -1,0 +1,127 @@
+Q.Create class Account having member id, name , balance.
+Id autoincrement write read only property
+Write getter setter for name and balance.
+Balance can be modified only by child class.
+This has virtual withdraw method which will 0.
+It has deposit method.
+Create two child class current and saving and override withdraw method. 
+Create reference of Account class and point to saving account
+and  current account. Using parent’s reference call withdraw method and deposit method.
+Use ToString method to display status of the object [id name balance]
+
+
+solution:
+
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAC
+{
+    class Account
+    {
+        int id;
+        string name;
+        protected double balance;
+        static int getid;
+        protected static double intrate = 0.07;
+
+        public Account( string name, double balance)
+        {
+            id = ++getid;
+            Name = name;
+            Balance = balance;
+        }
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        public Double Balance
+        {
+            get { return balance; }
+            set {
+                if (value <= 0)
+                {
+                    Console.Beep();
+                    throw new Exception("You can not open account with zero balance");
+                }
+                else { 
+                balance = value;
+                }
+            }
+        }
+        public void deposit (int amt)
+        {
+            balance = balance + amt;
+        }
+        public virtual void withdraw(int amt)
+        {
+            balance = balance - amt;
+        }
+        public override string ToString()
+        {
+            return string.Format("Id:{0} Name:{1} Balance:{2}",id,name,balance);
+        }
+    }
+    class Savingaccount:Account
+    {
+        string typeOfAccount;
+        const int minbal = 1000;
+
+        public Savingaccount(string name,double balance,string typeOfAccount):base(name,balance) 
+        {
+            this.typeOfAccount = typeOfAccount;
+        }
+        public override void withdraw(int amt)
+        {
+            if(balance+minbal-amt <= 1000)
+            {
+                Console.Beep();
+                throw new Exception("After  removing ammout min balance should be 1000");
+            }
+            else
+            {
+                this.balance -= amt;
+            }
+        }
+    }
+    class Currentaccount:Account
+    {
+        string typeOfAccount;
+        public Currentaccount(string name, double balance, string typeOfAccount) : base(name, balance)
+        {
+            this.typeOfAccount = typeOfAccount;
+        }
+        public override void withdraw(int amt)
+        {
+            this.balance -= amt;
+        }
+    }
+    class demo
+    {
+        public static void Main()
+        {
+            Account c = new Currentaccount("Mayur Current", 50000, "Current");
+            Account s = new Savingaccount("Mayur Saving", 40000, "Saving");
+            Console.WriteLine(c.ToString());
+            Console.WriteLine(s.ToString());
+            c.withdraw(1000);
+            s.withdraw(1000);
+            Console.WriteLine(c.ToString());
+            Console.WriteLine(s.ToString());
+            c.deposit(10000);
+            s.deposit(10000);
+            Console.WriteLine(c.ToString());
+            Console.WriteLine(s.ToString());
+            c.withdraw(59000);
+            s.withdraw(49000);
+            Console.WriteLine(c.ToString());
+            Console.WriteLine(s.ToString());
+        }
+    }
+
+}

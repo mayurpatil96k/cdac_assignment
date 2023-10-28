@@ -178,7 +178,8 @@ namespace DAC
                     throw new Exception("Salary should be greater than zero");
                 if (value >=50000)
                     throw new Exception("Error");
-                salary = value; }
+		else
+                	salary = value; }
         }
         public double deduct()
         {
