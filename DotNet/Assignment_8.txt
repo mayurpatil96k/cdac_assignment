@@ -1,0 +1,371 @@
+Q.Task:
+Create two static methd
+ a.  Public static int add(int a,int b) ==return sum of two number
+b. .  Public static int product(int a,int b)==return a*b;
+Declare delegate which can point to this method.
+Using reference of delegate call this method and print result.
+Solution:
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAC
+{
+    public delegate int test(int a, int b);
+   class demo
+    {
+        public static int add(int a, int b)
+        {
+            return a + b;
+        }
+        public static int product(int a, int b)
+        {
+            return a * b;
+        }
+    }
+    class mayur
+    {
+        public static void Main()
+        {
+            test m = new test(demo.add);
+            int r=m(10,20);
+            Console.WriteLine(r);
+            m= new test(demo.product);
+            Console.WriteLine(m(10,20));
+
+
+        }
+    }
+
+}
+
+
+Q.Task
+Solve above program by making above method as instance method.
+solution:
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAC
+{
+    public delegate int test(int a, int b);
+   class demo
+    {
+        public int add(int a, int b)
+        {
+            return a + b;
+        }
+        public int product(int a, int b)
+        {
+            return a * b;
+        }
+    }
+    class mayur
+    {
+        public static void Main()
+        {
+            demo a=new demo();
+            test m = new test(a.add);
+            int r=m(10,20);
+            Console.WriteLine(r);
+            m= new test(a.product);
+            Console.WriteLine(m(10,20));
+
+
+        }
+    }
+
+}
+Q.Task:
+Create class mymath having instance member a,b
+Create two instance method
+ a.  Public int add() ==return sum of two number
+b. .  Public int product()==return a*b;
+
+Declare delegate which can point to this method.
+Using reference of delegate call this method and print result
+
+Solution:
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAC
+{
+    public delegate int test();
+   class mymath
+    {
+        internal int a;
+        internal int b;
+        public int add()
+        {
+            return a + b;
+        }
+        public int product()
+        {
+            return a * b;
+        }
+    }
+    class mayur
+    {
+        public static void Main()
+        {
+            mymath a=new mymath();
+            a.a= 10;
+            a.b= 20;
+
+            test m = new test(a.add);
+            int r=m();
+            Console.WriteLine(r);
+            m= new test(a.product);
+            Console.WriteLine(m());
+
+
+        }
+    }
+
+}
+
+Q.Create delegate Delegate void math(int a, int b)
+Write static method Add to add 2 number  and print it.and product which will display product of 2 number
+Create a variable which can point to add and then to product and wirh single method call invoke both the method.
+solution:
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAC
+{
+    public delegate void test(int a,int b);
+   class mymath
+    {
+        internal int a;
+        internal int b;
+        public static void add(int a, int b)
+        {
+            Console.WriteLine(a + b);
+        }
+        public static void product(int a, int b)
+        {
+            Console.WriteLine(a * b);
+        }
+    }
+    class mayur
+    {
+        public static void Main()
+        {
+            test t = new test(mymath.add);
+            t += mymath.product;
+            t(10, 20);
+        }
+    }
+
+}
+
+Q.Create abstract class Employee having member id, name, salary, netsalary
+It has method givebasic_salary which will set netsalary after deduction 10%TDS
+ it has abstract method givebonus
+Id should be autoincrement and should be readonly property
+Write getter setter for name and salary
+Salary can be set only by child class
+Create two child class permanentEmp and tempEmp
+permanentEmp get bonus of 10%[ declare this as static veriable ]
+const maxsalay=150000.
+Ensure that you are not paying more then 150000 to any employee
+Bonus for tempEmp is 5% of the basic salary.
+When you load application it should print name of company
+When you give salary it should give SMS and Email to the employee.
+Crate Array of Employee and store all child class object.
+
+solution:
+
+Emmployye:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace mayur
+
+{
+    delegate void wd(string name, double balance);
+    abstract class Employee
+    {
+        static Employee()
+        {
+            Console.WriteLine("Vita Technologies");
+        }
+        protected int id;
+        protected string name;
+        protected double salary;
+        protected double netsalary;
+        public event wd wdevent;
+        static int getid;
+
+        protected Employee(string name)
+        {
+            id = ++getid;
+            Name = name;
+        }
+
+        public int Id
+        {
+            get { return id; }
+        }
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        public void givebasic_Salary()
+        {
+            netsalary = salary*0.1;
+        }
+        
+        public abstract void givebonus();
+        public void onsalary(string name,double salary)
+        {
+            if(wdevent != null)
+            {
+                wdevent(name, salary);
+            }
+        }
+        static void Main()
+        {
+            message m = new message();
+            Employee[] arr = new Employee[3];
+            tempemp t1 = new tempemp("Mayur", 50000);
+            permanentEmp p1 = new permanentEmp("mayur1", 70000);
+            permanentEmp p2 = new permanentEmp("mayur2", 80000);
+            arr[0] = p1;
+            arr[1] = p2;
+            arr[2] = t1;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                arr[i].wdevent += m.email;
+                arr[i].wdevent += m.sms;
+            }
+            p1.givebasic_Salary();
+            p1.givebonus();
+            p2.givebonus();
+            t1.givebonus();
+
+        }
+
+    }
+
+}
+
+
+permanant:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace mayur
+{
+    internal class permanentEmp:Employee
+    {
+        static int bonus_p = 10;
+        const int maxsalay = 150000;
+
+        public permanentEmp(string name,double salary) : base(name)
+        {
+            Salary = salary;
+            onsalary(name, salary);
+        }
+
+        public double Salary
+        {
+            get { return salary; }
+            set { salary = value; }
+        }
+
+        public override void givebonus()
+        {
+            if((salary * (bonus_p / 100)) > maxsalay)
+            {
+                throw new Exception("Maxxsalary is only upto 150000");
+            }else
+            {
+                salary = salary * (bonus_p / 100);
+                onsalary(name, this.salary);
+            }
+        }
+        
+    }
+}
+
+tempemp:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace mayur
+{
+    internal class tempemp: Employee
+    {
+        static int bonus_p = 5;
+        
+
+        public tempemp(string name, double salary) : base(name)
+        {
+            Salary = salary;
+            onsalary(name, salary);
+        }
+
+        public double Salary
+        {
+            get { return salary; }
+            set { salary = value; }
+            
+        }
+
+        public override void givebonus()
+        {
+             salary = salary * (bonus_p / 100);
+            onsalary(name, salary);
+        }
+    }
+}
+
+message:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace mayur
+{
+    internal class message
+    {
+        public void email(string message,double salary)
+        {
+            Console.WriteLine("E-mail : Saalary credited to account with name : ={0} new balance is ={1}",message,salary);
+        }
+        public void sms(string message, double salary)
+        {
+            Console.WriteLine("SMS : Saalary credited to account with name : ={0} new balance is ={1}",message, salary);
+        }
+    }
+}
+
