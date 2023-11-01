@@ -1,0 +1,420 @@
+int[] a={5,8,9,2,1};
+Q1. display all number<=5
+ 
+using System;
+using System.Linq;
+
+
+class test
+{
+    static void Main()
+    {
+        int[] a = { 5, 8, 9, 2, 1 };
+        var b = a.Where(r => r <= 5).Select(data => data);
+        foreach (var x in b)
+            Console.WriteLine(x);
+
+
+        var c= from i in a where i<=5 select i;
+        foreach (var x in c)
+            Console.WriteLine(x);
+
+    }
+}
+
+
+Q2. display all even number
+numbers.Where((r) => r %2==0).Select((data) => data);
+
+from g in number where g%2==0  select g;
+
+ 
+using System;
+using System.Linq;
+
+
+class test
+{
+    static void Main()
+    {
+        int[] a = { 5, 8, 9, 2, 1 };
+        var b = a.Where(r => r%2 == 0).Select(data => data);
+        foreach (var x in b)
+            Console.WriteLine(x);
+
+
+        var c= from i in a where i%2==0 select i;
+        foreach (var x in c)
+            Console.WriteLine(x);
+
+    }
+}
+
+
+Q3. display all odd number
+ 
+using System;
+using System.Linq;
+
+
+class test
+{
+    static void Main()
+    {
+        int[] a = { 5, 8, 9, 2, 1 };
+        var b = a.Where(r => r%2 != 0).Select(data => data);
+        foreach (var x in b)
+            Console.WriteLine(x);
+
+
+        var c= from i in a where i%2!=0 select i;
+        foreach (var x in c)
+            Console.WriteLine(x);
+
+    }
+}
+
+
+Q4 display all number>=8
+ 
+using System;
+using System.Linq;
+
+
+class test
+{
+    static void Main()
+    {
+        int[] a = { 5, 8, 9, 2, 1 };
+        var b = a.Where(r => r%2 != 0).Select(data => data);
+        foreach (var x in b)
+            Console.WriteLine(x);
+
+
+        var c= from i in a where i%2!=0 select i;
+        foreach (var x in c)
+            Console.WriteLine(x);
+
+    }
+}
+
+
+String[] str={“hello”,”hi”,”go”,”bye”}
+Q1. display all string starting with letter h
+ 
+using System;
+using System.Linq;
+
+
+class test
+{
+    static void Main()
+    {
+        String[] str = {"hello","hi","go","bye"};
+        var b = str.Where(r => r.StartsWith("h")).Select(data => data);
+        foreach (var x in b)
+            Console.WriteLine(x);
+
+
+        var c= from i in str where i.StartsWith("h") select i;
+        foreach (var x in c)
+            Console.WriteLine(x);
+
+    }
+}
+
+Q1. Display all product detail
+using System;
+using System.Linq;
+using System.Xml.Schema;
+
+class ProductInfo
+{
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public int NumberInStock { get; set; }
+    public override string ToString()
+    {
+        return string.Format("Name={0}, Description={1}, Number in Stock={2}",
+        Name, Description, NumberInStock);
+    }
+}
+class entry
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("***** Fun with Query Expressions *****\n");
+        // This array will be the basis of our testing...
+        ProductInfo[] itemsInStock = new[]
+{
+        new ProductInfo{ Name = "Mac's Coffee", Description = "Coffee with TEETH",NumberInStock = 24},
+        new ProductInfo { Name = "Milk Maid Milk",Description = "Milk cow's love",NumberInStock = 100},
+        new ProductInfo{ Name = "Pure Silk Tofu",  Description = "Bland as Possible",NumberInStock = 120},
+        new ProductInfo{ Name = "Cruchy Pops",  Description = "Cheezy, peppery goodness" ,NumberInStock = 2},
+        new ProductInfo{ Name = "RipOff Water",   Description = "From the tap to your wallet",NumberInStock = 100},
+        new ProductInfo{ Name = "Classic Valpo Pizza", Description = "Everyone loves pizza!", NumberInStock = 73}
+        };
+        var v = itemsInStock.Select(data => data);
+        foreach(var a in v) Console.WriteLine(a);
+
+
+
+    }
+}
+Q2. Display all product name
+using System;
+using System.Linq;
+using System.Xml.Schema;
+
+class ProductInfo
+{
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public int NumberInStock { get; set; }
+    public override string ToString()
+    {
+        return string.Format("Name={0}, Description={1}, Number in Stock={2}",
+        Name, Description, NumberInStock);
+    }
+}
+class entry
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("***** Fun with Query Expressions *****\n");
+        // This array will be the basis of our testing...
+        ProductInfo[] itemsInStock = new[]
+{
+        new ProductInfo{ Name = "Mac's Coffee", Description = "Coffee with TEETH",NumberInStock = 24},
+        new ProductInfo { Name = "Milk Maid Milk",Description = "Milk cow's love",NumberInStock = 100},
+        new ProductInfo{ Name = "Pure Silk Tofu",  Description = "Bland as Possible",NumberInStock = 120},
+        new ProductInfo{ Name = "Cruchy Pops",  Description = "Cheezy, peppery goodness" ,NumberInStock = 2},
+        new ProductInfo{ Name = "RipOff Water",   Description = "From the tap to your wallet",NumberInStock = 100},
+        new ProductInfo{ Name = "Classic Valpo Pizza", Description = "Everyone loves pizza!", NumberInStock = 73}
+        };
+        var v = itemsInStock.Select(data => data.Name);
+        foreach(var a in v) Console.WriteLine("Name "+a);
+
+
+
+    }
+}
+Q3.All product part of data as anonymous object
+using System;
+using System.Linq;
+using System.Xml.Schema;
+
+class ProductInfo
+{
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public int NumberInStock { get; set; }
+    public override string ToString()
+    {
+        return string.Format("Name={0}, Description={1}, Number in Stock={2}",
+        Name, Description, NumberInStock);
+    }
+}
+class entry
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("***** Fun with Query Expressions *****\n");
+        // This array will be the basis of our testing...
+        ProductInfo[] itemsInStock = new[]
+{
+        new ProductInfo{ Name = "Mac's Coffee", Description = "Coffee with TEETH",NumberInStock = 24},
+        new ProductInfo { Name = "Milk Maid Milk",Description = "Milk cow's love",NumberInStock = 100},
+        new ProductInfo{ Name = "Pure Silk Tofu",  Description = "Bland as Possible",NumberInStock = 120},
+        new ProductInfo{ Name = "Cruchy Pops",  Description = "Cheezy, peppery goodness" ,NumberInStock = 2},
+        new ProductInfo{ Name = "RipOff Water",   Description = "From the tap to your wallet",NumberInStock = 100},
+        new ProductInfo{ Name = "Classic Valpo Pizza", Description = "Everyone loves pizza!", NumberInStock = 73}
+        };
+        var v = from i in itemsInStock select new {name=i.Name,des=i.Description};
+        foreach(var a in v) Console.WriteLine(a);
+    }
+}
+Q4.Display all product Name ,and Description where 
+ NumberInStock=100 as anonymous object
+using System;
+using System.Linq;
+using System.Xml.Schema;
+
+class ProductInfo
+{
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public int NumberInStock { get; set; }
+    public override string ToString()
+    {
+        return string.Format("Name={0}, Description={1}, Number in Stock={2}",
+        Name, Description, NumberInStock);
+    }
+}
+class entry
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("***** Fun with Query Expressions *****\n");
+        // This array will be the basis of our testing...
+        ProductInfo[] itemsInStock = new[]
+{
+        new ProductInfo{ Name = "Mac's Coffee", Description = "Coffee with TEETH",NumberInStock = 24},
+        new ProductInfo { Name = "Milk Maid Milk",Description = "Milk cow's love",NumberInStock = 100},
+        new ProductInfo{ Name = "Pure Silk Tofu",  Description = "Bland as Possible",NumberInStock = 120},
+        new ProductInfo{ Name = "Cruchy Pops",  Description = "Cheezy, peppery goodness" ,NumberInStock = 2},
+        new ProductInfo{ Name = "RipOff Water",   Description = "From the tap to your wallet",NumberInStock = 100},
+        new ProductInfo{ Name = "Classic Valpo Pizza", Description = "Everyone loves pizza!", NumberInStock = 73}
+        };
+        var v = itemsInStock.Where((i) => i.NumberInStock == 100).Select((data) => new { Name = data.Name, Des = data.Description });
+        foreach(var a in v) Console.WriteLine(a);
+    }
+}
+Q5.Display all product name having letter ‘s’ in it’s name in
+ ascending order
+using System;
+using System.Linq;
+using System.Xml.Schema;
+
+class ProductInfo
+{
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public int NumberInStock { get; set; }
+    public override string ToString()
+    {
+        return string.Format("Name={0}, Description={1}, Number in Stock={2}",
+        Name, Description, NumberInStock);
+    }
+}
+class entry
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("***** Fun with Query Expressions *****\n");
+        // This array will be the basis of our testing...
+        ProductInfo[] itemsInStock = new[]
+{
+        new ProductInfo{ Name = "Mac's Coffee", Description = "Coffee with TEETH",NumberInStock = 24},
+        new ProductInfo { Name = "Milk Maid Milk",Description = "Milk cow's love",NumberInStock = 100},
+        new ProductInfo{ Name = "Pure Silk Tofu",  Description = "Bland as Possible",NumberInStock = 120},
+        new ProductInfo{ Name = "Cruchy Pops",  Description = "Cheezy, peppery goodness" ,NumberInStock = 2},
+        new ProductInfo{ Name = "RipOff Water",   Description = "From the tap to your wallet",NumberInStock = 100},
+        new ProductInfo{ Name = "Classic Valpo Pizza", Description = "Everyone loves pizza!", NumberInStock = 73}
+        };
+        var v = itemsInStock.Where((i) => i.Name.Contains("s")).OrderBy((i)=>i.Name).Select((data) => data);
+        foreach(var a in v) Console.WriteLine(a);
+    }
+}
+Q6. Display all product name having letter ‘s’ in it’s name in descending order
+using System;
+using System.Linq;
+using System.Xml.Schema;
+
+class ProductInfo
+{
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public int NumberInStock { get; set; }
+    public override string ToString()
+    {
+        return string.Format("Name={0}, Description={1}, Number in Stock={2}",
+        Name, Description, NumberInStock);
+    }
+}
+class entry
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("***** Fun with Query Expressions *****\n");
+        // This array will be the basis of our testing...
+        ProductInfo[] itemsInStock = new[]
+{
+        new ProductInfo{ Name = "Mac's Coffee", Description = "Coffee with TEETH",NumberInStock = 24},
+        new ProductInfo { Name = "Milk Maid Milk",Description = "Milk cow's love",NumberInStock = 100},
+        new ProductInfo{ Name = "Pure Silk Tofu",  Description = "Bland as Possible",NumberInStock = 120},
+        new ProductInfo{ Name = "Cruchy Pops",  Description = "Cheezy, peppery goodness" ,NumberInStock = 2},
+        new ProductInfo{ Name = "RipOff Water",   Description = "From the tap to your wallet",NumberInStock = 100},
+        new ProductInfo{ Name = "Classic Valpo Pizza", Description = "Everyone loves pizza!", NumberInStock = 73}
+        };
+        var v = itemsInStock.Where((i) => i.Description.Contains("s")).OrderByDescending((i)=>i.Description).Select((data) => data);
+        foreach(var a in v) Console.WriteLine(a);
+    }
+}
+Q7.count all product who’s stock is < 100
+using System;
+using System.Linq;
+using System.Xml.Schema;
+
+class ProductInfo
+{
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public int NumberInStock { get; set; }
+    public override string ToString()
+    {
+        return string.Format("Name={0}, Description={1}, Number in Stock={2}",
+        Name, Description, NumberInStock);
+    }
+}
+class entry
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("***** Fun with Query Expressions *****\n");
+        // This array will be the basis of our testing...
+        ProductInfo[] itemsInStock = new[]
+{
+        new ProductInfo{ Name = "Mac's Coffee", Description = "Coffee with TEETH",NumberInStock = 24},
+        new ProductInfo { Name = "Milk Maid Milk",Description = "Milk cow's love",NumberInStock = 100},
+        new ProductInfo{ Name = "Pure Silk Tofu",  Description = "Bland as Possible",NumberInStock = 120},
+        new ProductInfo{ Name = "Cruchy Pops",  Description = "Cheezy, peppery goodness" ,NumberInStock = 2},
+        new ProductInfo{ Name = "RipOff Water",   Description = "From the tap to your wallet",NumberInStock = 100},
+        new ProductInfo{ Name = "Classic Valpo Pizza", Description = "Everyone loves pizza!", NumberInStock = 73}
+        };
+        var v = itemsInStock.Where((i) => i.NumberInStock < 100).Select((data) => data);
+        foreach(var a in v) Console.WriteLine(a);
+    }
+}
+Q9. show max min and average value of numerinstock.
+
+using System;
+using System.Linq;
+using System.Xml.Schema;
+
+class ProductInfo
+{
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public int NumberInStock { get; set; }
+    public override string ToString()
+    {
+        return string.Format("Name={0}, Description={1}, Number in Stock={2}",
+        Name, Description, NumberInStock);
+    }
+}
+class entry
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("***** Fun with Query Expressions *****\n");
+        // This array will be the basis of our testing...
+        ProductInfo[] itemsInStock = new[]
+{
+        new ProductInfo{ Name = "Mac's Coffee", Description = "Coffee with TEETH",NumberInStock = 24},
+        new ProductInfo { Name = "Milk Maid Milk",Description = "Milk cow's love",NumberInStock = 100},
+        new ProductInfo{ Name = "Pure Silk Tofu",  Description = "Bland as Possible",NumberInStock = 120},
+        new ProductInfo{ Name = "Cruchy Pops",  Description = "Cheezy, peppery goodness" ,NumberInStock = 2},
+        new ProductInfo{ Name = "RipOff Water",   Description = "From the tap to your wallet",NumberInStock = 100},
+        new ProductInfo{ Name = "Classic Valpo Pizza", Description = "Everyone loves pizza!", NumberInStock = 73}
+        };
+        var v = itemsInStock.Select((data) => data);
+        var a=v.Max(x => x.NumberInStock);
+        var b = v.Min(x => x.NumberInStock);
+        var c = v.Average(x => x.NumberInStock);
+        Console.WriteLine(a);
+        Console.WriteLine(b);
+        Console.WriteLine(c);
+
+    }
+}
