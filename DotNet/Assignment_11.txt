@@ -1,0 +1,67 @@
+Q.Create class employee with member Id , EmpName salary and DetId
+Create class Department with member DetId  DeptName[ADV, HR, ADMIN]
+Create array of each class and store 6 object
+Write query and display EmpName and name of Department
+
+Solution:
+using System;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Xml.Schema;
+
+class employee
+{
+    public int Id;
+    public string EmpName;
+    public int Detid;
+    public double salary;
+    public employee(int id,string name,int detid,double salary)
+    {
+        this.Id = id;
+        this.EmpName = name;
+        this.Detid = detid;
+        this.salary = salary;
+    }
+}
+
+class Department
+{
+    public int Detid;
+    public string Deptname;
+    public Department(int id, string deptname)
+    {
+        this.Detid = id;
+        Deptname = deptname;
+    }
+}
+class test
+{
+    static void Main()
+    {
+        employee[] e =
+        {
+            new employee(1,"mayur",1,50080),
+            new employee(2,"omkar",1, 50800),
+            new employee(3,"rohit",2, 508800),
+            new employee(4,"suyash",2, 59900),
+            new employee(5,"Prashant",3, 40000),
+            new employee(6,"Akshay",3, 80500)
+        };
+
+        Department[] d =
+        {
+            new Department(1,"ADV"),
+            new Department(2,"HR"),
+            new Department(3,"ADMIN"),
+        };
+
+        var v = from emp in e
+                join dep in d on emp.Detid equals dep.Detid
+                select (emp.EmpName, dep.Deptname);
+        foreach (var item in v)
+        {
+            Console.WriteLine(item.EmpName +" "+item.Deptname );
+        }
+    }
+}
+
