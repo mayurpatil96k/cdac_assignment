@@ -65,3 +65,73 @@ class test
     }
 }
 
+
+Q.Create a class Employee having Id name salary dept.
+Display all employee detail department wise.
+
+
+new Employee{id=1, Name=“Raj”, dept=“HR” }
+new Employee{id=2, Name=“Raja”, dept=“HR” }
+new Employee{id=3, Name=“Rajani”, dept=“ADV” }
+new Employee{id=4, Name=“Kavita”, dept=“MKT” }
+new Employee{id=5, Name=“Vidya”, dept=“MKT” }
+new Employee{id=6, Name=“Ganesh”, dept=“HR” }
+new Employee{id=7, Name=“Mohan”, dept=“MKT” }
+
+
+solution:
+using System;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Xml.Schema;
+
+class employee
+{
+    public int Id;
+    public string EmpName;
+    public int Detid;
+    public double salary;
+    public employee(int id,string name,int detid,double salary)
+    {
+        this.Id = id;
+        this.EmpName = name;
+        this.Detid = detid;
+        this.salary = salary;
+    }
+}
+
+class test
+{
+    static void Main()
+    {
+        employee[] e =
+        {
+            new employee(1,"mayur",1,50080),
+            new employee(2,"omkar",1, 50800),
+            new employee(3,"rohit",2, 508800),
+            new employee(4,"suyash",2, 59900),
+            new employee(5,"Prashant",3, 40000),
+            new employee(6,"Akshay",3, 80500)
+        };
+
+
+        var w = from t in e
+                group t by t.Detid into g
+                select g;
+               
+        /*foreach (var item in v)
+        {
+            Console.WriteLine(item.EmpName +" "+item.Deptname );
+        }*/
+        foreach (var item in w)
+        {
+            Console.WriteLine(item.Key);
+            foreach (var item2 in item)
+            {
+                Console.WriteLine(item2.EmpName);
+            }
+        }
+    }
+}
+
+
