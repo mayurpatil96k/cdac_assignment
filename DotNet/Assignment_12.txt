@@ -1,4 +1,171 @@
 Q.Create a table employee with a column id name salary enter the record using sql connection class connect to the database and display record
+
+Program.cs:
+using Microsoft.Extensions.Configuration;
+using System.Data.SqlClient;
+
+namespace ConsoleApp1
+{
+    internal class Productlayer
+    {
+        public string _connstring;
+       public Productlayer(IConfiguration _iconfiguration)
+        {
+            _connstring = _iconfiguration.GetConnectionString("default");
+        }
+        public void products()
+        {
+            using(SqlConnection sql = new SqlConnection(_connstring))
+            {
+                SqlCommand cmd = new SqlCommand("Select * from Employee",sql);
+
+                sql.Open();
+
+                Console.WriteLine("Connected to database");
+
+                SqlDataReader sdr = cmd.ExecuteReader();
+                if(sdr.HasRows)
+                {
+                    while(sdr.Read())
+                    {
+                        Console.WriteLine(sdr["Id"]+" " + sdr["Name"]+" " + sdr["Salary"]);
+                    }
+                }
+            }
+        }
+    }
+}
+
+conn.cs:
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    internal class conn
+    {
+        private static IConfiguration _iconfiguration;
+        static void GetAppSettingsFile()
+        {
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Appsettings.json", optional: false, reloadOnChange: true);
+            _iconfiguration = builder.Build();
+        }
+
+        static void Printproduct()
+        {
+            Productlayer obj = new Productlayer(_iconfiguration);
+            obj.products();
+        }
+        public static void Main()
+        {
+            GetAppSettingsFile();
+            Printproduct(); 
+        }
+    }
+}
+
+
 Q.
-Create a table coustomer with column id name address mobile number display all records insert nee record update name of coustomer where id equal to 1
+Create a table customer with column id name address mobile number display all records insert new record update name of customer where id equal to 1
 Delete record where id equal to 3
+
+solution:
+program.cs:
+using Microsoft.Extensions.Configuration;
+using System.Data.SqlClient;
+
+namespace mayur
+{
+    class demo
+    {
+        private string _connstring;
+
+        public demo(IConfiguration configuration)
+        {
+            _connstring = configuration.GetConnectionString("default");
+        }
+        
+        public void products()
+        {
+            using(SqlConnection con=new SqlConnection(_connstring))
+            {
+                SqlCommand cmd = new SqlCommand("Select * from customer",con);
+                con.Open();
+                Console.WriteLine("Connection done");
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                if(reader.HasRows) {
+                    while (reader.Read())
+                    {
+                        Console.WriteLine(reader["id"] +" "+ reader["Name"]+" " + reader["Address"] + " " + reader["Mobile"]);
+                    }
+                }
+                
+            }
+        }
+        public void insert()
+        {
+            using(SqlConnection conn=new SqlConnection(_connstring))
+            {
+                SqlCommand cmd = new SqlCommand("Insert into customer values('omkar','delhi','9874563210')",conn);
+                conn.Open(); 
+                SqlDataReader reader = cmd.ExecuteReader();
+            }
+        }
+        public void delete() { 
+            using(SqlConnection _conn=new SqlConnection(_connstring))
+            {
+                SqlCommand cmd = new SqlCommand("Delete from customer where name='suyash'",_conn);
+                _conn.Open();
+                SqlDataReader reader=cmd.ExecuteReader();
+            }
+        }
+        public void update()
+        {
+            using(SqlConnection conn=new SqlConnection(_connstring))
+            {
+                SqlCommand cmd = new SqlCommand("update customer set Name='omkar' where id=3", conn);
+                conn.Open();
+                SqlDataReader reader=cmd.ExecuteReader();
+                Console.WriteLine("updated");
+            }
+        }
+    }
+}
+
+
+conn.cs:
+using Microsoft.Extensions.Configuration;
+
+namespace mayur
+{
+    class main
+    {
+        private static IConfiguration _iconfiguration;
+        static void GetAppSettings()
+        {
+            var builer = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Appsettings.json",optional:false,reloadOnChange:true);
+            _iconfiguration = builer.Build();
+        }
+        static void perform()
+        {
+            demo d = new demo(_iconfiguration);
+            d.delete();
+            d.update();
+            d.insert();
+            d.products();
+
+
+        }
+    
+        static void Main(string[] args) { 
+            GetAppSettings();
+            perform();
+
+        }
+    }
+}
