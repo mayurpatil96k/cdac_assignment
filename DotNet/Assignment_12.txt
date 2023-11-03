@@ -1,0 +1,4 @@
+Q.Create a table employee with a column id name salary enter the record using sql connection class connect to the database and display record
+Q.
+Create a table coustomer with column id name address mobile number display all records insert nee record update name of coustomer where id equal to 1
+Delete record where id equal to 3
