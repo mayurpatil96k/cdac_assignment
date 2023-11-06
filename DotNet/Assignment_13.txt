@@ -313,3 +313,346 @@ namespace mayur
         }
     }
 }
+
+
+Q.Create database HR with Table Employee having column name Id,Name, Salary,Gender,Address.
+Create Interface IEmployeeRepository with following methods
+	 Employee GetEmployee(int Id);
+        IEnumerable<Employee> GetAllEmployee();
+        Employee Add(Employee employee);
+        Employee Update(Employee employeeChanges);
+        Employee Delete(int Id);
+Create class which will implement IEmployeeRepository.
+In entry class call the method and complete CRUD.
+solution:
+
+using mayur;
+using mayur.ConsoleApp_ADO.Models;
+using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+using System.Data;
+
+namespace mayur
+{
+    interface IEmployeeRepository {
+        Employee GetEmployee(int Id);
+        IEnumerable<Employee> GetAllEmployee();
+        Employee Add(Employee employee);
+        Employee Update(Employee employeeChanges);
+        Employee Delete(int Id);
+    }
+    public class Employee
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public double salary { get; set; }
+    }
+    class test : IEmployeeRepository
+    {
+        public static List<Employee> _imps = new List<Employee>()
+        {
+            new Employee(){name="Mayur",id=1,salary=50000},
+            new Employee(){name="Suyash",id=2,salary=40000},
+            new Employee(){name="Om",id=3,salary=30000},
+            new Employee(){name="Rohit",id=4,salary=20000},
+            new Employee(){name="Akshay",id=5,salary=10000},
+        };
+
+        public Employee Add(Employee employee)
+        {
+            _imps.Add(employee);
+            employee.id=_imps.Max(i => i.id+1);
+            return employee;
+        }
+
+        public Employee Delete(int Id)
+        {
+            Employee employee = _imps.FirstOrDefault(i => i.id==Id);
+            if (employee == null)
+            {
+                _imps.Remove(employee);
+            }
+            return employee;
+        }
+
+        public IEnumerable<Employee> GetAllEmployee()
+        {
+            return _imps;
+        }
+
+        public Employee GetEmployee(int Id)
+        {
+            Employee employee = _imps.FirstOrDefault(i => i.id == Id);
+            return employee;
+        }
+
+        public Employee Update(Employee employeeChanges)
+        {
+            Employee employee = _imps.FirstOrDefault(i => i.id == employeeChanges.id);
+            if (employee == null)
+            {
+                employee.name= employeeChanges.name;
+                employee.salary= employeeChanges.salary;
+                employee.id=employee.id;
+                _imps.Add(employee);
+            }
+            return employee;
+        }
+    }
+    class demo
+    {
+        public static void Main()
+        {
+            test s = new test();
+            Employee e = new Employee()
+            {
+                id = 6,
+                name = "testing",
+                salary = 50000
+            };
+            Console.WriteLine(s.Add(e));
+            var test1= s.GetAllEmployee();
+            foreach (var i in test1)
+            {
+                Console.WriteLine(i.name);
+            }
+        }
+    }
+}
+
+Q.Create database HR with Table Employee having column name Id,Name, Salary,Gender,Address.
+Create Data_Layer class and complete CRUD operation
+Public void Add(Employee e){} // Create
+Public void Delete(Int Id ){ } //Delete
+Public  void Update(Employee e, int Id){} Update
+Public Employee Get(int id)// Read one record 
+Public List<Employee> GetAll(){} //Display all data
+
+Solution:
+using Microsoft.Extensions.Configuration;
+
+namespace mayur
+{
+    class conn
+    {
+        public static IConfiguration _iconfiguration;
+        static void GetConnectionString()
+        {
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Appsettings.json", optional: false, reloadOnChange: true);
+            _iconfiguration = builder.Build();
+        }
+        static  void perform()
+        {
+            demo d = new demo(_iconfiguration);
+            Employee e = new Employee();
+            e.Name = "Mayur";
+            e.Salary = 100000;
+            e.Gender = "Male";
+            e.Address = "US";
+            d.Add(e);
+            // d.Delete(1);
+            //d.Update(e, 2);
+            // Employee f= d.Get(2);
+            // Console.WriteLine(f);
+
+           var v= d.GetAll();
+            foreach (var item in v)
+            {
+                Console.WriteLine(item);
+            }
+
+
+        }
+        static void Main()
+        {
+            GetConnectionString();
+            perform();
+            
+            
+
+
+        }
+    }
+}
+
+
+
+
+using Microsoft.Extensions.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace mayur
+{
+    public class Employee
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string Gender { get; set; }
+        public double Salary { get; set; }
+        public override string ToString()
+        {
+            string s =Id+" "+ Name + " " + Address + " " + Salary.ToString() +" "+ Gender ;
+            return s;
+        }
+    }
+    public class demo
+    {
+        static string _connstring;
+       public demo(IConfiguration iconfigutration)
+        {
+            _connstring = iconfigutration.GetConnectionString("default");
+        }
+        public SqlConnection getsqlconn()
+        {
+            return new SqlConnection(_connstring);
+        }
+        public void Add(Employee e)
+        {
+            SqlConnection conn= getsqlconn();
+            SqlCommand cmd;
+            try
+            {
+                cmd = new SqlCommand("add1", conn);
+                cmd.CommandType=CommandType.StoredProcedure;
+                cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = e.Name;
+                cmd.Parameters.Add("@salary", SqlDbType.Float).Value = e.Salary;
+                cmd.Parameters.Add("@gen", SqlDbType.VarChar).Value = e.Gender;
+                cmd.Parameters.Add("@add", SqlDbType.NVarChar).Value = e.Address;
+                conn.Open();
+                Console.WriteLine(cmd.ExecuteNonQuery());
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+        public void Delete(int Id)
+        {
+            SqlConnection conn = getsqlconn();
+            SqlCommand cmd;
+            try
+            {
+                cmd = new SqlCommand("delete from Employee where Id=@id", conn);
+                cmd.Parameters.Add("@id",SqlDbType.Int).Value = Id;                
+                conn.Open();
+                Console.WriteLine(cmd.ExecuteNonQuery());
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+        public void Update(Employee e, int Id)
+        {
+            SqlConnection conn = getsqlconn();
+            SqlCommand cmd;
+            try
+            {
+                cmd = new SqlCommand("update Employee set Name=@name,Salary=@sal,Gender=@gen,Address=@add where Id=@Id", conn);
+                cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = e.Name;
+                cmd.Parameters.Add("@sal", SqlDbType.Float).Value =e.Salary;
+                cmd.Parameters.Add("@gen", SqlDbType.VarChar).Value = e.Gender;
+                cmd.Parameters.Add("@Id", SqlDbType.Int).Value =Id;
+                cmd.Parameters.Add("@add", SqlDbType.NVarChar).Value = e.Address;
+                conn.Open();
+                Console.WriteLine(cmd.ExecuteNonQuery());
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            
+        }
+        public Employee Get(int id)
+        {
+            SqlConnection conn = getsqlconn();
+            SqlCommand cmd;
+            Employee e = null;
+            try
+            {
+                cmd = new SqlCommand("select * from Employee where Id=@ID", conn);
+                
+                cmd.Parameters.Add("@Id", SqlDbType.Int).Value = id;
+               
+                conn.Open();
+                
+                SqlDataReader reader = cmd.ExecuteReader();
+                if(reader.Read())
+                {
+                    e = new Employee();
+                    e.Id = Convert.ToInt32(reader["ID"]);
+                    e.Address = reader["Address"].ToString();
+                    e.Name = reader["Name"].ToString();
+                    e.Gender = reader["Gender"].ToString();
+                    e.Salary = Convert.ToSingle(reader["Salary"]);
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return e;
+        }
+        public List<Employee> GetAll()
+        {
+            List<Employee> l1 = new List<Employee>();
+            SqlConnection conn = getsqlconn();
+            SqlCommand cmd;
+            Employee e = null;
+            try
+            {
+                cmd = new SqlCommand("select * from Employee", conn);
+
+
+                conn.Open();
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        e = new Employee();
+                        e.Id = Convert.ToInt32(reader["ID"]);
+                        e.Address = reader["Address"].ToString();
+                        e.Name = reader["Name"].ToString();
+                        e.Gender = reader["Gender"].ToString();
+                        e.Salary = Convert.ToSingle(reader["Salary"]);
+                        l1.Add(e);
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return l1;
+        }
+    }
+    
+}
+
+
+
+
