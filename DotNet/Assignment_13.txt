@@ -1,0 +1,315 @@
+Q) : Create a table customer id name address mobno use table customer and complete following task
+1: display all customer data(strongly type);
+2: accept id from the user and delete particular customers;
+3: create a object of customer and store data in customer table;
+4: write search method with parameter id; write search method with parameter string(name,mobileno);
+5: accept id and name from user and update the record
+
+conn.cs
+using Microsoft.Extensions.Configuration;
+
+namespace mayur
+{
+    class main
+    {
+        private static IConfiguration _iconfiguration;
+        static void GetAppSettings()
+        {
+            var builer = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Appsettings.json",optional:false,reloadOnChange:true);
+            _iconfiguration = builer.Build();
+        }
+        static void perform()
+        {
+            demo d = new demo(_iconfiguration);
+          
+            /* Console.WriteLine(d.delete(1));
+            Employee e = new Employee(){Name = "Akshay", Mobile = "1234569870", Address = "delhi"};
+            d.add(e);
+            d.display();*/
+            Console.WriteLine("searching");
+            d.searchwith(5);
+            Console.WriteLine("searching");
+            d.searchwithname("Akshay", "1234569870");
+           int a= d.update(8, "Abhishek", "Abhishek", "Nashik", "1234567890");
+            Console.WriteLine(a);
+            d.display();
+        }
+    
+        static void Main(string[] args) { 
+            GetAppSettings();
+            perform();
+            
+
+        }
+    }
+    
+
+}
+
+program.cs
+using Microsoft.Extensions.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Reflection;
+
+namespace mayur
+{
+    internal class Employee
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string Mobile { get; set; }
+
+        public override string? ToString()
+        {
+            return base.ToString();
+        }
+    }
+    internal class demo
+    {
+        private string _connstring;
+
+        public demo(IConfiguration configuration)
+        {
+            _connstring = configuration.GetConnectionString("default");
+        }
+
+        public SqlConnection GetConnection()
+        {
+            SqlConnection conn = new SqlConnection();
+            conn.ConnectionString = _connstring;
+            return conn;
+        }
+
+        public void display()
+        {
+            SqlConnection sqlconn = null;
+            SqlCommand sqlcmd;
+            try
+            {
+                sqlconn = GetConnection();
+                sqlcmd = new SqlCommand("display", sqlconn);
+                sqlcmd.CommandType = CommandType.StoredProcedure;
+                sqlconn.Open();
+                SqlDataReader rd = sqlcmd.ExecuteReader();
+                if (rd.HasRows)
+                {
+                    while (rd.Read())
+                    {
+                        Employee p = new Employee();
+
+                        Console.WriteLine(rd["Id"] + " " + rd["Name"].ToString() + " " + rd["Address"].ToString() + " " + rd["Mobile"].ToString());
+
+                    }
+                }
+            }
+            catch (SqlException se)
+            { Console.WriteLine(se.Message); }
+            finally
+            {
+                sqlconn.Close();
+
+            }
+        }
+
+        public int delete(int id)
+        {
+            SqlConnection sqlconn = null;
+            SqlCommand sqlcmd = null;
+            int no = 0;
+            try
+            {
+                sqlconn = GetConnection();
+                sqlconn.Open();
+                sqlcmd = new SqlCommand("delete from Employee where id=@pid", sqlconn);
+                sqlcmd.Parameters.AddWithValue("@pid", id);
+                no = sqlcmd.ExecuteNonQuery();
+            }
+            catch (SqlException se)
+            {
+                Console.WriteLine(se.Message);
+            }
+            finally
+            {
+                sqlconn.Close();
+
+            }
+            return no;
+        }
+        //create a object of customer and store data in customer table;
+        public void add(Employee e)
+        {
+            SqlCommand sqlcmd = null;
+            SqlConnection sqlconn = null;
+            try
+            {
+                sqlconn = GetConnection();
+                sqlcmd = new SqlCommand("addemp", sqlconn);
+                sqlcmd.CommandType = CommandType.StoredProcedure;
+                sqlcmd.Parameters.Add("@pname", SqlDbType.NVarChar).Value = e.Name;
+                sqlcmd.Parameters.Add("@paddress", SqlDbType.NVarChar).Value = e.Address;
+                sqlcmd.Parameters.Add("@pmobile", SqlDbType.VarChar).Value = e.Mobile;
+                sqlconn.Open();
+                sqlcmd.ExecuteNonQuery();
+
+
+            }
+            catch (SqlException se)
+            {
+                Console.WriteLine(se.Message);
+            }
+            finally
+            {
+                sqlconn.Close();
+            }
+        }
+        //write search method with parameter id;
+        public void searchwith(int id)
+        {
+            SqlConnection sqlconn = null;
+            SqlCommand sqlcmd = null;
+
+            try
+            {
+                sqlconn = GetConnection();
+
+                sqlcmd = new SqlCommand("saerchwithid", sqlconn);
+                sqlcmd.CommandType = CommandType.StoredProcedure;
+                sqlcmd.Parameters.Add("@pid", SqlDbType.Int).Value = id;
+                sqlconn.Open();
+
+                SqlDataReader rd = sqlcmd.ExecuteReader();
+                if (rd.HasRows)
+                {
+                    while (rd.Read())
+                    {
+                        Console.WriteLine(rd["Id"] + " " + rd["Name"].ToString() + " " + rd["Address"].ToString() + " " + rd["Mobile"].ToString());
+
+                    }
+                }
+
+            }
+            catch (SqlException se)
+            {
+                Console.WriteLine(se.Message);
+            }
+            finally
+            {
+                sqlconn.Close();
+            }
+
+        }
+        //write search method with parameter string(name,mobileno);
+        public void searchwithname(string name, string mobile)
+        {
+            SqlConnection sqlconn = null;
+            SqlCommand sqlcmd = null;
+
+            try
+            {
+                sqlconn = GetConnection();
+
+                sqlcmd = new SqlCommand("search", sqlconn);
+                sqlcmd.CommandType = CommandType.StoredProcedure;
+                sqlcmd.Parameters.Add("@pname", SqlDbType.NVarChar).Value = name;
+                sqlcmd.Parameters.Add("@pmobile", SqlDbType.VarChar).Value = mobile;
+                sqlconn.Open();
+
+                SqlDataReader rd = sqlcmd.ExecuteReader();
+                if (rd.HasRows)
+                {
+                    while (rd.Read())
+                    {
+                        Console.WriteLine(rd["Id"] + " " + rd["Name"].ToString() + " " + rd["Address"].ToString() + " " + rd["Mobile"].ToString());
+
+                    }
+                }
+
+            }
+            catch (SqlException se)
+            {
+                Console.WriteLine(se.Message);
+            }
+            finally
+            {
+                sqlconn.Close();
+            }
+
+
+        }
+        //accept id and name from user and update the record
+        /*public void Update(int id, string name)
+        {
+            SqlConnection sqlconn = null;
+            SqlCommand sqlcmd = null;
+
+            try
+            {
+                sqlconn = GetConnection();
+
+                sqlcmd = new SqlCommand("update", sqlconn);
+                sqlcmd.CommandType = CommandType.StoredProcedure;
+                sqlcmd.Parameters.Add("@pid", SqlDbType.Int).Value = id;
+                sqlcmd.Parameters.Add("@pname", SqlDbType.NVarChar).Value = name;
+                Console.WriteLine("Enter New Name Adress Mobile");
+                string a = Console.ReadLine();
+                string b = Console.ReadLine();
+                string c = Console.ReadLine();
+
+                sqlcmd.Parameters.Add("@pnewname", SqlDbType.NVarChar).Value = a;
+                sqlcmd.Parameters.Add("@pnewadd", SqlDbType.NVarChar).Value = b;
+                sqlcmd.Parameters.Add("@pnewmobile", SqlDbType.NVarChar).Value = c;
+                sqlconn.Open();
+
+                SqlDataReader rd = sqlcmd.ExecuteReader();
+                if (rd.HasRows)
+                {
+                    while (rd.Read())
+                    {
+                        Console.WriteLine(rd["Id"] + " " + rd["Name"].ToString() + " " + rd["Address"].ToString() + " " + rd["Mobile"].ToString());
+
+                    }
+                }
+
+            }
+            catch (SqlException se)
+            {
+                Console.WriteLine(se.Message);
+            }
+            finally
+            {
+                sqlconn.Close();
+            }
+        }*/
+        // accept id and name from user and update the record
+        public int update(int id,string name, string newname,string newadr,string mb)
+        {
+            SqlConnection sqlconn = null;  
+            SqlCommand sqlcmd = null;
+            int temp = 0;
+            try
+            {
+                sqlconn = GetConnection();
+                sqlcmd = new SqlCommand("empupdate",sqlconn);
+                sqlcmd.CommandType = CommandType.StoredProcedure;
+                sqlcmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                sqlcmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = name;
+                sqlcmd.Parameters.Add("@newname", SqlDbType.NVarChar).Value = newname;
+                sqlcmd.Parameters.Add("@newadr", SqlDbType.NVarChar).Value = newadr;
+                sqlcmd.Parameters.Add("@mb", SqlDbType.VarChar).Value = mb;
+                sqlconn.Open();
+               temp= sqlcmd.ExecuteNonQuery();
+                    
+            }
+            catch(SqlException se) { 
+                Console.WriteLine(se.Message);
+            }
+            finally
+            {
+                sqlconn.Close();
+            }
+            return temp;
+        }
+    }
+}
