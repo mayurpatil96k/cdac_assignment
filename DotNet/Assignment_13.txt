@@ -656,3 +656,210 @@ namespace mayur
 
 
 
+Q.Create Console Appplication for Bank Of Baroda.
+Create a  abstract class Account having member
+a. Id [ Let your application generate id, it is readonly] 
+b. Name [write getter, setter Method Give Validation Length of  name can not be less then 2 and greater then 15]
+c. Balance [write getter , setter, you can not set value  outside class other than child class]
+It has two methods
+1. public abstract withdraw(double amt);
+2. public void Deposit(double amt) {}This method will increase amount in balance.
+Create two child class SavingAccount and CurrentAccount.
+In CurrentAccount user can have negative balance.
+In SavingAccount minimum balance of 1000 need to maintain. Declare const double  minbala=1000
+When use withdraw money they should get SMS and EMAIL about new balance and amount withdrawn.
+ When you run application it should display name of bank. 
+Create List of Account class and store child Object.
+Do transaction and ensure user can not withdraw more then the balance. Also ensure it maintain minimum balance of 1000 in Saving Account.
+In SavingAccount write public static double Payinterest(Employee e) this method will return interest amount  and increase the balance  If data is in-validation then your application should throw exception
+ Your application should allow you to create only 5 object.
+Your application should handle all exception.
+Write user Define Exception for insufficient balance[If user try to withdraw more then minbalance in Saving Account] This class will print user name and transaction detail in a file.
+In Account class Create event. When use withdraw money it should send SMS and E-mail[Complete Publisher subscriber design pattern]
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+
+namespace mayur
+{
+    public delegate void text1();
+    abstract class Account
+        
+    {
+
+        static Account()
+        {
+            Console.WriteLine("BANK OF BARODA");
+        }
+        protected int id;
+        static int getid = 0;
+        protected string name;
+        protected double balance;
+        public event text1 notification;
+        public int Id
+        {
+            get { return id; }
+            set
+            {
+                if (getid <= 5)
+                {
+                    id = ++getid;
+                }
+                else
+                {
+                    throw new Exception("5 Objects already created");
+                }
+            }
+        }
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                if (value.Length >= 15 || value.Length <= 2)
+                {
+                    throw new Exception("Name Length cannot be less than 2 or grater than 15");
+                }
+                else
+                {
+                    name = value;
+                }
+            }
+        }
+
+        public virtual double GetBalance()
+        { return balance; }
+        protected virtual void SetBalance(double value)
+        { balance = value; }
+        public abstract void withdraw(double amt);
+        public void Deposit(double amt)
+        {
+            balance = balance + amt;
+        }
+
+        public void onevent()
+        {
+            if(notification != null)
+            {
+                notification();
+            }
+        }
+    }
+    class SavingAccount:Account
+    {
+        const double minbal = 1000;
+        public SavingAccount(String name,double balance)
+        {
+            Name = name;
+            SetBalance(balance);
+        }
+        protected override void SetBalance(double value)
+        { 
+            if(value < minbal)
+            {
+                throw new ApplicationException("You cannot create Saving account which has balance low than 1000");
+
+            }
+            else
+            {
+                balance = value;
+            }
+        }
+
+        public override void withdraw(double amt)
+        {
+            if (balance < amt)
+            {
+                throw new Exception("You can not Withdraw amount which is more than your Balance");
+            }
+            else
+            {
+                balance -= amt;
+                onevent();
+            }
+        }
+        public static double Payinterest(Account e)
+        {
+            double amt = 0;
+            if(e is SavingAccount)
+            {
+                SavingAccount temp = (SavingAccount)e;
+                amt = temp.GetBalance() * 0.7;
+                temp.balance = e.GetBalance() + amt;
+                return amt;
+            }
+            else
+            {
+                throw new ApplicationException("Account is not of type saving account");
+            }
+        }
+    }
+    class CurrentAccount : Account
+    {
+        public CurrentAccount(String name, double balance)
+        {
+            Name = name;
+            SetBalance(balance);
+        }
+        public override void withdraw(double amt)
+        {
+            if (balance+double.MinValue < amt)
+            {
+                throw new ApplicationException("You can not Withdraw amount which is more than your Balance");
+            }
+            else
+            {
+                balance -= amt;
+                onevent();
+            }
+        }
+    }
+    class message
+    {
+        static public void sms()
+        {
+            Console.WriteLine("SMS your account did one transaction");
+        }
+       static public void email()
+        {
+            Console.WriteLine("EMAIl your account did one transaction");
+        }
+    }
+    class test
+    {
+        public static void Main()
+        {
+            try
+            {
+                List<Account> accounts = new List<Account>();
+                SavingAccount s1 = new SavingAccount("Mayur",1000);
+                SavingAccount s2 = new SavingAccount("Bhushan",1001);
+                SavingAccount s3 = new SavingAccount("Abhi",1002);
+                CurrentAccount c1 = new CurrentAccount("mayur a",10000);
+                CurrentAccount c2 = new CurrentAccount("Abhi", 1002);
+                CurrentAccount c3 = new CurrentAccount("Bhushan", 1001);
+
+                accounts.Add(s1);
+                accounts.Add(s2);
+                accounts.Add(s3);
+                accounts.Add(c1);   
+                accounts.Add(c2);
+                accounts.Add(c3);
+
+                for (int i = 0; i < accounts.Count; i++)
+                {
+                    accounts[i].notification += message.email;
+                    accounts[i].notification += message.sms;
+                }
+                s3.withdraw(1);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+    }
+}
