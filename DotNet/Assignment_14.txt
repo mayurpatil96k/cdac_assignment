@@ -1,0 +1,19 @@
+Q.Create a poco class epmloyee with member id, name, salary
+department departmentid. 
+Create another class Depatment with member id, deptname.
+
+Create a context class which will derived from Dbcontext
+set connectionstring in on conconfiguring method
+put Dbset dept, employee
+download four dll file
+add migration update database
+
+task-->
+1. display all employee who is in dept id = 1.
+2. display all employee.
+3. (*)Enter data first in dept table then add in employee table.
+4. add employee record though entity(using code)
+5. delete employee where employee id = 3
+6. display dept name & employee within it.
+7. Display all employee whose salary is greater than 5000.
+8. display all employee whose name starting with 's'.
