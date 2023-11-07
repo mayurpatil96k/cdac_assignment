@@ -17,3 +17,183 @@ task-->
 6. display dept name & employee within it.
 7. Display all employee whose salary is greater than 5000.
 8. display all employee whose name starting with 's'.
+
+
+program.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    internal class program
+    {
+        public static void Main(string[] args)
+        {
+           /* Employee employee = new Employee() { Name = "Sakshi", Salary = 70000, deptid = 2 };
+            l.add(employee);*/
+            Logic l = new Logic();
+            
+            l.dispid(1);
+            Console.WriteLine("----------------------------------------------------------");
+            l.display();
+            Console.WriteLine("----------------------------------------------------------");
+            /*Department d = new Department() {deptName="SDE"};
+            l.adddep(d);*/
+            Console.WriteLine("----------------------------------------------------------");
+            l.delete(2);
+            Console.WriteLine("----------------------------------------------------------");
+            l.display();
+            Console.WriteLine("----------------------------------------------------------");
+            l.Dispall();
+            Console.WriteLine("----------------------------------------------------------");
+            l.display5000();
+            Console.WriteLine("----------------------------------------------------------");
+            l.displays();
+        }
+    }
+}
+
+
+logic.cs
+
+
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    internal class Logic
+    {
+        private static readonly Context c = new Context();
+        public void add(Employee employee)
+        {
+            c.Add<Employee>(employee);
+            c.SaveChanges();
+        }
+        public void dispid(int id)
+        {
+            FormattableString sql = $"Select * from Employees where deptid={id}";
+            var s = c.Employees.FromSql(sql).ToList() ;
+            foreach (var emp in s) { Console.WriteLine(emp); }
+        }
+        public void display()
+        {
+            FormattableString sql = $"Select * from Employees";
+            var s = c.Employees.FromSql(sql).ToList();
+            foreach (var emp in s) { Console.WriteLine(emp); }
+        }
+        public void adddep(Department d)
+        {
+            c.Add<Department>(d);
+            c.SaveChanges();
+        }
+        public void delete(int id)
+        {
+            Employee e= c.Employees.SingleOrDefault(e=>e.Id==id);
+            if (e != null)
+            {
+                c.Remove(e);
+                c.SaveChanges();
+            }
+        }
+        public void Dispall()
+        {
+            var r = c.Employees.Join(c.Department, (eid) => eid.deptid, (did) => did.Id, (r, g) => new { r.Name, g.deptName });
+            foreach(var a in r)
+            {
+                Console.WriteLine(a.deptName+" "+a.Name);
+            }
+        }
+        public void display5000()
+        {
+            FormattableString sql = $"Select * from Employees where Salary>5000";
+            var s = c.Employees.FromSql(sql).ToList();
+            foreach (var emp in s) { Console.WriteLine(emp); }
+        }
+        public void displays()
+        {
+            FormattableString sql = $"Select * from Employees where Name like 's%'";
+            var s = c.Employees.FromSql(sql).ToList();
+            foreach (var emp in s) { Console.WriteLine(emp); }
+        }
+    }
+}
+
+
+Employee.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    internal class Employee
+    {
+        public int Id { get; set; } 
+        public string? Name { get; set; }
+        public double? Salary {  get; set; }
+        public int deptid {  get; set; }
+        public Department? Departmentid { get; set; }
+        public override string ToString()
+        {
+            return String.Format("{0}, {1}, {2},{3}",Id,Name,Salary,Departmentid);
+        }
+    }
+}
+
+
+Connttext.cs
+
+using ConsoleApp1;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    internal class Context:DbContext
+    {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\ProjectModels;Initial Catalog=HR;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+        }
+        public DbSet<Department> Department { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+
+    }
+    
+}
+
+
+
+Deprtment.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ConsoleApp1;
+
+namespace ConsoleApp1
+{
+    internal class Department
+    {
+        public int Id { get; set; }
+        public string? deptName { get; set; }
+        public IList<Employee?> Employees { get; set; }
+    }
+}
