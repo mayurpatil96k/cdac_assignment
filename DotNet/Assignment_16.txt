@@ -1,0 +1,120 @@
+Q.create a poco class author, book(1 author can write many books)
+follow the conventions to achieve one to many relationships 
+create a dbcontext 
+write interface for CRUD for book
+create a service class  to implement CRUD
+create bookmcontroller and complete CRUD
+
+Steps
+1.download dll
+2.put connectionstring in appsetting
+3.write poco class and dbcontext class 
+4.open program file and configure to service
+a)DBContext
+b)Service Class
+c)add migration
+d)update database
+e)enter data in author table first
+f)then in book table
+
+Solution:
+Author.cs
+namespace CRUDASSI.Models
+{
+    public class Author
+    {
+        public int ID { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public ICollection<Book>? list { get; set; }
+    }
+}
+
+Book.cs
+
+namespace CRUDASSI.Models
+{
+    public class Book
+    {
+        public int Id { get; set; }
+        public string? Title { get; set; }
+        public string? Description { get; set; }
+        public Author? Author { get; set; }
+        public int? AuthorId { get; set; }
+    }
+}
+
+dbContext
+using Microsoft.EntityFrameworkCore;
+
+namespace CRUDASSI.Models
+{
+    public class dbcontext: DbContext
+    {
+        public dbcontext(DbContextOptions<dbcontext> options):base(options) { }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Book> Books { get; set; }
+    }
+}
+
+IbookAuthor
+namespace CRUDASSI.Models
+{
+    public interface IBookAuthor
+    {
+        Book GetBook(int Id);
+        IEnumerable<Book> GetAllBook();
+        Book Add(Book book);
+        Book Update(Book bookchanges);
+        Book Delete(int Id);
+    }
+}
+SQLBookAuthor
+namespace CRUDASSI.Models
+{
+    public class SQLBookAuthor : IBookAuthor
+    {
+        private static dbcontext db;
+        public SQLBookAuthor(dbcontext BA)
+        {
+            db = BA;
+        }
+        public Book Add(Book book)
+        {
+            db.Books.Add(book);
+            db.SaveChanges();
+            return book;
+        }
+
+        public Book Delete(int Id)
+        {
+            Book book = db.Books.Find(Id);
+            if (book != null)
+            {
+                db.Books.Remove(book);
+                db.SaveChanges();
+            }
+            return book;
+        }
+
+        public IEnumerable<Book> GetAllBook()
+        {
+            return db.Books;
+        }
+
+        public Book GetBook(int Id)
+        {
+            return db.Books.Find(Id);
+        }
+
+        public Book Update(Book bookchanges)
+        {
+            var book = db.Books.Attach(bookchanges);
+            book.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            //context.Update(employee);
+            db.SaveChanges();
+            return bookchanges;
+        }
+    }
+}
+
