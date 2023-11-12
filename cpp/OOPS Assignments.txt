@@ -3,7 +3,6 @@ create array of instances and observe how program behaves.
 
 
 
-
 #include <iostream>
 class MyClass {
 public:
