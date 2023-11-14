@@ -1,4 +1,4 @@
-1) class Number
+1) class Number 
    {
        int num;
    }
