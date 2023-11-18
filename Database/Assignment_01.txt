@@ -1,0 +1,12 @@
+Queries:
+
+1. Display the name of all employees whose salary is between 500 and 1300
+2. Display the name of all employees who are in HR dept
+3. Display the name of all the dept and count of all the employees in that dept.
+4. Display the name , deptname and  salary of the employee whose salary is highest.
+5. Display the name , deptname and  salary of the employee whose salary is lowest.
+6. Display the name , deptname of employee whose salary is second highest.
+7. display the name, deptname of top five earning employees.
+8. Display the deptname, name of top 5 earning employees from each dept.
+9. Display the avg salary of each dept.
+10.Display the min and max salary of each dept.
