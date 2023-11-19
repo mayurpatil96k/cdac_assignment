@@ -7,12 +7,13 @@ Queries:
 select ename from emp join dept on emp.deptid=dept.deptid where dept.
 deptname="HR";
 
+ select ename,deptname from emp join dept on emp.deptid=dept.deptid where dept.deptname="HR";
+
 3. Display the name of all the dept and count of all the employees in that dept.
- select deptname,count(emp.deptid) from dept join emp on emp.deptid=dept.deptid group by deptname;
+select deptname,count(emp.deptid) from dept left join emp on emp.deptid=dept.deptid group by deptname;
 
 4. Display the name , deptname and  salary of the employee whose salary is highest.
- select ename,deptname,salary from emp join dept on emp.deptid=dept.de
-ptid order by salary desc limit 1;
+ select ename,deptname,salary from emp join dept on emp.deptid=dept.deptid order by salary desc limit 1;
 
 5. Display the name , deptname and  salary of the employee whose salary is lowest.
  select ename,deptname,salary from emp join dept on emp.deptid=dept.deptid order by salary limit 1;
@@ -26,8 +27,12 @@ ptid order by salary desc limit 1;
 8. Display the deptname, name of top 5 earning employees from each dept.
  select * from (select deptname,ename from emp join dept on emp.deptid=dept.deptid where emp.deptid=1 order by salary desc limit 5)as t union select * from (select deptname,ename from emp join dept on emp.deptid=dept.deptid where emp.deptid=2 order by salary desc limit 5)as t1 union select * from (select deptname,ename from emp join dept on emp.deptid=dept.deptid where emp.deptid=3 order by salary desc limit 5)as t2;
 
+
+ select * from(select deptname,ename,dense_rank() over (partition by emp.deptid order by salary desc) t from emp join dept on dept.deptid=emp.deptid) as t1 where t<=5;
+
+
 9. Display the avg salary of each dept.
- select deptname,avg(salary) from emp join dept on emp.deptid=dept.deptid group by deptname;
+ select deptname,avg(salary) from emp right join dept on emp.deptid=dept.deptid group by deptname;
 
 10.Display the min and max salary of each dept.
  select deptname,min(salary),max(salary) from emp join dept on emp.deptid=dept.deptid group by deptname;
