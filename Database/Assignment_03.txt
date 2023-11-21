@@ -1,0 +1,173 @@
+Create the tables below using the commands and write 20 queris
+asked below
+
+CREATE TABLE Worker (
+WORKER_ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+FIRST_NAME CHAR(25),
+LAST_NAME CHAR(25),
+SALARY INT(15),
+JOINING_DATE DATETIME,
+DEPARTMENT CHAR(25)
+);
+
+INSERT INTO Worker
+(WORKER_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE,
+DEPARTMENT) VALUES
+
+(001, &#39;Monika&#39;, &#39;Arora&#39;, 100000, &#39;14-02-20
+
+09.00.00&#39;, &#39;HR&#39;),
+
+(002, &#39;Niharika&#39;, &#39;Verma&#39;, 80000, &#39;14-06-11
+
+09.00.00&#39;, &#39;Admin&#39;),
+
+(003, &#39;Vishal&#39;, &#39;Singhal&#39;, 300000, &#39;14-02-20
+
+09.00.00&#39;, &#39;HR&#39;),
+
+(004, &#39;Amitabh&#39;, &#39;Singh&#39;, 500000, &#39;14-02-20
+
+09.00.00&#39;, &#39;Admin&#39;),
+
+(005, &#39;Vivek&#39;, &#39;Bhati&#39;, 500000, &#39;14-06-11
+
+09.00.00&#39;, &#39;Admin&#39;),
+
+(006, &#39;Vipul&#39;, &#39;Diwan&#39;, 200000, &#39;14-06-11
+
+09.00.00&#39;, &#39;Account&#39;),
+
+(007, &#39;Satish&#39;, &#39;Kumar&#39;, 75000, &#39;14-01-20
+
+09.00.00&#39;, &#39;Account&#39;),
+
+(008, &#39;Geetika&#39;, &#39;Chauhan&#39;, 90000, &#39;14-04-11
+
+09.00.00&#39;, &#39;Admin&#39;);
+
+CREATE TABLE Bonus (
+WORKER_REF_ID INT,
+BONUS_AMOUNT INT(10),
+BONUS_DATE DATETIME,
+FOREIGN KEY (WORKER_REF_ID)
+REFERENCES Worker(WORKER_ID)
+
+ON DELETE CASCADE
+);
+
+INSERT INTO Bonus
+(WORKER_REF_ID, BONUS_AMOUNT, BONUS_DATE) VALUES
+(001, 5000, &#39;16-02-20&#39;),
+(002, 3000, &#39;16-06-11&#39;),
+(003, 4000, &#39;16-02-20&#39;),
+(001, 4500, &#39;16-02-20&#39;),
+(002, 3500, &#39;16-06-11&#39;);
+
+CREATE TABLE Title (
+WORKER_REF_ID INT,
+WORKER_TITLE CHAR(25),
+
+AFFECTED_FROM DATETIME,
+FOREIGN KEY (WORKER_REF_ID)
+REFERENCES Worker(WORKER_ID)
+
+ON DELETE CASCADE
+);
+
+INSERT INTO Title
+(WORKER_REF_ID, WORKER_TITLE, AFFECTED_FROM) VALUES
+(001, &#39;Manager&#39;, &#39;2016-02-20 00:00:00&#39;),
+(002, &#39;Executive&#39;, &#39;2016-06-11 00:00:00&#39;),
+(008, &#39;Executive&#39;, &#39;2016-06-11 00:00:00&#39;),
+(005, &#39;Manager&#39;, &#39;2016-06-11 00:00:00&#39;),
+(004, &#39;Asst. Manager&#39;, &#39;2016-06-11 00:00:00&#39;),
+(007, &#39;Executive&#39;, &#39;2016-06-11 00:00:00&#39;),
+(006, &#39;Lead&#39;, &#39;2016-06-11 00:00:00&#39;),
+(003, &#39;Lead&#39;, &#39;2016-06-11 00:00:00&#39;);
+
+
+Q-1. Write an SQL query to fetch “FIRST_NAME” from Worker table using
+the alias name as <WORKER_NAME>;.
+  select First_name as WORKER_NAME from worker;
+
+
+Q-2. Write an SQL query to fetch “FIRST_NAME” from Worker table in
+upper case.
+select upper(First_name) from worker;
+
+Q-3. Write an SQL query to fetch unique values of DEPARTMENT from
+Worker table.
+  select distinct(department) from worker;
+
+Q-4. Write an SQL query to print the FIRST_NAME and LAST_NAME from
+Worker table into a single column COMPLETE_NAME. A space char
+should separate them.
+ select concat(first_name,' ',Last_name) as COMPLETE_NAME from worker;
+
+ 
+Q-5. Write an SQL query to print all Worker details from the Worker table
+order by FIRST_NAME Ascending.
+ select * from worker order by first_name;
+ 
+Q-6. Write an SQL query to print all Worker details from the Worker table
+order by FIRST_NAME Ascending and DEPARTMENT Descending.
+ select *  from worker order by first_name asc, department desc;
+
+Q-7. Write an SQL query to print details for Workers with the first name as
+“Vipul” and “Satish” from Worker table.
+select * from worker where first_name in('vipul','satish');
+ 
+Q-8. Write an SQL query to print details of workers excluding first names,
+“Vipul” and “Satish” from Worker table.
+  select * from worker where first_name not in('vipul','satish');
+
+Q-9. Write an SQL query to print details of Workers with DEPARTMENT
+name as “Admin”.
+ select * from worker where department='Admin';
+ 
+Q-10. Write an SQL query to print details of the Workers whose
+FIRST_NAME contains ‘a’.
+  select * from worker where FIRST_NAME like '%a%';
+
+Q-11. Write an SQL query to print details of the Workers whose
+FIRST_NAME ends with ‘a’.
+  select * from worker where FIRST_NAME like '%a';
+
+Q-12. Write an SQL query to print details of the Workers whose
+FIRST_NAME ends with ‘h’ and contains six alphabets.
+  select * from worker where FIRST_NAME like '_____h';
+
+Q-13. Write an SQL query to print details of the Workers whose SALARY
+lies between 100000 and 500000.
+ 
+Q-14. Write an SQL query to print details of the Workers who have joined
+in Feb’2014.
+  select * from worker where salary between 100000 and 500000;
+
+Q-15. Write an SQL query to fetch the count of employees working in the
+department ‘Admin’.
+ select department,count(department) from worker group by department having department="admin";
+
+ select count(department) from worker where department="admin";
+
+
+Q-16. Write an SQL query to fetch worker names with salaries &gt;= 50000
+and &lt;= 100000.
+ select first_name,last_name from worker where salary between 50000 and 100000;
+
+
+Q-17. Write an SQL query to fetch the no. of workers for each department
+in the descending order.
+ select department,count(department) as no_of_workers from worker group by department order by no_of_workers desc;
+
+Q-18. Write an SQL query to print details of the Workers who are also
+Managers.
+  select worker.* from worker join title on worker.worker_id=title.worker_ref_id where title.WORKER_TITLE='Manager';
+
+Q-19. Write an SQL query to fetch duplicate records having matching data
+in some fields of a table.
+select w1.* from worker w1,worker w2 where w1.worker_id<>w2.worker_id and (w1.salary=w2.salary or w1.JOINING_DATE=w2.JOINING_DATE or w1.DEPARTMENT=w2.DEPARTMENT or w1.FIRST_NAME=w2.FIRST_NAME or w1.LAST_NAME=w2.LAST_NAME) group by w1.worker_id order by w1.worker_id;
+
+Q-20. Write an SQL query to show only odd rows from a table.
+ select * from worker where worker_id%2<>0;
