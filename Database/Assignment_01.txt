@@ -28,6 +28,36 @@ select deptname,count(emp.deptid) from dept left join emp on emp.deptid=dept.dep
  select * from (select deptname,ename from emp join dept on emp.deptid=dept.deptid where emp.deptid=1 order by salary desc limit 5)as t union select * from (select deptname,ename from emp join dept on emp.deptid=dept.deptid where emp.deptid=2 order by salary desc limit 5)as t1 union select * from (select deptname,ename from emp join dept on emp.deptid=dept.deptid where emp.deptid=3 order by salary desc limit 5)as t2;
 
 
+ select deptname,e1.ename,e1.salary,count(*) from emp e1 join emp e2
+    -> on e1.deptid=e2.deptid
+    -> join dept d
+    -> on e1.deptid=d.deptid
+    -> where e1.salary<e2.salary
+    -> group by deptname,e1.ename,e1.salary
+    -> having count(*)<=5
+    -> order by deptname,salary desc;
++----------+-------+--------+----------+
+| deptname | ename | salary | count(*) |
++----------+-------+--------+----------+
+| Finance  | y     |  19212 |        1 |
+| Finance  | b4    |   4444 |        2 |
+| Finance  | f     |   2023 |        3 |
+| Finance  | o     |   1999 |        4 |
+| Finance  | b6    |   1553 |        5 |
+| HR       | z     |  12111 |        1 |
+| HR       | a2    |   9238 |        2 |
+| HR       | v     |   9029 |        3 |
+| HR       | b7    |   6432 |        4 |
+| HR       | b9    |   3355 |        5 |
+| IT       | b8    |   4532 |        1 |
+| IT       | b3    |   4212 |        2 |
+| IT       | d1    |   2324 |        3 |
+| IT       | b2    |   1242 |        4 |
+| IT       | b     |   1023 |        5 |
++----------+-------+--------+----------+
+
+
+
  select * from(select deptname,ename,dense_rank() over (partition by emp.deptid order by salary desc) t from emp join dept on dept.deptid=emp.deptid) as t1 where t<=5;
 
 
