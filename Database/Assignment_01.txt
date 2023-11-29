@@ -58,6 +58,7 @@ select deptname,count(emp.deptid) from dept left join emp on emp.deptid=dept.dep
 
 
 
+
  select * from(select deptname,ename,dense_rank() over (partition by emp.deptid order by salary desc) t from emp join dept on dept.deptid=emp.deptid) as t1 where t<=5;
 
 

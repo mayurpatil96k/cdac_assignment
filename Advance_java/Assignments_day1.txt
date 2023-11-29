@@ -1,0 +1,207 @@
+1) create a table "Student"
+
+	rollno,name,age
+
+write a java program to accept rollno,name,age from user and insert a row.
+
+after inserting that row try to view using a query.
+
+
+Solution:
+package myprop;
+
+import java.beans.Statement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+public class assi3 {
+public static void main(String[] args) {
+	String ss="jdbc:mysql://localhost:3306/bit";
+	System.out.println("Enter rollno");
+	Scanner sc =  new Scanner(System.in);
+	int roll=sc.nextInt();
+	System.out.println("Enter name");
+	String nm=sc.next();
+	System.out.println("Enter age");
+	int ag=sc.nextInt();
+	try(Connection conn = DriverManager.getConnection(ss,"root","root")) {
+		PreparedStatement pst = conn.prepareStatement("insert into student values(?,?,?)");
+		pst.setInt(1, roll);
+		pst.setString(2, nm);
+		pst.setInt(3, ag);
+		pst.execute();
+		java.sql.Statement st=conn.createStatement();
+		ResultSet rs=st.executeQuery("select * from student");
+		while(rs.next()) {
+			System.out.println("Roll NO: "+rs.getInt(1)+" Name "+rs.getString(2)+" Age "+rs.getInt(3));
+		}
+		
+		
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+}
+}
+
+2) create table "Employee"
+	empid,empname,desig
+
+	add 5 records manually.
+
+   Now write a java program to accept "designation" from user and retrieve employees with the given designation.
+
+Solution:
+package myprop;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+public class assi2 {
+	public static void main(String[] args) {
+		String ss="jdbc:mysql://localhost:3306/bit";
+		System.out.println("Enter Designation To get employee");
+		Scanner sc =  new Scanner(System.in);
+		String de=sc.nextLine();
+		try(Connection conn = DriverManager.getConnection(ss,"root","root")) {
+			PreparedStatement pst = conn.prepareStatement("select * from employee where desig=?");
+			pst.setString(1, de);
+			ResultSet rs= pst.executeQuery();
+			while(rs.next()) {
+				System.out.println(rs.getString(2));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+}
+
+
+
+3) Object Persistence inside database
+
+create a table "Product" with
+	pid number
+	qty number
+	cost decimal
+	pname varchar
+[ do not add any record ]
+
+define a class "Product" with
+	private int pid,qty;
+	private double cost;
+	private String pname;
+		setters,getters,parameterized constructor and toString()
+
+create 1 instance of above class , display it and then insert a row inside Product with the help of above instance.
+
+	now assign "null" to the above instance. That means your heap based object will be soon garbage collected , but you need not worry as you have saved the state of an object inside the database.
+
+	now fire a query to read that record and with the help of it initialize new object of "Product" and display it.
+
+Solution:
+product.java
+package myprop;
+
+public class Product {
+	private int pid;
+	
+	public Product(int pid, int qty, double cost, String pname) {
+		this.pid = pid;
+		this.qty = qty;
+		this.cost = cost;
+		this.pname = pname;
+	}
+	public int getPid() {
+		return pid;
+	}
+	public void setPid(int pid) {
+		this.pid = pid;
+	}
+	public int getQty() {
+		return qty;
+	}
+	public void setQty(int qty) {
+		this.qty = qty;
+	}
+	public double getCost() {
+		return cost;
+	}
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+	public String getPname() {
+		return pname;
+	}
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+	private int qty;
+	@Override
+	public String toString() {
+		return "Product [pid=" + pid + ", qty=" + qty + ", cost=" + cost + ", pname=" + pname + "]";
+	}
+	private double cost;
+	private String pname;
+	
+}
+
+
+display.java
+package myprop;
+
+import java.beans.Statement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class display {
+public static void main(String[] args) {
+	Product p = new Product(1,50,80.69,"Toothpaste");
+	System.out.println(p.toString());
+	String ss="jdbc:mysql://localhost:3306/bit";
+	try(Connection con=DriverManager.getConnection(ss,"root","root")) {
+		PreparedStatement pst = con.prepareStatement("insert into product(qty,cost,pname) values (?,?,?)");
+		pst.setInt(1, p.getQty());
+		pst.setDouble(2, p.getCost());
+		pst.setString(3, p.getPname());
+		pst.execute();
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	p=null;
+	Product p1 = null;
+	try(Connection con=DriverManager.getConnection(ss,"root","root")) {
+		java.sql.Statement st = con.createStatement();
+		ResultSet rs = st.executeQuery("select * from product");
+		rs.next();
+		int no = rs.getInt(1);
+		int no1=rs.getInt(2);
+		double pri=rs.getDouble(3);
+		String s=rs.getString(4);
+		p1=new Product(no, no1, pri, s);
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	System.out.println(p1);
+}
+}
+
+	

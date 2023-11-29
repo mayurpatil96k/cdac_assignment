@@ -793,7 +793,7 @@ select s.*,t.sm from salespeople s join (select snum,sum(amt)sm from orders grou
 +------+---------+-----------+------+----------+
 
 
-60. Write a query that selects all orders save those with zeroes or NULLs in the amount field.
+60. Write a query that selects all orders save those except with zeroes or NULLs in the amount field.
 select *,amt from orders where amt is not null and amt<>0;
 +------+---------+------------+------+------+---------+
 | ONUM | AMT     | ODATE      | CNUM | SNUM | amt     |
@@ -812,17 +812,7 @@ select *,amt from orders where amt is not null and amt<>0;
 
 
 61. Produce all combinations of salespeople and customer names such that the former precedes the latter alphabetically, and the latter has a rating of less than 200.
- select sname,cname from customers c join salespeople s on c.city=s.city where c.rating<200 order by sname;
-+--------+---------+
-| sname  | cname   |
-+--------+---------+
-| Fran   | Clemens |
-| Fran   | Hoffman |
-| Motika | Clemens |
-| Motika | Hoffman |
-| Peel   | Clemens |
-| Peel   | Hoffman |
-+--------+---------+
+ 
 
 62. List all Salespeople’s names and the Commission they have earned.
  select sname,sum(comm*amt)commision from salespeople left join orders on salespeople.snum=orders.snum group by sname;
@@ -838,7 +828,7 @@ select *,amt from orders where amt is not null and amt<>0;
 +---------+-----------+
 
 63. Write a query that produces the names and cities of all customers with the same rating as Hoffman. Write the query using Hoffman’s CNUM rather than his rating, so that it would still be usable if his rating changed.
- select * from customers where rating=(select rating from customers where cname="hoffman") and cnum<>(select cnum from customers where cname='hoffman');
+ select * from customers where rating=(select rating from customers where cname="hoffman");
 +------+---------+--------+--------+------+
 | CNUM | CNAME   | CITY   | RATING | SNUM |
 +------+---------+--------+--------+------+
@@ -847,15 +837,9 @@ select *,amt from orders where amt is not null and amt<>0;
 +------+---------+--------+--------+------+
 
 64. Find all salespeople for whom there are customers that follow them in alphabetical order.
+
 65. Write a query that produces the names and ratings of all customers of all who have above average orders.
-> select c.cname,c.rating  from customers c join orders o on c.cnum=o.cnum where amt>all(select avg(amt) from orders);
-+---------+--------+
-| cname   | rating |
-+---------+--------+
-| Liu     |    200 |
-| Clemens |    100 |
-| Clemens |    100 |
-+---------+--------+
+
 
 66. Find the SUM of all purchases from the Orders table.
  select sum(amt) from orders;
@@ -884,7 +868,7 @@ the order table.
 +------------+---------+------------+
 
 68. Count the number of nonNULL rating fields in the Customers table (including repeats).
- select count(*) from customers where rating is not null;
+ select count(rating) from customers where rating is not null;
 +----------+
 | count(*) |
 +----------+
@@ -926,7 +910,7 @@ the order table.
 +-----------+
 
 71. Write a query using ANY or ALL that will find all salespeople who have no customers located in their city.
- select * from salespeople s where city <> any(select city from customers c where s.snum=c.snum);
+ select * from salespeople s where city <> all(select city from customers c where s.snum=c.snum);
 +------+---------+-----------+------+
 | SNUM | SNAME   | CITY      | COMM |
 +------+---------+-----------+------+
@@ -1155,16 +1139,52 @@ select cnum,min(amt) from orders group by cnum;
 +------+----------+
 
 89. Write a query that selects the first customer in alphabetical order whose name begins with G.
+ select cname from customers where cname like 'G%' order by cname limit 1;
++----------+
+| cname    |
++----------+
+| Giovanni |
++----------+
 90. Write a query that counts the number of different nonNULL city values in the Customers table.
+ select count(city) from customers;
++-------------+
+| count(city) |
++-------------+
+|           7 |
++-------------+
 91. Find the average amount from the Orders table.
+ select avg(amt)  from orders;
++-------------+
+| avg(amt)    |
++-------------+
+| 2665.840000 |
++-------------+
 92. What would be the output from the following query?
 SELECT * FROM ORDERS
 WHERE NOT (odate = 10/03/96 OR snum > 1006) AND amt >=
 1500);
 93. Find all customers who are not located in San Jose and whose rating is above 200.
+ select * from customers where city<>'san jose' and rating>200;
++------+-------+--------+--------+------+
+| CNUM | CNAME | CITY   | RATING | SNUM |
++------+-------+--------+--------+------+
+| 2004 | Grass | Berlin |    300 | 1002 |
++------+-------+--------+--------+------+
 94. Give a simpler way to write this query :
 SELECT snum, sname city, comm FROM salespeople
 WHERE (comm > + 0.12 OR comm < 0.14);
+
+SELECT snum, sname city, comm FROM salespeople;
++------+---------+------+
+| snum | city    | comm |
++------+---------+------+
+| 1001 | Peel    | 0.12 |
+| 1002 | Serres  | 0.13 |
+| 1003 | AxelRod | 0.10 |
+| 1004 | Motika  | 0.11 |
+| 1005 | Fran    | 0.26 |
+| 1007 | Rifkin  | 0.15 |
++------+---------+------+
 95. Evaluate the following query :
 SELECT * FROM orders
 WHERE NOT ((odate = 10/03/96 AND snum > 1002) OR amt > 2000.00);
@@ -1176,6 +1196,7 @@ percentages?
 99. Which salesperson has earned the most by way of commission?
 100.Does the customer who has placed the maximum number of orders have the maximum rating?
 101.Has the customer who has spent the largest amount of money been given the highest rating?
+
 102.List all customers in descending order of customer rating.
 103.On which days has Hoffman placed orders?
 104.Do all salespeople have different commissions?
