@@ -1,0 +1,217 @@
+1) create a table "Product" with
+pid,pname,price,qty
+enter 5/6 records.
+	
+write a FirstServ which will retrieve all the records.
+while retrieving records it will create ArrayList and store only productnames inside it.
+This ArrayList should be now stored inside "request" attribute.
+
+FirstServ will now forward to Shop.jsp which will display all the product names using checkbox. [ use jstl here ]
+
+after selecting products when user will enter submit button ("add to cart"), control will go to SecondServ.
+
+SecondServ will get all the selected products, store them in ArrayList. Store this ArrayList inside session attribute.
+
+write a Bill.jsp will 
+retrieve session and ArrayList from it.
+display all the selected products using EL and Jstl.
+
+
+Firstser.jsp
+
+
+
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletConfig;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.beans.Statement;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+/**
+ * Servlet implementation class FirstServ
+ */
+public class FirstServ extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private Connection con;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public FirstServ() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see Servlet#init(ServletConfig)
+	 */
+	public void init(ServletConfig config) throws ServletException {
+		// TODO Auto-generated method stub
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String ss="jdbc:mysql://localhost:3306/bit";
+		try {
+			con=DriverManager.getConnection(ss,"root","root");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			java.sql.Statement st=con.createStatement();
+			ResultSet rs=st.executeQuery("select pname from product");
+			ArrayList<String> arr=new ArrayList<>();
+			while(rs.next()) {
+				arr.add(rs.getString(1));
+			}
+			request.setAttribute("arr", arr);
+			RequestDispatcher rd=request.getRequestDispatcher("Shop.jsp");
+			rd.forward(request, response);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+}
+
+
+
+shop.jsp
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+   <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%
+ArrayList<String> arr=(ArrayList<String>)request.getAttribute("arr");
+%>
+ 
+<form action="secondserv" method="post">
+
+        <c:forEach var="xy" items="${arr}">
+            <input type="checkbox" name="ch" value="${xy}">${xy}<br>
+        </c:forEach>
+
+        <input type="submit" name="button" value="ADD TO CART">
+
+    </form>
+</body>
+</html>
+
+
+
+
+
+
+secondserv.jsp
+
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
+/**
+ * Servlet implementation class secondserv
+ */
+public class secondserv extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		String[] arr= request.getParameterValues("ch");
+		HttpSession session=request.getSession();
+		session.setAttribute("arr", arr);
+		PrintWriter pw=response.getWriter();
+		for (String string : arr) {
+			pw.println(string);
+		}
+	}
+
+}
+
+
+
+
+bill.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%
+String[] arr=(String[])session.getAttribute("arr");
+%>
+<c:forEach var="xy" items="${arr}">
+            ${xy}<br>
+        </c:forEach>
+</body>
+</html>
+
+2) 
+	define a class "Dept" inside "mypack"
+the class should have following members
+
+int deptno;
+String dname;
+String loc;
+
+with getter and setter methods
+
+jsp -> servlet 
+
+	in jsp u need to have
+
+	Search By loc:-  <textfield>
+
+		<submit>
+
+user will enter "location" and click on submit. Request will go to Servlet , which will search records from database where location is  the one entered by user. while traversing from resultset servlet will create objects of Dept and initialize it with database values i.e. deptno,dname and loc. Also servlet will add each and every object of Dept inside ArrayList. 
+Now store this ArrayList inside "request" attribute and forward it to the same jsp from where u have come inside servlet.
+
+jsp will display the arraylist using EL.
