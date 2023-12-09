@@ -1,4 +1,4 @@
-create a structure "Product"
+ create a structure "Product"
 	with following members
 
 	char *pcode;
