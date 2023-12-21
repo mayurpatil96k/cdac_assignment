@@ -1,0 +1,4 @@
+server:
+  port: 9700
+my:
+  message: Hello Developer

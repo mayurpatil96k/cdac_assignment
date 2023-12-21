@@ -1,0 +1,4 @@
+server:
+  port: 9600
+my:
+  message: Hello Deployer

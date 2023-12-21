@@ -1,0 +1,9 @@
+server:
+  port: 9400
+spring:
+  profiles:
+    # active: test
+    # active: prod
+     active: dev
+my:
+ message: Hello User

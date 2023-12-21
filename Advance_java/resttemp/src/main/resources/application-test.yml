@@ -1,0 +1,4 @@
+server:
+  port: 9000
+my:
+  message: Hello Tester
