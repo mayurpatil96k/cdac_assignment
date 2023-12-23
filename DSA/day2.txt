@@ -1,0 +1,152 @@
+package que;
+
+import java.util.Scanner;
+
+import queue.queue;
+
+class Stack {
+        int stack[], tos, MaxSize;
+
+        void createStack(int size) {
+            stack = new int[size];
+            tos = -1;
+            MaxSize = size;
+        }
+
+        void push(int e) {
+            stack[++tos] = e;
+        }
+
+        boolean is_full() {
+            return tos == MaxSize - 1;
+        }
+
+        int pop() {
+            return stack[tos--];
+        }
+
+        boolean is_empty() {
+            return tos == -1;
+        }
+
+        int peek() {
+            return stack[tos];
+        }
+
+        void print_stack() {
+            for (int i = tos; i >= 0; i--) {
+                System.out.println(stack[i]);
+            }
+        }
+
+        int size() {
+            return tos + 1;
+        }
+    }
+
+    class assi {
+        Stack stack1 = new Stack();
+        Stack stack2 = new Stack();
+
+        void createQueue(int size) {
+            stack1.createStack(size);
+            stack2.createStack(size);
+        }
+
+        void enqueue(int e) {
+            stack1.push(e);
+        }
+
+        int dequeue() {
+            if (stack1.size() > 0) {
+                while (stack1.size() > 0) {
+                    int a = stack1.pop();
+                    stack2.push(a);
+                }
+                int b = stack2.pop();
+                while (stack2.size() > 0) {
+                    int a = stack2.pop();
+                    stack1.push(a);
+                }
+                return b;
+            } else {
+                return 0;
+            }
+        }
+
+        void print() {
+            while (stack1.size() > 0) {
+                int a = stack1.pop();
+                stack2.push(a);
+            }
+            while (stack2.size() > 0) {
+                int a = stack2.pop();
+                System.out.print(a + " ");
+                stack1.push(a);
+            }
+            System.out.println();
+        }
+        boolean isfull() {
+        	return stack1.size() == stack1.MaxSize;
+        }
+        boolean isempty() {
+        	return stack1.size() == 0;
+        }
+    
+
+    public static void main(String[] args) {
+        assi obj = new assi();
+        Scanner sc = new Scanner(System.in);
+		System.out.println("Enter size of Queue");
+		int size=sc.nextInt();
+		obj.createQueue(size);
+		int ch;
+		do {
+			System.out.println("1.Eneque");
+			System.out.println("2.Dequeue");
+			
+			System.out.println("3.Print");
+			System.out.println("0.Exit");
+			ch=sc.nextInt();
+			switch (ch) {
+			
+			
+			case 1:
+				if(!obj.isfull()) {
+					System.out.println("Enter a number");
+					int no=sc.nextInt();
+					obj.enqueue(no);
+					System.out.println("INSERTED "+no);
+				}
+				else {
+					System.out.println("QUEUE IS FULL");
+				}
+				break;
+			case 2:
+				if(!obj.isempty()) {
+					System.out.println("element removed "+obj.dequeue());
+				}
+				else {
+					System.out.println("QUEUE IS EMPTY");
+				}
+				break;
+			case 3:	
+				if(!obj.isempty()) {
+					System.out.println("Elements in Queue are");
+					obj.print();
+				}
+				else {
+					System.out.println("Queue is Empty");
+				}
+				break;
+			case 0:
+				System.out.println("Exiting");
+				break;
+			default:
+				System.out.println("Enter choice between 0 to 3");
+				break;
+			}
+		}while(ch!=0);
+	}
+    }
+    

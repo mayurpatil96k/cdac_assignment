@@ -1,0 +1,364 @@
+1. postfix evaluation
+
+package assignment;
+
+import java.util.Scanner;
+
+public class assi1 {
+
+	int stack[],tos,Max;
+	void createstack(int size) {
+		stack=new int[size];
+		tos=-1;
+		Max=size;
+	}
+	void push(int e) {
+		stack[++tos]=e;
+	}
+	int pop() {
+		return stack[tos--];
+	}
+	int peek() {
+		return stack[tos];
+	}
+	void print_stack() {
+		for(int i=tos;i>=0;i--) {
+			System.out.println(stack[i]);
+		}
+	}
+	boolean is_empty() {
+		if(tos==-1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	boolean is_full() {
+		if(tos==Max-1) {
+			return true;
+		}else{
+			return false;	
+		}
+	}
+	public static void main(String[] args) {
+		assi1 ob=new assi1();
+		System.out.println("Enter String to valuate");
+		Scanner sc=new Scanner(System.in);
+		String ip=sc.next();
+		ob.createstack(ip.length());
+		for(int i=0;i<ip.length();i++) {
+			char ch=ip.charAt(i);
+			if(Character.isDigit(ch)) {
+				ob.push(Character.getNumericValue(ch));
+			}
+			else {
+				int a=ob.pop();
+				int b=ob.pop();
+				switch (ch) {
+				case '+': 
+					ob.push(b+a);
+					break;
+				case '-':
+					ob.push(b-a);
+					break;
+				case '*':
+					ob.push(b*a);
+					break;
+				case '/':
+					ob.push(b/a);
+					break;
+					
+				}
+			}
+		}
+		System.out.println(ob.peek());
+	}
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+2. convert infix to prefix
+
+
+package assignment;
+import java.util.Scanner;
+
+public class INFIXTOPREFIX {
+	char stack[];
+	int tos,MaxSize;
+	void createstack(int size) {
+		stack =new char[size];
+		MaxSize=size;
+		tos=-1;
+		
+	}
+	void push(char e) {
+		tos++;
+		stack [tos]=e;
+	}
+	boolean is_full() {
+		if(tos==MaxSize-1)
+			return true;
+		else
+			return false;
+	}
+	char pop() {
+		char temp =stack[tos];
+		tos--;
+		return temp;
+
+	}
+	char peek() {
+		char temp =stack [tos];
+		return temp;
+
+	}
+	boolean is_empty() {
+		if(tos==-1)
+			return true;
+		else
+			return false;
+	}
+    boolean is_operator(char c) {
+        return c == '+' || c == '-' || c == '*' || c == '/';
+    }
+
+    int get_precedence(char operator) {
+        switch (operator) {
+            case '+':
+            case '-':
+                return 1;
+            case '*':
+            case '/':
+                return 2;
+            default:
+                return 0;
+        }
+    }
+    String INFIX_TO_PREFIX(String infix) {
+    	StringBuilder prefix= new StringBuilder();
+    	
+    	for (int i = infix.length() - 1; i >= 0; i--) {
+            char c = infix.charAt(i);
+            if (c == ')') {
+                push(c);
+            } else if (c == '(') {
+                while (!is_empty() && peek() != ')') {
+                    prefix.insert(0, pop());
+                }
+                pop(); // Pop ')'
+            } else if (Character.isLetterOrDigit(c)) {
+                prefix.insert(0, c);
+            } else if (is_operator(c)) {
+                while (!is_empty() && get_precedence(c) < get_precedence(peek())) {
+                    prefix.insert(0, pop());
+                }
+                push(c);
+            }
+        }
+
+    	 while (!is_empty()) {
+             prefix.insert(0, pop());
+         }
+
+
+        return prefix.toString();
+    	
+    }
+    public static void main(String args[]) {
+    	Scanner sc= new Scanner(System.in);
+    	String s=sc.nextLine();
+    	INFIXTOPREFIX OBJ= new INFIXTOPREFIX();
+    	OBJ.createstack(s.length());
+    	System.out.println("Prefix is "+OBJ.INFIX_TO_PREFIX(s));
+    }
+    
+
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3. reverse stack
+Solution:
+package assignment;
+//3. reverse stack
+public class assi3 {
+	int stack[],tos,Max;
+	void createstack(int size) {
+		stack=new int[size];
+		tos=-1;
+		Max=size;
+	}
+	void push(int e) {
+		stack[++tos]=e;
+	}
+	int pop() {
+		return stack[tos--];
+	}
+	int peek() {
+		return stack[tos];
+	}
+	void print_stack() {
+		for(int i=tos;i>=0;i--) {
+			System.out.println(stack[i]);
+		}
+	}
+	boolean is_empty() {
+		if(tos==-1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	boolean is_full() {
+		if(tos==Max-1) {
+			return true;
+		}else{
+			return false;	
+		}
+	}
+	public static void main(String[] args) {
+		assi3 ob=new assi3();
+		ob.createstack(5);
+		ob.push(10);
+		ob.push(20);
+		ob.push(30);
+		ob.push(40);
+		ob.push(50);
+		ob.print_stack();
+		assi3 ob1=new assi3();
+		ob1.createstack(5);
+		ob1.push(ob.pop());
+		ob1.push(ob.pop());
+		ob1.push(ob.pop());
+		ob1.push(ob.pop());
+		ob1.push(ob.pop());
+		System.out.println("reverse");
+		ob1.print_stack();
+	}
+}
+
+
+string reverse:
+package assignment;
+
+import java.util.Scanner;
+
+//3. reverse stack
+public class assi3 {
+	char stack[];
+	int tos,Max;
+	void createstack(int size) {
+		stack=new char[size];
+		tos=-1;
+		Max=size;
+	}
+	void push(char e) {
+		stack[++tos]=e;
+	}
+	int pop() {
+		return stack[tos--];
+	}
+	int peek() {
+		return stack[tos];
+	}
+	void print_stack() {
+		for(int i=tos;i>=0;i--) {
+			System.out.print(stack[i]);
+		}
+	}
+	boolean is_empty() {
+		if(tos==-1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	boolean is_full() {
+		if(tos==Max-1) {
+			return true;
+		}else{
+			return false;	
+		}
+	}
+	
+	public static void main(String[] args) {
+		assi3 ob=new assi3();
+		System.out.println("ENTER");
+		Scanner sc=new Scanner(System.in);
+		String a=sc.next();
+		ob.createstack(a.length());
+		for(int i=0;i<a.length();i++) {
+			ob.push(a.charAt(i));
+		}
+		ob.print_stack();
+		assi3 ob1=new assi3();
+		
+	}
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4.sort stack using other stack
+
+package assignment;
+
+import java.util.Scanner;
+
+public class assi4 {
+	int stack[],tos,Max;
+	void createstack(int size) {
+		stack=new int[size];
+		tos=-1;
+		Max=size;
+	}
+	void push(int e) {
+		stack[++tos]=e;
+	}
+	int pop() {
+		return stack[tos--];
+	}
+	int peek() {
+		return stack[tos];
+	}
+	void print_stack() {
+		for(int i=tos;i>=0;i--) {
+			System.out.println(stack[i]);
+		}
+	}
+	boolean is_empty() {
+		if(tos==-1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	boolean is_full() {
+		if(tos==Max-1) {
+			return true;
+		}else{
+			return false;	
+		}
+	}
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter Size");
+		int size=sc.nextInt();
+		assi4 stack=new assi4();
+		assi4 sortedStack=new assi4();
+		sortedStack.createstack(size);
+		stack.createstack(size);
+		for(int i=0;i<size;i++) {
+			stack.push(sc.nextInt());
+		}
+		while (!stack.is_empty()) {
+            int temp = stack.pop();
+            while (!sortedStack.is_empty() && sortedStack.peek() > temp) {
+                stack.push(sortedStack.pop());
+            }
+            sortedStack.push(temp);
+        }
+		sortedStack.print_stack();
+	}
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
