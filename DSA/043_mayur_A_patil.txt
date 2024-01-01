@@ -1,0 +1,118 @@
+Q1: Quick Sort
+package exam;
+
+public class q1 {
+	void print(int[]a) {
+		for(int i=0;i<a.length;i++) {
+			System.out.println(a[i]+" ");
+		}
+	}
+	void quick(int[]a,int start,int end) {
+		int i=start;
+		int j=end;
+		int pivot=a[j];
+		if(i<=j) {
+			while(i<j) {
+				while(a[i]<pivot) {
+					i++;
+				}
+				while(a[j]>pivot){
+					j--;
+				}
+				if (i < j) {
+	                int temp = a[i];
+	                a[i] = a[j];
+	                a[j] = temp;
+	            }
+				
+			}
+		}
+		if (i < end)
+	        quick(a, i + 1, end);
+	    if (j > start)
+	        quick(a, start, j - 1);
+		
+	}
+	public static void main(String[] args) {
+		q1 ob=new q1();
+		int[] arr= {5,2,3,6,7,9,7,120,656};
+		ob.quick(arr, 0, arr.length-1);
+		ob.print(arr);
+	}
+}
+
+-------------------------------------------------------------------------------------------
+Q2: Dynamic Stack
+Node.java
+package exam;
+
+public class Node {
+	Node next;
+	int data;
+	Node(int data){
+		this.data=data;
+		next=null;
+	}
+}
+
+q2.java
+package exam;
+
+public class q2 {
+	Node root;
+	void createstack() {
+		root=null;
+	}
+	void push(int data) {
+		Node n=new Node(data);
+		if(root==null) {
+			root=n;
+		}
+		else {
+			n.next=root;
+			root=n;
+		}
+	}
+	int pop() {
+		if(root==null) {
+			System.out.println("Empty stack");
+		}
+		else {
+			if(root.next==null) {
+				int dt=root.data;
+				root=null;
+				return dt;
+			}
+			else {
+				int dt=root.data;
+				root=root.next;
+				return dt;
+			}
+		}
+		return -1;
+	}
+	void print() {
+		Node t=root;
+		if(t==null) {
+			System.out.println("empty stack");
+		}else {
+		while(t.next!=null) {
+			System.out.println(t.data);
+			t=t.next;
+		}
+		System.out.println(t.data);
+		}
+	}
+	public static void main(String[] args) {
+		q2 ob=new q2();
+		ob.createstack();
+		ob.push(10);
+		ob.push(20);
+		ob.push(30);
+		ob.push(40);
+		ob.push(50);
+		System.out.println(ob.pop());
+		ob.print();
+	}
+}
+----------------------------------------------------------------------------------
